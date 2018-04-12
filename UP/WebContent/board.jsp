@@ -199,7 +199,7 @@
 					<span class="board_view_a a_boarder_num">
 						${list.bno}
 					</span>
-					<a href="boarddetail?bno=${list.bno}" class="board_view_a a_boarder_title" >
+					<a href="boraddetail.bizpoll?bno=${list.bno}" class="board_view_a a_boarder_title" >
 						${list.title}
 					</a>
 					<a href="#" class="board_view_a a_boarder_user">

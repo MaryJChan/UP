@@ -2,6 +2,10 @@
     pageEncoding="UTF-8"%>
     
 <%@ include file="header.jsp" %>
+
+<!-- jstl 태그 사용 -->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -162,9 +166,22 @@
 		margin-top: 15px;
 	}
 </style>
-
+<script type="text/javascript" src="js/jquery-3.3.1.js"></script>
  <script type="text/javascript">	
- 
+ 	/* $(document).ready(function(){
+ 		// 수정 버튼 클릭
+ 		$("#bdtail_btn_update").on("click", function(){
+ 			formObj.attr("action", "boardupdateview.bizpoll?bno=${boardDetailList.bno}")
+ 			formObj.attr("method", "get");
+ 			formObj.submit();
+ 		});
+ 	// 수정 버튼 클릭
+ 		$("#bdtail_btn_delete").on("click", function(){
+ 			formObj.attr("action", "boarddeleteview.bizpoll?bno=${boardDetailList.bno}")
+ 			formObj.attr("method", "get");
+ 			formObj.submit();
+ 		});
+ 	}); */
 </script>
 
 </head>
@@ -172,7 +189,7 @@
 	<div id="bdetail_wrap">
 		<div id="bdtail_header">
 			<div id="bdtail_title">
-				안녕하세용
+				${boardDetailList.title}
 			</div>			
 		</div>
 		<div id="bdtail_header2">
@@ -181,7 +198,7 @@
 					Name : 
 				</span>
 				<span id="bdtail_user">
-					<a href="#">dhfjswl3</a>
+					<a href="#">${boardDetailList.writer}</a>
 				</span>
 			</div>			
 			<span id="bdtail_date_hits_wrap">
@@ -190,14 +207,14 @@
 						Hits : 
 					</span>
 					<span id="bdtail_hits">
-						5
+						${boardDetailList.hits}
 					</span>
 				</span>	
 				<span class="date_fix">
 					Date : 
 				</span>
 				<span id="bdtail_date">
-					2018-04-10		
+					${boardDetailList.regdate}
 				</span>				
 			</span>
 			<span id="bdtail_header4">	
@@ -210,7 +227,7 @@
 			</span>
 		</div>
 		<div id="bdtail_contents">
-			sdalkfhsalkfhsdlakfhsadfhsad;hadflsakdhf;kfhsa;d
+			${boardDetailList.content}
 		</div>
 		<div id="bdtail_comment_wrap">
 			<div class="commend_registration_wrap">
@@ -256,21 +273,21 @@
 		</div>
 		<div id="bdtail_option">
 			<span id="bdtail_footer">
-				<span id="bdtail_">
-					<a href="#">수정</a>
+				<span id="bdtail_update">
+					<a href="boardupdateview.bizpoll?bno=${boardDetailList.bno}" id="bdtail_btn_update">수정</a>
 				</span>
 				<span class="bdtail_share">|</span>
-				<span id="bdtail_delete">
-					<a href="#">삭제</a>
+				<span id="bdtail_btn_delete">
+					<a href="boarddelete.bizpoll?bno=${boardDetailList.bno}">삭제</a>
 				</span>
 			</span>
 			<span id="bdtail_footer2">			
 				<span id="bdtail_write">
-					<a href="#">글쓰기</a>
+					<a href="boardregisterview.bizpoll">글쓰기</a>
 				</span>
 				<span class="bdtail_share">|</span>
 				<span id="bdtail_list">
-					<a href="#">목록</a>
+					<a href="board.bizpoll">목록</a>
 				</span>
 			</span>
 		</div>

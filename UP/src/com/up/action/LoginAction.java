@@ -11,8 +11,8 @@ public class LoginAction implements Action {
 	@Override
 	public ActionForward excute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String url = "login.jsp";		
-
+		String url = "board.bizpoll";
+		
 		ActionForward forward = new ActionForward();
 		forward.setPath(url);
 		forward.setRedirect(false);		

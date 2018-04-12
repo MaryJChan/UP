@@ -68,4 +68,45 @@ public class BoardDAO {
 		return result;
 	}
 	
+	public BoardDTO boardDetail(Integer bno) {
+		BoardDTO bDto = new BoardDTO();
+		sqlSession = sqlSessionFactory.openSession();
+		try {
+			// 여러건 출력 : selectList = List Type
+			// 단건 출력 : selectOne = DTO Type
+			bDto = sqlSession.selectOne("boarddetailview", bno);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			sqlSession.close();
+		}		
+		return bDto;
+	}
+	
+	public int boardUpdate(BoardDTO bDto) {
+		sqlSession = sqlSessionFactory.openSession();
+		try {
+			result = sqlSession.update("boardupdate", bDto);
+			sqlSession.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			sqlSession.close();
+		}
+		return result;
+	}
+	
+	public int boardDelete(Integer bno) {
+		sqlSession = sqlSessionFactory.openSession();
+		try {
+			result = sqlSession.delete("boarddelete", bno);
+			sqlSession.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			sqlSession.close();
+		}
+		return result;
+	}
+	
 }

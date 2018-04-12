@@ -12,9 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 import com.up.action.Action;
 
 import com.up.action.ActionForward;
-import com.up.action.BoardAjaxAction;
+import com.up.action.BoardAction;
+import com.up.action.BoardDeleteAction;
+import com.up.action.BoardDetailAction;
 import com.up.action.BoardRegisterStoreAction;
 import com.up.action.BoardRegisterViewAction;
+import com.up.action.BoardUpdateAction;
+import com.up.action.BoardUpdateViewAction;
 import com.up.action.IdOlapCkAction;
 import com.up.action.IndexAction;
 import com.up.action.LoginAction;
@@ -95,13 +99,25 @@ public class BizpollFrontController extends HttpServlet {
 			action = new LogoutAjaxAction();			
 			forward = action.excute(request, response);
 		} else if (command.equals("/board.bizpoll")) {
-			action = new BoardAjaxAction();			
+			action = new BoardAction();			
 			forward = action.excute(request, response);
 		} else if (command.equals("/boardregisterview.bizpoll")) {
 			action = new BoardRegisterViewAction();			
 			forward = action.excute(request, response);
 		} else if (command.equals("/boardregisterstore.bizpoll")) {
 			action = new BoardRegisterStoreAction();			
+			forward = action.excute(request, response);
+		} else if (command.equals("/boraddetail.bizpoll")) {
+			action = new BoardDetailAction();			
+			forward = action.excute(request, response);
+		} else if (command.equals("/boardupdateview.bizpoll")) {
+			action = new BoardUpdateViewAction();			
+			forward = action.excute(request, response);
+		} else if (command.equals("/boardupdate.bizpoll")) {
+			action = new BoardUpdateAction();			
+			forward = action.excute(request, response);
+		} else if (command.equals("/boarddelete.bizpoll")) {
+			action = new BoardDeleteAction();			
 			forward = action.excute(request, response);
 		}
 		// ======= 공통분기 작업 ======= //
