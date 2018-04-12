@@ -31,5 +31,14 @@
 		INSERT INTO member(mid, mpw, mname, msex, mbirth, mphone, mpostcode, madd, memail) 
 		VALUES (#{mid}, #{mpw}, #{mname}, #{msex}, #{mbirth}, #{mphone}, #{mpostcode}, #{madd}, #{memail})
 	</insert>
+	
+	<select id="boardListAll" resultType="bDTO">
+		SELECT * FROM tblboard
+		ORDER BY bno DESC
+	</select>
+	
+	<insert id="boardstore" parameterType="bDTO">
+		INSERT INTO tblboard(bno, title, content, writer) VALUES (seq_tblboard_bno.nextval, #{title}, #{content}, #{writer})
+	</insert>
 
 </mapper>

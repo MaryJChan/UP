@@ -13,6 +13,7 @@
 	<typeAliases>
 		<typeAlias type="com.up.dto.MemberDTO"  alias="mDTO"/>
 		<typeAlias type="com.up.dto.ProductDTO"  alias="pDTO"/>
+		<typeAlias type="com.up.dto.BoardDTO"  alias="bDTO"/>
 	</typeAliases>
 	
 	<!-- DB접속 정보 셋팅 -->

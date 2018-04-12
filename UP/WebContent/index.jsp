@@ -55,32 +55,35 @@
 		height: 100%;
 	}
 	.iu_pinkblue01 {
-		width: 1918px;
+		width: 100%;
 		height: 1000px;
 		background: url('image/up_main/IU_MAIN_REALBG.png') center 0 no-repeat;
 		position: relative;
 		margin: 0 auto;
 	}
+	.iu_pinkblue_hover {
+		width: 1144px;
+		height: 761px;
+		margin: 0 auto;
+		top: 2.69%;
+		position: relative;
+	}
 	.iu_pink_image {
 		width: 572px;
 		height: 761px;
-		background: url('image/up_main/IU_MAIN_PINK.png') 0 0  no-repeat;
 		position: absolute;
-		top: 27px;
-		left: 387px;			
+		left: 0;			
 	}
 
 	.iu_blue_image {
 		width: 572px;
 		height: 761px;
-		background: url('image/up_main/IU_MAIN_BLUE.png') 0 0  no-repeat;
 		position: absolute;
-		top: 27px;
-		right: 387px;			
+		right: 0;			
 	}
 	.pinkblue01_drop {
 		width: 228px;
-		height: 740.5px;
+		height: 740px;
 		background-color: #FFF;
 		padding: 10px;
 		border: 1px solid #dfdfdf;		
@@ -89,6 +92,7 @@
 		z-index: -1;	
 	}	
 	#pink_drop {
+		display: none;
 		left: 0px;		
 	}
 	#pink_drop  a {
@@ -117,19 +121,22 @@
 		border-bottom: 1px solid #dfdfdf;
 	}
 	#blue_drop {
+		display: none;
 		right: 0px;			
 	}
 	#blue_drop  a {
 		width: 226px;
 	}
 	.iu_pink_image:hover #pink_drop{
+		display: block;
 		z-index: 0;
 		left: -250px;
 		transition: 0.3s;
 	}
 	.iu_blue_image:hover #blue_drop {
+		display: block;
 		z-index: 0;
-		right: -250px;
+		right: -249px;
 		transition: 0.3s;
 	}
 	.drop_goods {
@@ -439,30 +446,32 @@
 		<div class="conWrap">
 			<div class="wrap">
 				<div class="iu_pinkblue01">
-					<div class="iu_pink_image">
-						<div class="pinkblue01_drop" id="pink_drop">
-							<div id="pink_drop_title">P I N K</div>							
-								<div class="drop_goods" id="pink_MTM">
-									<div class="total_pinkblue_drop"><a href="#" class="drop_name">UNI 등판 레터로고 맨투맨</a></div>
-                                	<div class="total_pinkblue_drop"><a href="#" class="drop_sale">69,000원</a></div>	
+					<div class="iu_pinkblue_hover">
+						<div class="iu_pink_image">
+							<div class="pinkblue01_drop" id="pink_drop">
+								<div id="pink_drop_title">P I N K</div>							
+									<div class="drop_goods" id="pink_MTM">
+										<div class="total_pinkblue_drop"><a href="#" class="drop_name">UNI 등판 레터로고 맨투맨</a></div>
+	                                	<div class="total_pinkblue_drop"><a href="#" class="drop_sale">69,000원</a></div>	
+									</div>
+								<div class="drop_goods" id="coral_SHOES">
+									<div class="total_pinkblue_drop"><a href="#" class="drop_name">WL840WF</a></div>
+	                               	<div class="total_pinkblue_drop"><a href="#" class="drop_sale">129,000원</a></div>
 								</div>
-							<div class="drop_goods" id="coral_SHOES">
-								<div class="total_pinkblue_drop"><a href="#" class="drop_name">WL840WF</a></div>
-                               	<div class="total_pinkblue_drop"><a href="#" class="drop_sale">129,000원</a></div>
 							</div>
 						</div>
-					</div>
-					<div class="iu_blue_image">
-						<div class="pinkblue01_drop" id="blue_drop">
-							<div id="blue_drop_title">B L U E</div>							
-							<div class="drop_goods" id="blue_HOOD">
-								<div class="total_pinkblue_drop"><a href="#" class="drop_name">UNI 사이드 레터로고 후드티</a></div>
-	                            <div class="total_pinkblue_drop" class="drop_sale"><a href="#" class="drop_sale">79,000원</a></div>	
+						<div class="iu_blue_image">
+							<div class="pinkblue01_drop" id="blue_drop">
+								<div id="blue_drop_title">B L U E</div>							
+								<div class="drop_goods" id="blue_HOOD">
+									<div class="total_pinkblue_drop"><a href="#" class="drop_name">UNI 사이드 레터로고 후드티</a></div>
+		                            <div class="total_pinkblue_drop" class="drop_sale"><a href="#" class="drop_sale">79,000원</a></div>	
+								</div>
+								<div class="drop_goods" id="blue_SHOES">
+									<div class="total_pinkblue_drop"><a href="#" class="drop_name">WL840WS</a></div>
+		                            <div class="total_pinkblue_drop"><a href="#" class="drop_sale">129,000원</a></div>
+								</div>								
 							</div>
-							<div class="drop_goods" id="blue_SHOES">
-								<div class="total_pinkblue_drop"><a href="#" class="drop_name">WL840WS</a></div>
-	                            <div class="total_pinkblue_drop"><a href="#" class="drop_sale">129,000원</a></div>
-							</div>								
 						</div>
 					</div>
 				</div>

@@ -906,7 +906,7 @@
 					</table>
 					<div class="conBox mt20 mb40">
 						<div class="fl">
-							<a href="#" class="btn_gray">								
+							<a href="../index/index.bizpoll" class="btn_gray">								
 							</a>
 						</div>
 						<div class="fr">

@@ -32,9 +32,9 @@
 		width: 730px;
 		text-align: center;
 		font-size: 14px;
-		border-top: 1px solid #e5e5e5;
-		border-bottom: 1px solid #e5e5e5;
-		color: #9d9d9d;
+		border-top: 1px solid #ccc;
+		border-bottom: 1px solid #ccc;
+		color: #555;
 		font-weight: bold;
 	}
 	#bdtail_header2 {
@@ -47,7 +47,7 @@
 		float: right;
 	}
 	#bdtail_header2 {
-		border-bottom: 1px dotted #e5e5e5;
+		border-bottom: 1px dotted #ccc;
 	}	
 	#bdtail_contents {
 		padding: 10px 10px 50px 10px;
@@ -56,7 +56,7 @@
 	#bdtail_comment_wrap {
 		position: relative;
 		padding: 15px 0;
-		border-bottom: 1px solid #e5e5e5;
+		border-bottom: 1px solid #ccc;
 		background-color: #f4f4f4;
 	}
 	#bdtail_comment_write {
@@ -75,15 +75,18 @@
 		text-align: center;
 	}
 	#bdtail_registration_img {
-		height: 55px;
-		position: absolute;		
+		height: 52px;		
+		position: absolute;
 		right: 0px;
 		top: 0px;
 	}
 	#bdtail_registration_btn {
 		display: inline-block;
-		width: 58px;
-		height: 55px;
+		width: 55px;
+		height: 52px;
+		position: absolute;
+		right: 0px;
+		top: 3px;
 	}	
 	#bdtail_footer {
 		padding: 10px;
@@ -96,10 +99,10 @@
 	#bdtail_option {
 		width: 100%;
 		height: 38px;
-		border-bottom: 2px solid #e5e5e5;
+		border-bottom: 2px solid #ccc;
 	}
 	.commend_registration_wrap {
-		border-bottom: 1px dotted #e5e5e5;		
+		border-bottom: 1px dotted #ccc;		
 	}
 	.command_registration_title_wrap:first-child {
 		position: relative;
@@ -124,7 +127,7 @@
 		bottom: 0;
 	}
 	.reply_registration_wrap {
-		border-bottom: 1px dotted #e5e5e5;		
+		border-bottom: 1px dotted #ccc;		
 		position: relative;
 	}
 	#reply_check {
