@@ -21,7 +21,9 @@ public class BoardDetailAction implements Action{
 		BoardDTO bDto = null;
 		
 		int bno = Integer.parseInt(request.getParameter("bno"));
+		int hits = Integer.parseInt(request.getParameter("hits"));
 		System.out.println("게시글 번호 : " + bno);
+		System.out.println("조회수 : " + hits);
 		
 		BoardDAO bDao = BoardDAO.getInstance();
 		bDto = bDao.boardDetail(bno);

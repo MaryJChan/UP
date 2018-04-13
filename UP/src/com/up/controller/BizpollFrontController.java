@@ -19,7 +19,6 @@ import com.up.action.BoardRegisterStoreAction;
 import com.up.action.BoardRegisterViewAction;
 import com.up.action.BoardUpdateAction;
 import com.up.action.BoardUpdateViewAction;
-import com.up.action.IdOlapCkAction;
 import com.up.action.IndexAction;
 import com.up.action.LoginAction;
 import com.up.action.LoginAjaxCkAction;
@@ -77,9 +76,6 @@ public class BizpollFrontController extends HttpServlet {
 		} else if (command.equals("/member.bizpoll")) {
 			action = new MemberAction();
 			forward = action.excute(request, response);
-		} else if (command.equals("/id_olap_ck.bizpoll")) {
-			action = new IdOlapCkAction();			
-			forward = action.excute(request, response);
 		} else if (command.equals("/up_constract.bizpoll")) {
 			action = new UPConstractAction();			
 			forward = action.excute(request, response);
@@ -107,7 +103,7 @@ public class BizpollFrontController extends HttpServlet {
 		} else if (command.equals("/boardregisterstore.bizpoll")) {
 			action = new BoardRegisterStoreAction();			
 			forward = action.excute(request, response);
-		} else if (command.equals("/boraddetail.bizpoll")) {
+		} else if (command.equals("/boarddetail.bizpoll")) {
 			action = new BoardDetailAction();			
 			forward = action.excute(request, response);
 		} else if (command.equals("/boardupdateview.bizpoll")) {

@@ -608,7 +608,8 @@ a:link, a:visited {
 							if (data.flag == "1") {
 								$("#login_id").val(data.id);
 								$("#login_pw").val(data.pw);
-								$("#frm_login").submit();
+								location.reload();
+								/* $("#frm_login").submit(); */
 							} else if (data.flag == "0") {
 								$("#pw_error").text("ID 또는 비밀번호가 틀렸습니다.").css("display", "block");
 							}
@@ -750,7 +751,6 @@ a:link, a:visited {
 		</div>
 	</div>
 	<div id="myModal" class="modal">
-		Modal content
 		<div class="modal-content">
 			<span class="close">&times;</span>
 			<div id="wrap">

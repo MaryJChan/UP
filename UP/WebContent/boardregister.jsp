@@ -19,7 +19,7 @@
 		color: #d60013;
 		font-family: Tahoma, Helvetica;
 		letter-spacing: -1px;
-		padding-top: 100px;
+		padding-top: 70px;
 		padding-bottom: 30px;		
 		text-align: center;
 	}
@@ -43,13 +43,14 @@
 	}
 	#bdregister_title {
 		display: inline-block;
-		width: 250px;
+		width: 236px;
 		height: 20px;
 		font-size: 13px;
 		border: 0;
 		position: absolute;
-		top: 10px;
+		top: 4px;
 		outline: none;
+		padding: 7px;
 	}
 	#bdregister_category_wrap {
 		width: 750px;
@@ -143,10 +144,14 @@
 		height: 40px;
 		color: white;
 	}
+	#bdregister_tail_wrap {
+		padding-bottom: 30px;
+	}
 </style>
 <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
+		$("#bdregister_title").focus();
 		$("#bdregister_title").val("");
 		$("#bdregister_content").val("");
 		$("#bdregister_store").on("click", function(){
@@ -188,12 +193,14 @@
 				<textarea name="bdregister_content" id="bdregister_content" placeholder="내용을 입력하세요."></textarea>
 			</div>
 		</form>
-		<span id="bdregister_cancle_wrap" class="bdregister_btn_wrap">
-			<a href="board.bizpoll" id="bdregister_cancle" >취  소</a>
-		</span>
-		<span id="bdregister_store_wrap" class="bdregister_btn_wrap">
-			<a href="#" id="bdregister_store">등  록</a>
-		</span>		
+		<div id="bdregister_tail_wrap">
+			<span id="bdregister_cancle_wrap" class="bdregister_btn_wrap">
+				<a href="board.bizpoll" id="bdregister_cancle" >취  소</a>
+			</span>
+			<span id="bdregister_store_wrap" class="bdregister_btn_wrap">
+				<a href="#" id="bdregister_store">등  록</a>
+			</span>		
+		</div>
 	</div>
 </body>
 </html>

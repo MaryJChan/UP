@@ -12,6 +12,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
 import com.up.dto.BoardDTO;
+import com.up.dto.CriteriaDTO;
 import com.up.mybatis.SqlMapConfig;
 
 public class BoardDAO {
@@ -36,11 +37,11 @@ public class BoardDAO {
 		return instance;
 	}
 	
-	public List<BoardDTO> listAll() {
+	public List<BoardDTO> listAll(CriteriaDTO criDto) {
 		sqlSession = sqlSessionFactory.openSession();
 		List<BoardDTO> list = new ArrayList<>();
 		try {
-			list = sqlSession.selectList("boardListAll");
+			list = sqlSession.selectList("listCriteria", criDto);
 			System.out.println();
 			for (BoardDTO boardDTO : list) {
 				System.out.println("번호 : " + boardDTO.getBno() + "  작성자 : " + boardDTO.getWriter() + "  제목 : " + boardDTO.getTitle() + "  내용 : " + boardDTO.getContent() + "  조회수 : " + boardDTO.getHits() + "  작성일 : " + boardDTO.getRegdate());
@@ -54,6 +55,18 @@ public class BoardDAO {
 		return list;
 	}
 	
+	public int totalCount(CriteriaDTO criDto) {
+		sqlSession = sqlSessionFactory.openSession();
+		try {
+			result = sqlSession.selectOne("countPaging", criDto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			sqlSession.close();
+		}
+		
+		return result;
+	}	
 	public int boardStore(BoardDTO bDto) {
 		sqlSession = sqlSessionFactory.openSession();
 		try {

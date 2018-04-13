@@ -32,35 +32,36 @@
 		font-family: Tahoma, Helvetica;
 		letter-spacing: -1px;
 		padding-top: 60px;
+		text-align: center;
+		padding-bottom: 30px;
 	}
 	.faqs_search {
-		padding: 20px;
-		background: #eee;
 		margin: 22px 0 30px 0;
 		line-height: 30px;
-		border: 1px solid #ddd;
 		position: relative;
 	}
 	#SearchWd {
-		width: 447px;
-		height: 30px;
-		line-height: 30px;
+		padding-left: 5px;
+		width: 145px;
+		height: 25px;
+		line-height: 25px;
 		background: #fff;
-		border: 1px solid #e51130;
+		border: 1px solid #ccc;
 		font-size: 11px;
-		margin-left: 100px;
 		vertical-align: middle;
+		outline: none;
+		position: absolute;
+		top: -10px;
 	}
 	#search_btn {
-		width: 60px;
-		height: 32px;
+		width: 50px;
+		height: 27px;
 		position: absolute;
 		background-color: #e51130;
-		top: 20px;
-		right: 120px;
+		left: 151px;
 		color: white;
 		text-align: center;
-		line-height: 30px;
+		line-height: 27px;
 		border-radius: 2px;
 	}
 	.board_box {
@@ -141,6 +142,7 @@
 	.pagination a {
 		color: #666;
 	    padding: 8px 16px;
+	    border-radius: 2px;
 	    /* transition: background-color .3s; */
 	}
 	/* .pagination a.active {
@@ -151,38 +153,63 @@
 		width: 740px;
 		height: 30px;
 	}
-	#board_write_button {
+	.board_write_btn {
 		width: 70px;
-		height: 20px;
-		line-height: 20px;
+		height: 25px;
+		line-height: 25px;
 		display: inline-block;
 		float: right;
 		font-size: 12px;
 		text-align: center;
-		border: 1px solid #ccc;
-		border-radius: 3px;
-		color: #666;
+		border: 1px solid #e51130;
+		background-color: #e51130;
+		border-radius: 2px;
+		color: white;
+	}
+	.active {
+		background-color: #e51130;
+		color: white!important;
+	}
+	#search_board {
+		display: inline-block;
+	}
+	#board_tail_wrap {
+		padding: 20px 5px 0 5px;
+		height: 27px;
+	}
+	#search_select {
+		height: 27px;
+	}
+	#board_category_wrap {
+		height: 27px;
+		padding: 0 0 10px 5px;
+	}
+	#board_category {
+		height: 27px;
 	}
 </style>
 
 <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
 <script type="text/javascript">
-	
+	$(document).ready(function(){
+		$("#nologin_write").on("click", function(){
+			$("#myModal").css("display", "block");
+		});
+	});
 </script>
 </head>
 <body>
 	<div id="wrap_board">
-		<h1 class="title_r">게시판</h1>
-		<div class="faqs_search">
-			<form action="" name="search_board" id="search_board" method="GET">
-				<input type="text" name="SearchWd" id="SearchWd" class="sr_input">
-			</form>
-			<a href="#"  id="search_btn">검색</a>
-		</div>
-		<div class="board_box">
-			<div id= "board_write">
-				<a href="boardregisterview.bizpoll"  id="board_write_button">글쓰기</a>
-			</div>			
+		<h1 class="title_r">Q&A 게시판</h1>	
+		<div id="board_category_wrap">			
+			<select name="board_category" id="board_category">
+				<option value>카테고리 선택</option>
+				<option value="상품 문의">상품 문의</option>
+				<option value="배송 문의">배송 문의택</option>
+				<option value="기타 문의">기타 문의</option>
+			</select>
+		</div>	
+		<div class="board_box">			
 			<div id="board_attr">
 				<span id="board_num" class="board_attr_option">번 호</span>
 				<span class="share_attr">|</span>
@@ -199,7 +226,7 @@
 					<span class="board_view_a a_boarder_num">
 						${list.bno}
 					</span>
-					<a href="boraddetail.bizpoll?bno=${list.bno}" class="board_view_a a_boarder_title" >
+					<a href="boarddetail.bizpoll?bno=${list.bno}&hits=${list.hits}" class="board_view_a a_boarder_title" >
 						${list.title}
 					</a>
 					<a href="#" class="board_view_a a_boarder_user">
@@ -214,15 +241,47 @@
 				</div>
 			</c:forEach>
 		</div>
+		
+		<div id="board_tail_wrap">
+			<span>
+				<select id="search_select" name="search_select">
+					<option class="select_value"  value="제목">제목</option>
+					<option class="select_value"  value="작성자">작성자</option>
+					<option class="select_value"  value="내용">내용</option>
+					<option class="select_value"  value="제목+내용">제목+내용</option>
+				</select>
+			</span>
+			<span class="faqs_search">
+				<form action="" name="search_board" id="search_board" method="GET">
+					<input type="text" name="SearchWd" id="SearchWd" class="sr_input">
+				</form>
+				<a href="#"  id="search_btn">검색</a>
+			</span>
+			<span id= "board_write">
+				<c:choose>
+					<c:when test="${empty sessionScope.loginUser}">
+						<a href="#"  id="nologin_write" class="board_write_btn">글쓰기</a>
+					</c:when>
+					<c:otherwise>
+						<a href="boardregisterview.bizpoll"  id="board_write_button" class="board_write_btn">글쓰기</a>
+					</c:otherwise>
+				</c:choose>
+			</span>			
+			
+		</div>
+		
 		<div class="pagination">
-			<a href="#">&laquo;</a>
-			<a href="#">1</a>
-			<a href="#">2</a>
-			<a href="#">3</a>
-			<a href="#">4</a>
-			<a href="#">5</a>
-			<a href="#">6</a>
-			<a href="#">&raquo;</a>
+			<c:if test="${pageMaker.prev}">
+				<a href="board.bizpoll?page=${pageMaker.startPage-1}">&laquo;</a>
+			</c:if>
+			<!-- ${pageMaker.startPage}값부터 ${pageMaker.endPage}값까지 반복-->
+			<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
+				<%-- <c:out value="${pageMaker.criDto.page == idx? 'class=active' : ' '}"/> --%><!-- li태그 필요 -->
+				<a href="board.bizpoll?page=${idx}"<c:out value="${pageMaker.criDto.page == idx? 'class=active' : ' '}"/>>${idx}</a>
+			</c:forEach>
+			<c:if test="${pageMaker.next}">
+				<a href="board.bizpoll?page=${pageMaker.endPage+1}">&raquo;</a>
+			</c:if>
 		</div>
 	</div>
 

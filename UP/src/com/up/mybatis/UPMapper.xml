@@ -56,5 +56,30 @@
 		DELETE FROM tblboard
 		WHERE bno = #{bno}
 	</delete>
+	
+	<select id="countPaging" resultType="int">
+		<!-- 부등호나 느낌표가 들어갈때에는 CDATA를 써줘야함(태그가 아님을 명시) -->
+		<![CDATA[
+			SELECT count(bno) FROM tblboard
+			WHERE bno > 0
+		]]>		
+	</select>
+	
+	<select id="listCriteria" resultType="bDTO">
+		<![CDATA[
+			SELECT * 
+			FROM (
+				SELECT rownum rnum,
+				a.*
+				FROM (
+					SELECT *
+					FROM tblboard
+					WHERE bno > 0
+					ORDER BY bno desc
+				) a
+			)
+			WHERE rnum BETWEEN #{pageStart} AND #{perPageNum}
+		]]>
+	</select>
 
 </mapper>

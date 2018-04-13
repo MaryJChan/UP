@@ -32,7 +32,7 @@ public class BoardUpdateAction implements Action{
 		
 		ActionForward forward = new ActionForward();
 		forward.setPath(url);
-		forward.setRedirect(false);		
+		forward.setRedirect(true);		
 
 		return forward;
 	}
