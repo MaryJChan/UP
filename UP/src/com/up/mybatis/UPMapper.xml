@@ -52,6 +52,12 @@
 		WHERE bno = #{bno}
 	</update>
 	
+	<update id="boardhitsupdate" parameterType="bDTO">
+		UPDATE tblboard SET
+		hits = #{hits}
+		WHERE bno = #{bno}
+	</update>
+	
 	<delete id="boarddelete" parameterType="Integer">
 		DELETE FROM tblboard
 		WHERE bno = #{bno}

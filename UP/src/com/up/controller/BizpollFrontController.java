@@ -12,22 +12,20 @@ import javax.servlet.http.HttpServletResponse;
 import com.up.action.Action;
 
 import com.up.action.ActionForward;
-import com.up.action.BoardAction;
-import com.up.action.BoardDeleteAction;
-import com.up.action.BoardDetailAction;
-import com.up.action.BoardRegisterStoreAction;
-import com.up.action.BoardRegisterViewAction;
-import com.up.action.BoardUpdateAction;
-import com.up.action.BoardUpdateViewAction;
-import com.up.action.IndexAction;
-import com.up.action.LoginAction;
-import com.up.action.LoginAjaxCkAction;
-import com.up.action.LogoutAjaxAction;
-import com.up.action.MemAjaxAction;
-import com.up.action.MemberAction;
-import com.up.action.MemberInsertAction;
-import com.up.action.SessionLoginAction;
-import com.up.action.UPConstractAction;
+import com.up.action.board.BoardAction;
+import com.up.action.board.BoardDeleteAction;
+import com.up.action.board.BoardDetailAction;
+import com.up.action.board.BoardRegisterStoreAction;
+import com.up.action.board.BoardRegisterViewAction;
+import com.up.action.board.BoardUpdateAction;
+import com.up.action.board.BoardUpdateViewAction;
+import com.up.action.index.IndexAction;
+import com.up.action.login.LoginAjaxCkAction;
+import com.up.action.login.LogoutAjaxAction;
+import com.up.action.member.MemAjaxAction;
+import com.up.action.member.MemberAction;
+import com.up.action.member.MemberInsertAction;
+import com.up.action.member.UPConstractAction;
 
 /**
  * Servlet implementation class BizpollFrontController
@@ -70,9 +68,6 @@ public class BizpollFrontController extends HttpServlet {
 		if(command.equals("/index.bizpoll")) {
 			action = new IndexAction();						// action은 인터페이스: 다형성을 이용해서 해당 액션기능을 action에 넣는다
 			forward = action.excute(request, response);	// 공통 분기작업에 보낼 forward
-		} else if (command.equals("/login.bizpoll")) {
-			action = new LoginAction();
-			forward = action.excute(request, response);
 		} else if (command.equals("/member.bizpoll")) {
 			action = new MemberAction();
 			forward = action.excute(request, response);
@@ -87,9 +82,6 @@ public class BizpollFrontController extends HttpServlet {
 			forward = action.excute(request, response);
 		} else if (command.equals("/loginck.bizpoll")) {
 			action = new LoginAjaxCkAction();			
-			forward = action.excute(request, response);
-		} else if (command.equals("/sessionlogin.bizpoll")) {
-			action = new SessionLoginAction();			
 			forward = action.excute(request, response);
 		} else if (command.equals("/logout.bizpoll")) {
 			action = new LogoutAjaxAction();			

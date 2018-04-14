@@ -121,5 +121,18 @@ public class BoardDAO {
 		}
 		return result;
 	}
+
+	public int boardHits(BoardDTO bDto) {
+		sqlSession = sqlSessionFactory.openSession();
+		try {
+			result = sqlSession.update("boardhitsupdate", bDto);
+			sqlSession.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			sqlSession.close();
+		}
+		return result;
+	}
 	
 }

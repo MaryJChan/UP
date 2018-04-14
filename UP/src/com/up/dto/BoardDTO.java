@@ -13,8 +13,14 @@ public class BoardDTO {
 	
 	public BoardDTO(){
 		
-	}		
+	}			
 	
+	public BoardDTO(int bno, int hits) {
+		super();
+		this.bno = bno;
+		this.hits = hits;
+	}
+
 	public BoardDTO(int bno, String title, String content) {
 		super();
 		this.bno = bno;

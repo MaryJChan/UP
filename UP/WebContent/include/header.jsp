@@ -782,7 +782,7 @@ a:link, a:visited {
 							</form>
 						</div>
 						<div id="login_help">
-							<a href="#">회원가입</a>
+							<a href="up_constract.bizpoll">회원가입</a>
 							<div class="right">
 								<a href="#">계정 찾기</a> <span class="right_bar"></span> <a
 									href="#">비밀번호 재설정</a>

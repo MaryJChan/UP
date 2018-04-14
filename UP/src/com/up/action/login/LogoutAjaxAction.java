@@ -1,4 +1,4 @@
-package com.up.action;
+package com.up.action.login;
 
 import java.io.IOException;
 
@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
+
+import com.up.action.Action;
+import com.up.action.ActionForward;
 
 public class LogoutAjaxAction implements Action{
 

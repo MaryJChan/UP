@@ -1,4 +1,4 @@
-package com.up.action;
+package com.up.action.member;
 
 import java.io.IOException;
 
@@ -6,6 +6,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.up.action.Action;
+import com.up.action.ActionForward;
 import com.up.dao.MemberDAO;
 import com.up.dto.MemberDTO;
 
@@ -48,9 +50,9 @@ public class MemberInsertAction implements Action{
 		int result = mDao.memInsert(mDto);
 		
 		if(result > 0) {
-			url = "index.bizpoll";
+			url = "index/index.bizpoll";
 		} else {
-			url = "member.bizpoll";
+			url = "member/member.bizpoll";
 		}
 		
 		ActionForward forward = new ActionForward();

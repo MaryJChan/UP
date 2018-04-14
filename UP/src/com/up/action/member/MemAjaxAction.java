@@ -1,4 +1,4 @@
-package com.up.action;
+package com.up.action.member;
 
 import java.io.IOException;
 
@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONObject;
 
+import com.up.action.Action;
+import com.up.action.ActionForward;
 import com.up.dao.MemberDAO;
 
 public class MemAjaxAction implements Action{

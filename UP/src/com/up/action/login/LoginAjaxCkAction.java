@@ -1,4 +1,4 @@
-package com.up.action;
+package com.up.action.login;
 
 import java.io.IOException;
 
@@ -10,6 +10,8 @@ import javax.websocket.Session;
 
 import org.json.simple.JSONObject;
 
+import com.up.action.Action;
+import com.up.action.ActionForward;
 import com.up.dao.MemberDAO;
 import com.up.dto.MemberDTO;
 

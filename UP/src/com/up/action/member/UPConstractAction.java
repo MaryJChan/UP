@@ -1,4 +1,4 @@
-package com.up.action;
+package com.up.action.member;
 
 import java.io.IOException;
 
@@ -6,17 +6,20 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class BoardRegisterViewAction implements Action{
+import com.up.action.Action;
+import com.up.action.ActionForward;
+
+public class UPConstractAction implements Action{
 
 	@Override
 	public ActionForward excute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String url = "boardregister.jsp";		
-
+		String url = "member/UP_Constract.jsp";
+		
 		ActionForward forward = new ActionForward();
 		forward.setPath(url);
-		forward.setRedirect(false);		
-
+		forward.setRedirect(false);
+		
 		return forward;
 	}
 

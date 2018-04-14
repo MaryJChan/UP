@@ -1,4 +1,4 @@
-package com.up.action;
+package com.up.action.board;
 
 import java.io.IOException;
 import java.util.List;
@@ -7,6 +7,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.up.action.Action;
+import com.up.action.ActionForward;
 import com.up.dao.BoardDAO;
 import com.up.dto.BoardDTO;
 import com.up.dto.CriteriaDTO;
@@ -17,7 +19,7 @@ public class BoardAction implements Action{
 	@Override
 	public ActionForward excute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String url = "board.jsp";
+		String url = "board/board.jsp";
 		
 		CriteriaDTO criDto = new CriteriaDTO();
 		int page = 1;

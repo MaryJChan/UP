@@ -1,4 +1,4 @@
-package com.up.action;
+package com.up.action.board;
 
 import java.io.IOException;
 
@@ -6,6 +6,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.up.action.Action;
+import com.up.action.ActionForward;
 import com.up.dao.BoardDAO;
 import com.up.dto.BoardDTO;
 
@@ -18,7 +20,7 @@ public class BoardRegisterStoreAction implements Action{
 		
 		String title = request.getParameter("bdregister_title");
 		String content = request.getParameter("bdregister_content");
-		String writer = "dhfjswl3";
+		String writer = request.getParameter("bdregister_writer");
 		System.out.println("제목 : " + title + "  내용 : " + content + "  작성자 : " + writer);
 				
 		BoardDAO bDao = BoardDAO.getInstance();
