@@ -59,9 +59,13 @@
 	}
 	#bdtail_comment_wrap {
 		position: relative;
-		padding: 15px 0;
+		padding: 0 0 15px 0;
+		border-top: 1px solid #ccc;
 		border-bottom: 1px solid #ccc;
 		background-color: #f4f4f4;
+	}
+	#bdreply_store {
+		padding-top: 15px;
 	}
 	#bdtail_comment_write {
 		width: 646px;
@@ -97,6 +101,7 @@
 	#bdtail_footer {
 		padding: 10px;
 		float: left;
+		display: none;
 	}
 	#bdtail_footer2 {
 		padding: 10px;
@@ -112,7 +117,7 @@
 	}
 	.command_registration_title_wrap:first-child {
 		position: relative;
-		padding: 0px 10px 10px 10px;
+		padding: 15px 10px 10px 10px;
 	}
 	.command_registration_title_wrap {
 		padding: 15px 10px 10px 10px;
@@ -163,9 +168,6 @@
 	}
 	#bdtail_hits{
 		color: #777;
-	}
-	#command_line {
-		margin-top: 15px;
 	}
 	/* 모달 창  */
 	/* The board_modal (background) */
@@ -244,37 +246,46 @@
 	}
 </style>
 <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
- <script type="text/javascript">	
- 	/* $(document).ready(function(){
- 		$("#bdtail_btn_delete").on("click", function() {
- 			// 새창의 크기
- 			cw = 550;
- 			ch = 300;
- 			// 스크린의 크기
- 			sw = screen.availWidth;
- 			sh = screen.availHeight
- 			// 팝업 창의 포지션(가운데 위치)
- 			px = (sw-cw)/2;
- 			py = (sw-ch)/2;
- 			
- 			boarddelete.bizpoll?bno=${boardDetailList.bno}
- 			var url = "boarddeletewindow.bizpoll?bno=${boardDetailList.bno}";
- 			window.open(url, "_blank_1", "toolbar=no, menubar=no, status = no, scrollbars=no, left=" + px + ",top=" + py + ",width=" + cw + ",height=" + ch);
- 		}); */
- 		
- 		/* // 수정 버튼 클릭
- 		$("#bdtail_btn_update").on("click", function(){
- 			formObj.attr("action", "boardupdateview.bizpoll?bno=${boardDetailList.bno}")
- 			formObj.attr("method", "get");
- 			formObj.submit();
- 		});
- 	// 수정 버튼 클릭
- 		$("#bdtail_btn_delete").on("click", function(){
- 			formObj.attr("action", "boarddeleteview.bizpoll?bno=${boardDetailList.bno}")
- 			formObj.attr("method", "get");
- 			formObj.submit();
- 		}); 
- 	});*/
+<script type="text/javascript">
+	$(document).ready(function(){		
+		var boardWriter = '<%=request.getAttribute("writer") %>';
+		var sessionUser = '<%=session.getAttribute("sid") %>';
+
+		if(boardWriter == sessionUser) {
+			$("#bdtail_footer").css("display", "block");
+		} else {
+			$("#bdtail_footer").css("display", "none");
+		}
+	});		
+	
+	$(document).on("click", "#bdtail_registration_img", function(){	
+		var bno = '<%=request.getAttribute("bno") %>';				
+		var sessionUser = '<%=session.getAttribute("sid") %>';
+		var replyComment = $("#bdtail_comment_write").val();
+		
+		$.ajax({
+			// 가야할 서블릿 지정
+			url : "boardreplystore.bizpoll",
+			// 방식 지정 [GET | POST]
+			type : "POST",
+			// 타입 지정
+			dataType : "JSON",
+			// 쿼리스트링과 같은 =에 공백X     //data를 dataTpye가방에 담아 type방식으로 url로 보냄
+			data : "bno=" + bno + "&sessionUser=" + sessionUser + "&replyComment=" + replyComment,
+			//성공했을때	
+			success : function(data) {
+				if (data.flag == "1") {
+					$("#bdreply_store").submit();
+				} else if (data.flag == "0") {
+					$("#pw_error").text("ID 또는 비밀번호가 틀렸습니다.").css("display", "block");
+				}
+			},
+			//실패했을떄
+			error : function(data) {
+				alert("System Error!!!");
+			}
+		});			
+	});			
 </script>
 
 </head>
@@ -323,39 +334,43 @@
 			${boardDetailList.content}
 		</div>
 		<div id="bdtail_comment_wrap">
-			<div class="commend_registration_wrap">
-				<div class="command_registration_title_wrap">
-					<a href="#" class="commend_user">
-						dddd
-					</a>
-					<span class="command_date">
-						2018-04-10 14:20
-					</span>
-					<a href="#" class="command_reply">
-						답글
-					</a>
+			<c:forEach items="${boardReply}" var="reply">
+				<div class="commend_registration_wrap">
+					<div class="command_registration_title_wrap">
+						<a href="#" class="commend_user">
+							${reply.sessionUser}
+						</a>
+						<span class="command_date">
+							2018-04-10 14:20
+						</span>
+						<a href="#" class="command_reply">
+							답글
+						</a>
+					</div>
+					<div class="command_registration_contents">
+						${reply.replyComment}
+					</div>
+				</div>			
+				<div class="reply_registration_wrap">
+					<div class="reply_registration_title_wrap">
+						<span id="reply_check">ㄴ</span>
+						<a href="#" class="reply_user">
+							dddddd
+						</a>
+						<span class="reply_date">
+							2018-04-10 14:22
+						</span>					
+					</div>
+					<div class="reply_registration_contents">
+						저두영
+					</div>
 				</div>
-				<div class="command_registration_contents">
-					좋네용
-				</div>
-			</div>
-			<div class="reply_registration_wrap">
-				<div class="reply_registration_title_wrap">
-					<span id="reply_check">ㄴ</span>
-					<a href="#" class="reply_user">
-						dddddd
-					</a>
-					<span class="reply_date">
-						2018-04-10 14:22
-					</span>					
-				</div>
-				<div class="reply_registration_contents">
-					저두영
-				</div>
-			</div>
+			</c:forEach>
 			<div id="command_line">
-				<form action="" method="" name=""  id="">
-					<textarea name="bdtail_comment_write" id="bdtail_comment_write"></textarea>
+				<form action="boarddetail.bizpoll" method="GET" name="bdreply_store"  id="bdreply_store">
+					<textarea name="bdtail_comment_write" id="bdtail_comment_write"></textarea>					
+					<input type="hidden" name="bno"  value="${boardDetailList.bno}">
+					<input type="hidden" name="hits"  value="${boardDetailList.hits}">
 				</form>
 				<span id="bdtail_registration">
 					<a href="#" id="bdtail_registration_btn">등록
@@ -404,6 +419,7 @@
 		</div>
 	</div>
 	<script>
+		
 		// Get the board_modal
 		var board_modal = document.getElementById("myboard_modal");
 

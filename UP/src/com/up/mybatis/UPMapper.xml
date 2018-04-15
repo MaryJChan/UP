@@ -38,7 +38,8 @@
 	</select>
 	
 	<insert id="boardstore" parameterType="bDTO">
-		INSERT INTO tblboard(bno, title, content, writer) VALUES (seq_tblboard_bno.nextval, #{title}, #{content}, #{writer})
+		INSERT INTO tblboard(bno, title, content, writer) 
+		VALUES (seq_tblboard_bno.nextval, #{title}, #{content}, #{writer})
 	</insert>
 	
 	<select id="boarddetailview" resultType="bDTO" parameterType="Integer">
@@ -86,6 +87,16 @@
 			)
 			WHERE rnum BETWEEN #{pageStart} AND #{perPageNum}
 		]]>
+	</select>
+	
+	<insert id="boardReplyStore" parameterType="rDTO">
+		INSERT INTO boardreply(rno, bno, sessionuser, replycomment)
+		VALUES (seq_boardreply_rno.nextval, #{bno}, #{sessionUser}, #{replyComment})
+	</insert>
+	
+	<select id="boardReplyView" resultType="rDTO">
+		SELECT * FROM boardreply
+		WHERE bno = #{bno}
 	</select>
 
 </mapper>

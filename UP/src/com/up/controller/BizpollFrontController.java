@@ -17,6 +17,7 @@ import com.up.action.board.BoardDeleteAction;
 import com.up.action.board.BoardDetailAction;
 import com.up.action.board.BoardRegisterStoreAction;
 import com.up.action.board.BoardRegisterViewAction;
+import com.up.action.board.BoardReplyAction;
 import com.up.action.board.BoardUpdateAction;
 import com.up.action.board.BoardUpdateViewAction;
 import com.up.action.index.IndexAction;
@@ -106,6 +107,9 @@ public class BizpollFrontController extends HttpServlet {
 			forward = action.excute(request, response);
 		} else if (command.equals("/boarddelete.bizpoll")) {
 			action = new BoardDeleteAction();			
+			forward = action.excute(request, response);
+		} else if (command.equals("/boardreplystore.bizpoll")) {
+			action = new BoardReplyAction();			
 			forward = action.excute(request, response);
 		}
 		// ======= 공통분기 작업 ======= //

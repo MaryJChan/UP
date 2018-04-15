@@ -50,9 +50,9 @@ public class MemberInsertAction implements Action{
 		int result = mDao.memInsert(mDto);
 		
 		if(result > 0) {
-			url = "index/index.bizpoll";
+			url = "index.bizpoll";
 		} else {
-			url = "member/member.bizpoll";
+			url = "member.bizpoll";
 		}
 		
 		ActionForward forward = new ActionForward();

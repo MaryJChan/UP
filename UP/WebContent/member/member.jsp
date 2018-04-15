@@ -506,14 +506,18 @@
 	});
 	
 	$(document).on("blur", "#PlaceHolder1_txtWebPwd", function(){
-		var mpw = $("#PlaceHolder1_txtWebPwd");
-		var tpw = $.trim(mpw.val());
+		var mpwcheck = $("#PlaceHolder1_txtWebPwdChk"),
+		 	   mpw = $("#PlaceHolder1_txtWebPwd");
+		var tpw = $.trim(mpw.val()),
+		       tpwcheck = $.trim(mpwcheck.val());
 		var regPass = /^.*(?=.{6,20})(?=.*[0-9])(?=.*[a-zA-Z]).*$/; // 6~20 자 이내 숫자 + 영문
 		
 		if(tpw=="") {
 			$("#mem_pw_error").text("비밀번호를 입력하지 않았습니다.").css("display","block");
 		} else if(!regPass.test(tpw)) { 	//정규식이 안맞을때만 돔
 			$("#mem_pw_error").text("6~20 자 이내 숫자 + 영문을 입력해주세요.").css("display","block");
+		} else if(tpw == tpwcheck){
+			$("#pwchk_error").css("display","none");
 		} else {
 			$("#mem_pw_error").css("display","none");
 		}

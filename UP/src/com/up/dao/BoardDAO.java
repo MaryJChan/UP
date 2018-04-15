@@ -42,7 +42,7 @@ public class BoardDAO {
 		List<BoardDTO> list = new ArrayList<>();
 		try {
 			list = sqlSession.selectList("listCriteria", criDto);
-			System.out.println();
+			System.out.println(list.size());
 			for (BoardDTO boardDTO : list) {
 				System.out.println("번호 : " + boardDTO.getBno() + "  작성자 : " + boardDTO.getWriter() + "  제목 : " + boardDTO.getTitle() + "  내용 : " + boardDTO.getContent() + "  조회수 : " + boardDTO.getHits() + "  작성일 : " + boardDTO.getRegdate());
 			}			

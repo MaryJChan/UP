@@ -1,6 +1,7 @@
 package com.up.action.board;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -9,7 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.up.action.Action;
 import com.up.action.ActionForward;
 import com.up.dao.BoardDAO;
+import com.up.dao.BoardReplyDAO;
 import com.up.dto.BoardDTO;
+import com.up.dto.BoardReplyDTO;
 
 public class BoardDetailAction implements Action{
 
@@ -18,7 +21,7 @@ public class BoardDetailAction implements Action{
 			throws ServletException, IOException {
 		String url = "board/boarddetail.jsp";		
 		
-		
+		List<BoardReplyDTO> list = null;
 		
 		int bno = Integer.parseInt(request.getParameter("bno"));
 		int hits = Integer.parseInt(request.getParameter("hits"))+1;
@@ -38,6 +41,15 @@ public class BoardDetailAction implements Action{
 		System.out.println("번호 : " + bDto.getBno() + "  제목 : " + bDto.getTitle() + "  내용" + bDto.getContent() + "  작성자 : " + bDto.getWriter() + "  조회수 : " + bDto.getHits() + "  작성일 : " + bDto.getRegdate());
 		
 		request.setAttribute("boardDetailList", bDto);
+		request.setAttribute("writer", bDto.getWriter());
+		request.setAttribute("bno", bDto.getBno());
+		
+		
+		System.out.println(bno);
+		BoardReplyDAO rDao = BoardReplyDAO.getInstance();
+		list = rDao.boardReplyView(bno);
+		
+		request.setAttribute("boardReply", list);
 		
 		ActionForward forward = new ActionForward();
 		forward.setPath(url);

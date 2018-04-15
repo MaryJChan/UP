@@ -574,54 +574,49 @@ a:link, a:visited {
 <script type="text/javascript">
 	// el태그는 자바 스크립트 사용[로그인시 flag값 받기]
 
-	$(document).on(
-			"click",
-			"#btn_login",
-			function() {
-				var id = $("#login_id").val();
-				var pw = $("#login_pw").val();
-				if (id == "") {
-					$("#login_id").focus();
-					$("#id_error").text("ID를 입력하지 않았습니다.").css("display",
-							"block").css("color", "red");
-					return false;
-				} else if (pw == "") {
-					$("#login_pw").focus();
-					$("#pw_error").text("비밀번호를 입력하지 않았습니다.").css("display",
-							"block").css("color", "red");
-					return false;
-				} else if (id != "" && pw != "") {
-					$("#id_error").css("display", "none");
-					$("#pw_error").css("display", "none");
-					//Ajax사용법
-					$.ajax({
-						// 가야할 서블릿 지정
-						url : "loginck.bizpoll",
-						// 방식 지정 [GET | POST]
-						type : "POST",
-						// 타입 지정
-						dataType : "JSON",
-						// 쿼리스트링과 같은 =에 공백X     //data를 dataTpye가방에 담아 type방식으로 url로 보냄
-						data : "id=" + id + "&pw=" + pw,
-						//성공했을때	
-						success : function(data) {
-							if (data.flag == "1") {
-								$("#login_id").val(data.id);
-								$("#login_pw").val(data.pw);
-								location.reload();
-								/* $("#frm_login").submit(); */
-							} else if (data.flag == "0") {
-								$("#pw_error").text("ID 또는 비밀번호가 틀렸습니다.").css("display", "block");
-							}
-						},
-						//실패했을떄
-						error : function(data) {
-							alert("System Error!!!");
-						}
-					});
+	$(document).on("click", "#btn_login",function() {
+		var id = $("#login_id").val();
+		var pw = $("#login_pw").val();
+		if (id == "") {
+			$("#login_id").focus();
+			$("#id_error").text("ID를 입력하지 않았습니다.").css("display", "block").css("color", "red");
+			return false;
+		} else if (pw == "") {
+			$("#login_pw").focus();
+			$("#pw_error").text("비밀번호를 입력하지 않았습니다.").css("display", "block").css("color", "red");
+			return false;
+		} else if (id != "" && pw != "") {
+			$("#id_error").css("display", "none");
+			$("#pw_error").css("display", "none");
+			//Ajax사용법
+			$.ajax({
+				// 가야할 서블릿 지정
+				url : "loginck.bizpoll",
+				// 방식 지정 [GET | POST]
+				type : "POST",
+				// 타입 지정
+				dataType : "JSON",
+				// 쿼리스트링과 같은 =에 공백X     //data를 dataTpye가방에 담아 type방식으로 url로 보냄
+				data : "id=" + id + "&pw=" + pw,
+				//성공했을때	
+				success : function(data) {
+					if (data.flag == "1") {
+						$("#login_id").val(data.id);
+						$("#login_pw").val(data.pw);
+						location.reload();
+						/* $("#frm_login").submit(); */
+					} else if (data.flag == "0") {
+						$("#pw_error").text("ID 또는 비밀번호가 틀렸습니다.").css("display", "block");
+					}
+				},
+				//실패했을떄
+				error : function(data) {
+					alert("System Error!!!");
 				}
-
 			});
+		}
+
+	});
 
 	$(document).on("blur", "#login_id", function() {
 		var id = $("#login_id");
@@ -734,7 +729,7 @@ a:link, a:visited {
 							<c:otherwise>
 								<li class="mr15"><a href="#" class="icon_login">로그인</a>
 									<p class="log_txt">
-										<a href="#">${sessionScope.loginUser.mid}님</a> / <a href="#" id="header_logout">로그아웃</a>
+										<a href="#" id="a_login">${sessionScope.loginUser.mid}님</a> / <a href="#" id="header_logout">로그아웃</a>
 									</p></li>
 								<%-- <li>${sessionScope.loginUser.mname} (${sessionScope.loginUser.mid})</li>
 										<li><a>로그아웃</a></li>	 --%>
@@ -803,14 +798,16 @@ a:link, a:visited {
 
 		// Get the <span> element that closes the modal
 		var span = document.getElementsByClassName("close")[0];
-
+		
 		// When the user clicks the button, open the modal 
-		a_login.onclick = function() {
-			modal.style.display = "block";
-		}
-		icon_login.onclick = function() {
-			modal.style.display = "block";
-		}
+		if(a_login.text == "로그인"){
+			a_login.onclick = function() {
+				modal.style.display = "block";
+			}
+			icon_login.onclick = function() {
+				modal.style.display = "block";
+			}
+		}		
 
 		// When the user clicks on <span> (x), close the modal
 		span.onclick = function() {

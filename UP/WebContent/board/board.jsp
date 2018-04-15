@@ -200,7 +200,7 @@
 </head>
 <body>
 	<div id="wrap_board">
-		<h1 class="title_r">Q&A 게시판</h1>	
+		<h1 class="title_r">Q & A 게시판</h1>	
 		<div id="board_category_wrap">			
 			<select name="board_category" id="board_category">
 				<option value>카테고리 선택</option>

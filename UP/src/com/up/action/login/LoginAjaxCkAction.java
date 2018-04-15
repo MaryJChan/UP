@@ -43,6 +43,7 @@ public class LoginAjaxCkAction implements Action{
 					session.removeAttribute("loginUser");
 					
 					// 세션에 값 담기
+					session.setAttribute("sid", mDto.getMid());
 					session.setAttribute("loginUser", mDto);
 				}
 			} else {
