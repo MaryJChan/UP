@@ -59,5 +59,18 @@ public class BoardReplyDAO {
 		}
 		return list;
 	}
+
+	public int boardReplyDelete(Integer rno) {
+		sqlSession = sqlSessionFactory.openSession();
+		try {
+			result = sqlSession.delete("boardReplyDelete", rno);
+			sqlSession.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			sqlSession.close();
+		}
+		return result;
+	}
 	
 }

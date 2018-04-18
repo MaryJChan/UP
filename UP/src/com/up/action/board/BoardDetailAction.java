@@ -24,18 +24,18 @@ public class BoardDetailAction implements Action{
 		List<BoardReplyDTO> list = null;
 		
 		int bno = Integer.parseInt(request.getParameter("bno"));
-		int hits = Integer.parseInt(request.getParameter("hits"))+1;
 		System.out.println("게시글 번호 : " + bno);
-		System.out.println("조회수 : " + hits);
 		
 		BoardDAO bDao = BoardDAO.getInstance();
-		BoardDTO bDto = new BoardDTO(bno, hits);
-		int result = bDao.boardHits(bDto);
+		BoardDTO bDto = null;
+		int result = bDao.boardHits(bno);
+		
 		if (result > 0) {
 			System.out.println("조회수 수정 완료");
 		} else {
 			System.out.println("조회수 수정 실패");
 		}
+		
 		bDto = null;
 		bDto = bDao.boardDetail(bno);
 		System.out.println("번호 : " + bDto.getBno() + "  제목 : " + bDto.getTitle() + "  내용" + bDto.getContent() + "  작성자 : " + bDto.getWriter() + "  조회수 : " + bDto.getHits() + "  작성일 : " + bDto.getRegdate());
@@ -49,6 +49,7 @@ public class BoardDetailAction implements Action{
 		BoardReplyDAO rDao = BoardReplyDAO.getInstance();
 		list = rDao.boardReplyView(bno);
 		
+		request.setAttribute("boardReply", list);
 		request.setAttribute("boardReply", list);
 		
 		ActionForward forward = new ActionForward();

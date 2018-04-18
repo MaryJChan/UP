@@ -11,7 +11,8 @@
 <style type="text/css">
 	#bdregister_wrap{
 		width: 750px;
-		margin: 0 auto;
+		margin: 100px auto;
+		box-shadow: 0px 0px 5px #d8d8d8;
 	}
 	.title_r {
 		line-height: 1.4em;
@@ -19,12 +20,13 @@
 		color: #d60013;
 		font-family: Tahoma, Helvetica;
 		letter-spacing: -1px;
-		padding-top: 70px;
+		padding-top: 30px;
 		padding-bottom: 30px;		
 		text-align: center;
+		margin: 0 10px;
 	}
 	#bdregister_title_wrap {
-		width: 750px;
+		margin: 0 10px;
 		height: 32px;		
 		padding-top: 5px;
 		padding-bottom: 5px;
@@ -53,11 +55,11 @@
 		padding: 7px;
 	}
 	#bdregister_category_wrap {
-		width: 750px;
 		height: 32px;		
 		padding-top: 5px;
 		padding-bottom: 5px;
 		border-bottom: 1px solid #ccc;
+		margin: 0 10px;
 	}
 	#bdregister_category_fix {
 		display: inline-block;
@@ -76,11 +78,11 @@
 		font-size: 13px;
 	}
 	#bdregister_writer_wrap {
-		width: 750px;
 		height: 32px;		
 		padding-top: 5px;
 		padding-bottom: 5px;
 		border-bottom: 1px solid #ccc;
+		margin: 0 10px;
 	}
 	#bdregister_writer_fix {
 		display: inline-block;
@@ -101,19 +103,22 @@
 	}
 	#bdregister_content_wrap {
 		height: 503px;
-		width: 750px;		
+		width: 730px;
+		margin: 0 10px;		
 		padding-top: 10px;
 		padding-bottom: 10px;
 		border-bottom: 1px solid #ccc;
 	}
 	#bdregister_content {
-		width: 710px;
+		width: 690px;
 		font-size:13px;
 		line-height: 16px;
 		height: 486px;
 		padding: 7px 20px 7px 20px;
 		border: none;
 		outline:none;
+		margin: 0 10px;
+		resize: none;
 	}
 	.bdregister_btn_wrap {
 		display: inline-block;
@@ -145,7 +150,8 @@
 		color: white;
 	}
 	#bdregister_tail_wrap {
-		padding-bottom: 30px;
+		margin: 0 auto;
+		padding: 10px 0 20px;
 	}
 </style>
 <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
@@ -177,7 +183,7 @@
 				<select name="bdregister_category" id="bdregister_category">
 					<option value>카테고리 선택</option>
 					<option value="상품 문의">상품 문의</option>
-					<option value="배송 문의">배송 문의택</option>
+					<option value="배송 문의">배송 문의</option>
 					<option value="기타 문의">기타 문의</option>
 				</select>
 			</div>

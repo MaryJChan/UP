@@ -6,14 +6,13 @@ public class BoardDTO {
 	
 	private int bno;
 	private String title;
+	private String category;
 	private String content;
 	private String  writer;
 	private int hits;
 	private Date regdate;
 	
-	public BoardDTO(){
-		
-	}			
+	public BoardDTO(){}			
 	
 	public BoardDTO(int bno, int hits) {
 		super();
@@ -30,9 +29,10 @@ public class BoardDTO {
 
 
 
-	public BoardDTO(String title, String content, String writer) {
+	public BoardDTO(String title, String category, String content, String writer) {
 		super();
 		this.title = title;
+		this.category = category;
 		this.content = content;
 		this.writer = writer;
 	}
@@ -45,10 +45,11 @@ public class BoardDTO {
 		this.writer = writer;
 	}
 
-	public BoardDTO(int bno, String title, String content, String writer, int hits, Date regdate) {
+	public BoardDTO(int bno, String title, String category, String content, String writer, int hits, Date regdate) {
 		super();
 		this.bno = bno;
 		this.title = title;
+		this.category = category;
 		this.content = content;
 		this.writer = writer;
 		this.hits = hits;
@@ -69,6 +70,14 @@ public class BoardDTO {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}	
+	
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	public String getContent() {

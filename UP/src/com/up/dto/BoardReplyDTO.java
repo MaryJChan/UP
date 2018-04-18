@@ -1,10 +1,13 @@
 package com.up.dto;
 
+import java.util.Date;
+
 public class BoardReplyDTO {
 	private int rno;
 	private int bno;
 	private String sessionUser;
 	private String replyComment;
+	private Date regdate;
 	
 	public BoardReplyDTO(){};
 	
@@ -13,6 +16,15 @@ public class BoardReplyDTO {
 		this.bno = bno;
 		this.sessionUser = sessionUser;
 		this.replyComment = replyComment;
+	}	
+
+	public BoardReplyDTO(int rno, int bno, String sessionUser, String replyComment, Date regdate) {
+		super();
+		this.rno = rno;
+		this.bno = bno;
+		this.sessionUser = sessionUser;
+		this.replyComment = replyComment;
+		this.regdate = regdate;
 	}
 
 	public int getRno() {
@@ -45,6 +57,16 @@ public class BoardReplyDTO {
 
 	public void setReplyComment(String replyComment) {
 		this.replyComment = replyComment;
+	}
+
+	public Date getRegdate() {
+		return regdate;
+	}
+
+	public void setRegdate(Date regdate) {
+		this.regdate = regdate;
 	}			
+	
+	
 	
 }

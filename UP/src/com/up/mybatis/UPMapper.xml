@@ -5,13 +5,11 @@
 
 <mapper namespace="com/up/mybatis/UPMapper.xml">
 
-	<select id="newpdtview" resultType="pDTO"
-		parameterType="String">
+	<select id="newpdtview" resultType="pDTO" parameterType="String">
 		SELECT * FROM new_pro_view
 	</select>
 	
-	<select id="bestpdtview" resultType="pDTO"
-		parameterType="String">
+	<select id="bestpdtview" resultType="pDTO" parameterType="String">
 		SELECT * FROM best_pro_view
 	</select>
 	
@@ -38,8 +36,8 @@
 	</select>
 	
 	<insert id="boardstore" parameterType="bDTO">
-		INSERT INTO tblboard(bno, title, content, writer) 
-		VALUES (seq_tblboard_bno.nextval, #{title}, #{content}, #{writer})
+		INSERT INTO tblboard(bno, title, category, content, writer) 
+		VALUES (seq_tblboard_bno.nextval, #{title}, #{category}, #{content}, #{writer})
 	</insert>
 	
 	<select id="boarddetailview" resultType="bDTO" parameterType="Integer">
@@ -53,9 +51,9 @@
 		WHERE bno = #{bno}
 	</update>
 	
-	<update id="boardhitsupdate" parameterType="bDTO">
+	<update id="boardhitsupdate">
 		UPDATE tblboard SET
-		hits = #{hits}
+		hits = hits + 1
 		WHERE bno = #{bno}
 	</update>
 	
@@ -72,12 +70,76 @@
 		]]>		
 	</select>
 	
+	<select id="searchCountPaging" resultType="int">
+		<!-- 부등호나 느낌표가 들어갈때에는 CDATA를 써줘야함(태그가 아님을 명시) -->
+		SELECT count(bno) FROM tblboard
+		<choose>
+			<when test="category.equals('전체')">
+				<choose>					
+					<when test="searchOption.equals('제목')">
+						<![CDATA[
+							WHERE bno > 0 AND title LIKE '%'||#{keyword}||'%'
+						]]>
+					</when>						
+					<when test="searchOption.equals('작성자')">
+						<![CDATA[
+							WHERE bno > 0 AND writer LIKE '%'||#{keyword}||'%'
+						]]>
+					</when>
+					<when test="searchOption.equals('내용')">
+						<![CDATA[
+							WHERE bno > 0 AND content LIKE '%'||#{keyword}||'%'
+						]]>
+					</when>
+					<when test="searchOption.equals('제목+내용')">
+						<![CDATA[
+							WHERE bno > 0 AND title LIKE '%'||#{keyword}||'%' OR content LIKE '%'||#{keyword}||'%'
+						]]>
+					</when>
+				</choose>
+			</when>
+			<otherwise>
+				<choose>					
+					<when test="searchOption.equals('제목')">
+						<![CDATA[
+							WHERE bno > 0 AND title LIKE '%'||#{keyword}||'%' AND category = #{category}
+						]]>
+					</when>						
+					<when test="searchOption.equals('작성자')">
+						<![CDATA[
+							WHERE bno > 0 AND writer LIKE '%'||#{keyword}||'%' AND category = #{category}
+						]]>
+					</when>
+					<when test="searchOption.equals('내용')">
+						<![CDATA[
+							WHERE bno > 0 AND content LIKE '%'||#{keyword}||'%' AND category = #{category}
+						]]>
+					</when>
+					<when test="searchOption.equals('제목+내용')">
+						<![CDATA[
+							WHERE bno > 0 AND title LIKE '%'||#{keyword}||'%' OR content LIKE '%'||#{keyword}||'%' AND category = #{category}
+						]]>
+					</when>
+				</choose>
+			</otherwise>	
+		</choose>			
+	</select>
+	 
+	<select id="categoryCountPaging" resultType="int" parameterType="cDTO">
+		SELECT count(bno) FROM tblboard
+		<choose>
+			<when test="category.equals('전체')">
+			</when>
+			<otherwise>
+				WHERE category = #{category}
+			</otherwise>			
+		</choose>		
+	</select>
+	
 	<select id="listCriteria" resultType="bDTO">
 		<![CDATA[
-			SELECT * 
-			FROM (
-				SELECT rownum rnum,
-				a.*
+			SELECT * FROM (
+				SELECT rownum rnum, a.*
 				FROM (
 					SELECT *
 					FROM tblboard
@@ -97,6 +159,93 @@
 	<select id="boardReplyView" resultType="rDTO">
 		SELECT * FROM boardreply
 		WHERE bno = #{bno}
+		ORDER BY rno DESC
 	</select>
-
+	
+	<delete id="boardReplyDelete" parameterType="Integer">
+		DELETE FROM boardreply
+		WHERE rno = #{rno}
+	</delete>
+	
+	<select id="boardSearch" resultType="bDTO" parameterType="cDTO">		
+			SELECT * FROM (
+				SELECT rownum rnum, a.*
+				FROM (
+					SELECT *
+					FROM tblboard
+					<choose>
+						<when test="category.equals('전체')">
+							<choose>					
+								<when test="searchOption.equals('제목')">
+									<![CDATA[
+										WHERE bno > 0 AND title LIKE '%'||#{keyword}||'%'
+									]]>
+								</when>						
+								<when test="searchOption.equals('작성자')">
+									<![CDATA[
+										WHERE bno > 0 AND writer LIKE '%'||#{keyword}||'%'
+									]]>
+								</when>
+								<when test="searchOption.equals('내용')">
+									<![CDATA[
+										WHERE bno > 0 AND content LIKE '%'||#{keyword}||'%'
+									]]>
+								</when>
+								<when test="searchOption.equals('제목+내용')">
+									<![CDATA[
+										WHERE bno > 0 AND title LIKE '%'||#{keyword}||'%' OR content LIKE '%'||#{keyword}||'%'
+									]]>
+								</when>
+							</choose>
+						</when>
+						<otherwise>
+							<choose>					
+								<when test="searchOption.equals('제목')">
+									<![CDATA[
+										WHERE bno > 0 AND title LIKE '%'||#{keyword}||'%' AND category = #{category}
+									]]>
+								</when>						
+								<when test="searchOption.equals('작성자')">
+									<![CDATA[
+										WHERE bno > 0 AND writer LIKE '%'||#{keyword}||'%' AND category = #{category}
+									]]>
+								</when>
+								<when test="searchOption.equals('내용')">
+									<![CDATA[
+										WHERE bno > 0 AND content LIKE '%'||#{keyword}||'%' AND category = #{category}
+									]]>
+								</when>
+								<when test="searchOption.equals('제목+내용')">
+									<![CDATA[
+										WHERE bno > 0 AND title LIKE '%'||#{keyword}||'%' OR content LIKE '%'||#{keyword}||'%' AND category = #{category}
+									]]>
+								</when>
+							</choose>
+						</otherwise>						
+					</choose>					
+					ORDER BY bno desc
+				) a
+			)
+		WHERE rnum BETWEEN #{pageStart} AND #{perPageNum}		
+	</select>
+	
+	<select id="boardCategoryView" resultType="bDTO" parameterType="cDTO">
+		SELECT * FROM (
+				SELECT rownum rnum, a.*
+				FROM (
+					SELECT *
+					FROM tblboard
+					<choose>					
+						<when test="category.equals('전체')">
+						</when>
+						<otherwise>
+							WHERE category = #{category}
+						</otherwise>
+					</choose>
+					ORDER BY bno desc
+				) a
+			)
+		WHERE rnum BETWEEN #{pageStart} AND #{perPageNum}
+	</select>
+	
 </mapper>

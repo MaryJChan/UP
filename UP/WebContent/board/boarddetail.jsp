@@ -2,10 +2,6 @@
     pageEncoding="UTF-8"%>
     
 <%@ include file="../include/header.jsp" %>
-
-<!-- jstl 태그 사용 -->
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -28,21 +24,22 @@
 	}
 	#bdetail_wrap {
 		width: 750px;
-		margin: 0 auto;
-		padding-top: 100px;
+		margin: 100px auto;
+		box-shadow: 0px 0px 5px #d8d8d8;
 	}		
 	#bdtail_title {
-		padding: 10px;
+		padding: 20px 0;
+		margin: 0 10px;
 		width: 730px;
 		text-align: center;
 		font-size: 14px;
-		border-top: 1px solid #ccc;
 		border-bottom: 1px solid #ccc;
 		color: #555;
 		font-weight: bold;
 	}
 	#bdtail_header2 {
 		padding: 10px;
+		margin: 0 10px;
 	}
 	#bdtail_grade, #bdtail_date {
 		color: #555;
@@ -54,31 +51,33 @@
 		border-bottom: 1px dotted #ccc;
 	}	
 	#bdtail_contents {
+		margin: 0 10px;
 		padding: 10px 10px 50px 10px;
 		color: #777;
 	}
 	#bdtail_comment_wrap {
 		position: relative;
 		padding: 0 0 15px 0;
-		border-top: 1px solid #ccc;
-		border-bottom: 1px solid #ccc;
 		background-color: #f4f4f4;
 	}
 	#bdreply_store {
 		padding-top: 15px;
+		margin: 0 10px;
 	}
 	#bdtail_comment_write {
-		width: 646px;
+		width: 636px;
 		height: 36px;
 		margin-left: 10px;		
 		border: 1px solid #EDEDED;
 		padding: 7px;
 		vertical-align: middle;
+		outline: none;
+		resize: none;
 	}
 	#bdtail_registration {
 		display: inline-block;
-		width: 58px;
-		height: 55px;
+		width: 55px;
+		height: 52px;
 		position: absolute;
 		right: 10px;
 		bottom: 15px;
@@ -88,15 +87,13 @@
 		height: 52px;		
 		position: absolute;
 		right: 0px;
-		top: 0px;
 	}
-	#bdtail_registration_btn {
+	.bdtail_registration_btn_css {
 		display: inline-block;
 		width: 55px;
 		height: 52px;
 		position: absolute;
-		right: 0px;
-		top: 3px;
+		right: 10px;
 	}	
 	#bdtail_footer {
 		padding: 10px;
@@ -108,22 +105,22 @@
 		float: right;
 	}
 	#bdtail_option {
-		width: 100%;
-		height: 38px;
-		border-bottom: 2px solid #ccc;
+		margin: 0 10px;
+		height: 38px;		
 	}
 	.commend_registration_wrap {
-		border-bottom: 1px dotted #ccc;		
+		position: relative;		
 	}
 	.command_registration_title_wrap:first-child {
-		position: relative;
-		padding: 15px 10px 10px 10px;
+		padding: 15px 10px 10px 10px;	
+		margin: 0 10px;
 	}
 	.command_registration_title_wrap {
 		padding: 15px 10px 10px 10px;
 	}
 	.command_registration_contents {
 		padding: 5px 10px 15px 10px;
+		margin: 0 10px;
 	}
 	.commend_user {
 		padding-right: 5px;
@@ -138,7 +135,6 @@
 		bottom: 0;
 	}
 	.reply_registration_wrap {
-		border-bottom: 1px dotted #ccc;		
 		position: relative;
 	}
 	#reply_check {
@@ -150,10 +146,14 @@
 		font-weight: bold;
 	}
 	.reply_registration_title_wrap {
+		margin: 0 10px;
+		border-top: 1px dotted #ccc;		
 		padding: 15px 10px 10px 50px;
 	}
 	.reply_registration_contents {
 		padding: 5px 10px 15px 50px;
+		margin: 0 10px;
+		border-bottom: 1px dotted #ccc;	
 	}
 	.reply_user {
 		padding-right: 5px;
@@ -233,16 +233,37 @@
 		text-align: center;
 	}
 	#select_false {
-		border: 1px solid #ccc;
-		float: left;
-		margin-left: 30px;
+		border: 1px solid #ccc;		
+		float: right;
+		margin-right: 30px;		
 	}
 	#select_true {
 		border: 1px solid #e51130;
 		background-color: #e51130;
-		float: right;
+		float: left;
 		color: white;
-		margin-right: 30px;
+		margin-left: 30px;
+	}
+	#bdtail_comment_count_wrap {
+		margin: 0 10px;
+		padding: 10px;
+	}
+	#nologin_commend_wirte {
+		position: absolute;
+		bottom: 34px;
+		left: 35px;
+	}
+	#nologin_commend_wirte_btn {
+		cursor: pointer;
+		font-weight: bold;
+	}
+	.none_text {
+		display: none;
+	}
+	#board_comment_option {
+		position: absolute;
+		top: 15px;
+		right: 10px;
 	}
 </style>
 <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
@@ -258,11 +279,12 @@
 		}
 	});		
 	
+	
+	//댓글 작성 Ajax	
 	$(document).on("click", "#bdtail_registration_img", function(){	
 		var bno = '<%=request.getAttribute("bno") %>';				
 		var sessionUser = '<%=session.getAttribute("sid") %>';
 		var replyComment = $("#bdtail_comment_write").val();
-		
 		$.ajax({
 			// 가야할 서블릿 지정
 			url : "boardreplystore.bizpoll",
@@ -275,9 +297,9 @@
 			//성공했을때	
 			success : function(data) {
 				if (data.flag == "1") {
-					$("#bdreply_store").submit();
+					location.href = "boarddetail.bizpoll?bno=" + bno;
 				} else if (data.flag == "0") {
-					$("#pw_error").text("ID 또는 비밀번호가 틀렸습니다.").css("display", "block");
+					alert("게시글 등록 실패");
 				}
 			},
 			//실패했을떄
@@ -286,6 +308,39 @@
 			}
 		});			
 	});			
+	
+	//댓글 삭제 Ajax
+	$(document).on("click", ".board_comment_delete", function(){
+		var rno = $(this).attr("data_num");				
+		 $.ajax({
+			// 가야할 서블릿 지정
+			url : "replydelete.bizpoll",
+			// 방식 지정 [GET | POST]
+			type : "POST",
+			// 타입 지정
+			dataType : "JSON",
+			// 쿼리스트링과 같은 =에 공백X     //data를 dataTpye가방에 담아 type방식으로 url로 보냄
+			data : "rno=" + rno,
+			//성공했을때	
+			success : function(data) {
+				if (data.flag == "1") {
+					location.reload();
+				} else if (data.flag == "0") {
+					alert("댓글 삭제 실패");
+				}
+			},
+			//실패했을떄
+			error : function(data) {
+				alert("System Error!!!");
+			}
+		});
+	});
+	
+	/* $(document).on("click", ".command_reply", function(){
+		var $textarea = $('<textarea id="rerply_command_write_box"></textarea>');
+		$(".commend_registration_wrap").append($textarea);
+	}); */
+	
 </script>
 
 </head>
@@ -318,7 +373,7 @@
 					Date : 
 				</span>
 				<span id="bdtail_date">
-					${boardDetailList.regdate}
+					<fmt:formatDate pattern="yyyy-MM-dd hh:mm" value="${boardDetailList.regdate}"/>
 				</span>				
 			</span>
 			<span id="bdtail_header4">	
@@ -333,6 +388,14 @@
 		<div id="bdtail_contents">
 			${boardDetailList.content}
 		</div>
+		<div id="bdtail_comment_count_wrap">
+			<span id="comment_count_fix">
+				댓글 : 
+			</span>
+			<span id="comment_count">
+				${boardReply.size()}
+			</span>
+		</div>
 		<div id="bdtail_comment_wrap">
 			<c:forEach items="${boardReply}" var="reply">
 				<div class="commend_registration_wrap">
@@ -341,12 +404,23 @@
 							${reply.sessionUser}
 						</a>
 						<span class="command_date">
-							2018-04-10 14:20
+							<fmt:formatDate pattern="yyyy-MM-dd hh:mm" value="${reply.regdate}"/>
 						</span>
 						<a href="#" class="command_reply">
 							답글
 						</a>
-					</div>
+					</div>		
+					<c:if test="${fn:trim(sessionScope.loginUser.mid) eq fn:trim(reply.sessionUser)}">	
+						<span id="board_comment_option">
+							<a href="#" class="board_comment_update" data_num="${reply.rno}">
+								수정
+							</a>
+							<span>|</span>
+							<a href="#" class="board_comment_delete" data_num="${reply.rno}">
+								삭제
+							</a>
+						</span>
+					</c:if>	
 					<div class="command_registration_contents">
 						${reply.replyComment}
 					</div>
@@ -360,23 +434,49 @@
 						<span class="reply_date">
 							2018-04-10 14:22
 						</span>					
-					</div>
+					</div>					
 					<div class="reply_registration_contents">
 						저두영
 					</div>
 				</div>
 			</c:forEach>
+			
 			<div id="command_line">
-				<form action="boarddetail.bizpoll" method="GET" name="bdreply_store"  id="bdreply_store">
-					<textarea name="bdtail_comment_write" id="bdtail_comment_write"></textarea>					
-					<input type="hidden" name="bno"  value="${boardDetailList.bno}">
-					<input type="hidden" name="hits"  value="${boardDetailList.hits}">
-				</form>
-				<span id="bdtail_registration">
-					<a href="#" id="bdtail_registration_btn">등록
-						<img id="bdtail_registration_img" alt="bdtail_registration_img" src="image/up_boardwrite.png">
-					</a>
-				</span>
+			<c:choose>
+				<c:when test="${empty sessionScope.loginUser}">
+					<span id="nologin_commend_wirte">
+						<span id="nologin_commend_wirte_btn">
+							로그인
+						</span>
+						<span>
+							후 댓글작성이 가능합니다.
+						</span>
+					</span>
+					<form action="boarddetail.bizpoll" method="GET" name="bdreply_store"  id="bdreply_store">
+						<textarea name="bdtail_comment_write" id="bdtail_comment_write" readonly></textarea>					
+					</form>
+					<span id="bdtail_registration">
+						<a href="#" id="nologin_bdtail_registration_btn" class="bdtail_registration_btn_css">등록
+							<img id="bdtail_registration_img" alt="bdtail_registration_img" src="image/up_boardwrite.png">
+						</a>
+					</span>
+				</c:when>
+				<c:otherwise>
+					<span id="nologin_commend_wirte_btn" class="none_text">
+							로그인
+					</span>
+					<form action="boarddetail.bizpoll" method="GET" name="bdreply_store"  id="bdreply_store">
+						<textarea name="bdtail_comment_write" id="bdtail_comment_write"></textarea>					
+						<input type="hidden" name="bno" id="bno"  value="${boardDetailList.bno}">
+						<input type="hidden" name="hits" hits="hits"  value="${boardDetailList.hits}">
+					</form>
+					<span id="bdtail_registration">
+						<a href="#" id="bdtail_registration_btn" class="bdtail_registration_btn_css">등록
+							<img id="bdtail_registration_img" alt="bdtail_registration_img" src="image/up_boardwrite.png">
+						</a>
+					</span>
+				</c:otherwise>
+			</c:choose>
 			</div>			
 		</div>
 		<div id="bdtail_option">
@@ -386,13 +486,22 @@
 				</span>
 				<span class="bdtail_share">|</span>
 				<span id="bdtail_delete">
-					<a href="#" id="bdtail_btn_delete">삭제</a>
+					<a href="boarddelete.bizpoll?bno=${boardDetailList.bno}" id="bdtail_btn_delete">삭제</a>
 				</span>
 			</span>
-			<span id="bdtail_footer2">			
-				<span id="bdtail_write">
-					<a href="boardregisterview.bizpoll">글쓰기</a>
-				</span>
+			<span id="bdtail_footer2">
+				<c:choose>
+					<c:when test="${empty sessionScope.loginUser}">			
+						<span id="bdtail_write">
+							<a href="#">글쓰기</a>
+						</span>
+					</c:when>
+					<c:otherwise>
+						<span id="bdtail_write">
+							<a href="boardregisterview.bizpoll">글쓰기</a>
+						</span>							
+					</c:otherwise>
+				</c:choose>	
 				<span class="bdtail_share">|</span>
 				<span id="bdtail_list">
 					<a href="board.bizpoll">목록</a>
@@ -408,12 +517,12 @@
 					  게시글을 삭제하시겠습니까?
 				</div>
 				<div id="delete_window_select">
+					<a href="#" id="select_true" class="delete_selectbox">
+						확인	
+					</a>
 					<a href="#" id="select_false" class="delete_selectbox">
-						아니요
-					</a>
-					<a href="boarddelete.bizpoll?bno=${boardDetailList.bno}" id="select_true" class="delete_selectbox">
-						예
-					</a>
+						취소
+					</a>					
 				</div>
 			</div>
 		</div>
@@ -425,6 +534,9 @@
 
 		// Get the button that opens the board_modal
 		var btn_delete = document.getElementById("bdtail_btn_delete");
+		var nologin_command_btn = document.getElementById("nologin_commend_wirte_btn");
+		var bdtail_login_write = document.getElementById("bdtail_write");
+		var sessionUser = '<%=session.getAttribute("sid") %>';
 		
 		// Get the <span> element that closes the board_modal
 		var delete_span = document.getElementsByClassName("delete_close")[0];
@@ -434,10 +546,15 @@
 		btn_delete.onclick = function() {
 			board_modal.style.display = "block";
 		}
-		delete_btn.onclick = function() {
-			board_modal.style.display = "block";
-		}
-
+		nologin_command_btn.onclick = function() {
+			modal.style.display = "block";
+		}		
+		if(sessionUser == null) {
+			bdtail_login_write.onclick = function() {
+				modal.style.display = "block";
+			}		
+		}		
+		
 		// When the user clicks on <span> (x), close the board_modal
 		delete_span.onclick = function() {
 			board_modal.style.display = "none";

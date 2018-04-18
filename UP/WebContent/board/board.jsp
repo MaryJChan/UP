@@ -2,9 +2,6 @@
     pageEncoding="UTF-8"%>
     
 <%@ include file="../include/header.jsp" %>
-
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -21,8 +18,9 @@
 		text-decoration: none;
 	}
 	#wrap_board {
+		box-shadow: 0px 0px 5px #d8d8d8;
 		width: 750px;
-		margin: 0 auto;
+		margin: 100px auto;
 	}
 	.title_r {
 		font-size: 36px;
@@ -51,14 +49,16 @@
 		vertical-align: middle;
 		outline: none;
 		position: absolute;
-		top: -10px;
+		top: -27px;
+		left: 95px;
 	}
 	#search_btn {
 		width: 50px;
 		height: 27px;
 		position: absolute;
 		background-color: #e51130;
-		left: 151px;
+		top: -27px;
+		left: 246px;
 		color: white;
 		text-align: center;
 		line-height: 27px;
@@ -68,15 +68,17 @@
 		width: 716px;
 	}
 	.board_view_q {
-		width: 746px;
+		width: 726px;
 		padding: 12px 2px 12px 2px;
 		line-height: 1.7em;
 		border-bottom: 1px solid #ccc;
+		margin: 0 10px;
 	}
 	#board_attr {
+		margin: 0 10px;
 		padding: 15px 2px 15px 2px;
 		line-height: 1.7em;
-		width: 746px;
+		width: 726px;
 		border: 1px solid #ccc;
 		border-left: 0px;
 		border-right: 0px;
@@ -87,7 +89,7 @@
 		width: 50px;
 	}
 	#board_title {
-		width: 430px;
+		width: 410px;
 	}
 	#board_user {
 		width: 90px;
@@ -116,7 +118,7 @@
 		width: 50px;
 	}
 	.a_boarder_title {
-		width: 430px;
+		width: 410px;
 		text-align:  left;
 		padding-left: 8px;
 		padding-right: 0;
@@ -134,10 +136,9 @@
 		padding: 0;
 	}
 	.pagination {
-		width: 690px;
-		display: inline-block;
 		text-align: center;
-		padding: 30px;
+		padding: 15px;
+		margin: 0 10px;
 	}	
 	.pagination a {
 		color: #666;
@@ -174,27 +175,59 @@
 		display: inline-block;
 	}
 	#board_tail_wrap {
-		padding: 20px 5px 0 5px;
+		padding: 20px 5px 25px 5px;
+		margin: 0 10px;
 		height: 27px;
+		border-bottom: 1px dotted #eee;
 	}
 	#search_select {
 		height: 27px;
 	}
 	#board_category_wrap {
+		margin: 0 10px;
 		height: 27px;
 		padding: 0 0 10px 5px;
 	}
 	#board_category {
 		height: 27px;
 	}
+	.board_none_list {
+		text-align: center;
+	}
+	#board_total_count {
+		margin: 0 10px 0 10px;
+		padding: 16px 22px 0; 
+		text-align: right;
+	}
 </style>
 
 <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
+		var category_value = $("#category_value").val();
+		var board_category = $("#board_category");
+		if (category_value == "전체") {
+			board_category.val("전체").prop("selected", true);
+		} else if (category_value == "상품 문의") {
+			board_category.val("상품 문의").prop("selected", true);
+		} else if (category_value == "배송 문의") {
+			board_category.val("배송 문의").prop("selected", true);
+		} else if (category_value == "기타 문의") {
+			board_category.val("기타 문의").prop("selected", true);
+		}
+		
 		$("#nologin_write").on("click", function(){
 			$("#myModal").css("display", "block");
 		});
+	});
+	
+	$(document).on("click", "#search_btn", function(){
+		$("#search_board").submit();
+	});
+	
+	$(document).on("change", "#board_category", function(){
+		var category = $(this).val();
+		location.href="boardcategory.bizpoll?category="+category;
 	});
 </script>
 </head>
@@ -203,9 +236,9 @@
 		<h1 class="title_r">Q & A 게시판</h1>	
 		<div id="board_category_wrap">			
 			<select name="board_category" id="board_category">
-				<option value>카테고리 선택</option>
+				<option value="전체">카테고리 선택</option>
 				<option value="상품 문의">상품 문의</option>
-				<option value="배송 문의">배송 문의택</option>
+				<option value="배송 문의">배송 문의</option>
 				<option value="기타 문의">기타 문의</option>
 			</select>
 		</div>	
@@ -220,43 +253,56 @@
 				<span id="board_day" class="board_attr_option">날짜</span>
 				<span class="share_attr">|</span>
 				<span id="board_click" class="board_attr_option">조회수</span>
-			</div>			
-			<c:forEach items="${boardList}" var="list">
-				<div class="board_view_q">
-					<span class="board_view_a a_boarder_num">
-						${list.bno}
-					</span>
-					<a href="boarddetail.bizpoll?bno=${list.bno}&hits=${list.hits}" class="board_view_a a_boarder_title" >
-						${list.title}
-					</a>
-					<a href="#" class="board_view_a a_boarder_user">
-						${list.writer}
-					</a>
-					<span class="board_view_a a_boarder_day" >
-						<fmt:formatDate pattern="yyyy-MM-dd" value="${list.regdate}"/>
-					</span>
-					<span class="board_view_a a_boarder_click">
-						${list.hits}
-					</span>				
-				</div>
-			</c:forEach>
+			</div>
+			<c:choose>
+				<c:when test="${empty boardList}">
+					<div class="board_view_q board_none_list">
+						<span>${pageMaker.criDto.keyword}</span>
+					 	<span>로 검색된 결과가 없습니다.</span>
+					 </div>
+				</c:when>
+				<c:otherwise>
+					<c:forEach items="${boardList}" var="list">
+						<div class="board_view_q">
+							<span class="board_view_a a_boarder_num">
+								${list.bno}
+							</span>
+							<a href="boarddetail.bizpoll?bno=${list.bno}&hits=${list.hits}" class="board_view_a a_boarder_title" >
+								${list.title}
+							</a>
+							<a href="#" class="board_view_a a_boarder_user">
+								${list.writer}
+							</a>
+							<span class="board_view_a a_boarder_day" >
+								<fmt:formatDate pattern="yyyy-MM-dd" value="${list.regdate}"/>
+							</span>
+							<span class="board_view_a a_boarder_click">
+								${list.hits}
+							</span>				
+						</div>
+					</c:forEach>
+				</c:otherwise>
+			</c:choose>						
 		</div>
-		
+		<div id="board_total_count">
+			총 ${pageMaker.totalCount}건 검색
+		</div>
 		<div id="board_tail_wrap">
-			<span>
-				<select id="search_select" name="search_select">
-					<option class="select_value"  value="제목">제목</option>
-					<option class="select_value"  value="작성자">작성자</option>
-					<option class="select_value"  value="내용">내용</option>
-					<option class="select_value"  value="제목+내용">제목+내용</option>
-				</select>
-			</span>
-			<span class="faqs_search">
-				<form action="" name="search_board" id="search_board" method="GET">
-					<input type="text" name="SearchWd" id="SearchWd" class="sr_input">
-				</form>
-				<a href="#"  id="search_btn">검색</a>
-			</span>
+			<form action="boardsearch.bizpoll" name="search_board" id="search_board"  method="GET">
+				<span>				
+					<select id="search_select" name="search_select">
+						<option class="select_value"  value="제목">제목</option>
+						<option class="select_value"  value="작성자">작성자</option>
+						<option class="select_value"  value="내용">내용</option>
+						<option class="select_value"  value="제목+내용">제목+내용</option>
+					</select>
+				</span>
+				<span class="faqs_search">					
+					<input type="hidden" name="category_value" id="category_value" value="${pageMaker.criDto.category}">
+					<input type="text" name="SearchWd" id="SearchWd" class="sr_input">					
+					<a href="#"  id="search_btn">검색</a>
+				</span>
+			</form>
 			<span id= "board_write">
 				<c:choose>
 					<c:when test="${empty sessionScope.loginUser}">
@@ -277,7 +323,12 @@
 			<!-- ${pageMaker.startPage}값부터 ${pageMaker.endPage}값까지 반복-->
 			<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
 				<%-- <c:out value="${pageMaker.criDto.page == idx? 'class=active' : ' '}"/> --%><!-- li태그 필요 -->
-				<a href="board.bizpoll?page=${idx}"<c:out value="${pageMaker.criDto.page == idx? 'class=active' : ' '}"/>>${idx}</a>
+				<c:if test="${flag == 0}">
+					<a href="board.bizpoll?page=${idx}"<c:out value="${pageMaker.criDto.page == idx? 'class=active' : ' '}"/>>${idx}</a>
+				</c:if>
+				<c:if test="${flag == 1}">
+					<a href="boardsearch.bizpoll?page=${idx}&search_select=${pageMaker.criDto.searchOption}&SearchWd=${pageMaker.criDto.keyword}&category_value=${pageMaker.criDto.category}"<c:out value="${pageMaker.criDto.page == idx? 'class=active' : ' '}"/>>${idx}</a>
+				</c:if>
 			</c:forEach>
 			<c:if test="${pageMaker.next}">
 				<a href="board.bizpoll?page=${pageMaker.endPage+1}">&raquo;</a>

@@ -13,11 +13,14 @@ import com.up.action.Action;
 
 import com.up.action.ActionForward;
 import com.up.action.board.BoardAction;
+import com.up.action.board.BoardCategoryAction;
 import com.up.action.board.BoardDeleteAction;
 import com.up.action.board.BoardDetailAction;
 import com.up.action.board.BoardRegisterStoreAction;
 import com.up.action.board.BoardRegisterViewAction;
 import com.up.action.board.BoardReplyAction;
+import com.up.action.board.BoardReplyDeleteAction;
+import com.up.action.board.BoardSearchAction;
 import com.up.action.board.BoardUpdateAction;
 import com.up.action.board.BoardUpdateViewAction;
 import com.up.action.index.IndexAction;
@@ -110,6 +113,15 @@ public class BizpollFrontController extends HttpServlet {
 			forward = action.excute(request, response);
 		} else if (command.equals("/boardreplystore.bizpoll")) {
 			action = new BoardReplyAction();			
+			forward = action.excute(request, response);
+		} else if (command.equals("/replydelete.bizpoll")) {
+			action = new BoardReplyDeleteAction();			
+			forward = action.excute(request, response);
+		} else if (command.equals("/boardsearch.bizpoll")) {
+			action = new BoardSearchAction();			
+			forward = action.excute(request, response);
+		} else if (command.equals("/boardcategory.bizpoll")) {
+			action = new BoardCategoryAction();			
 			forward = action.excute(request, response);
 		}
 		// ======= 공통분기 작업 ======= //

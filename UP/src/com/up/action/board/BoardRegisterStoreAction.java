@@ -19,12 +19,14 @@ public class BoardRegisterStoreAction implements Action{
 		String url = "board.bizpoll";		
 		
 		String title = request.getParameter("bdregister_title");
+		String category = request.getParameter("bdregister_category");
 		String content = request.getParameter("bdregister_content");
 		String writer = request.getParameter("bdregister_writer");
-		System.out.println("제목 : " + title + "  내용 : " + content + "  작성자 : " + writer);
+		
+		System.out.println("제목 : " + title + " 카테고리 :  " + category +  " 내용 : " + content + "  작성자 : " + writer);
 				
 		BoardDAO bDao = BoardDAO.getInstance();
-		BoardDTO bDto = new BoardDTO(title, content, writer);
+		BoardDTO bDto = new BoardDTO(title, category, content, writer);
 		int result = bDao.boardStore(bDto);
 		
 		if(result > 0) {

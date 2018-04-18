@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.websocket.Session;
-
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
@@ -55,10 +53,10 @@ public class BoardDAO {
 		return list;
 	}
 	
-	public int totalCount(CriteriaDTO criDto) {
+	public int totalCount() {
 		sqlSession = sqlSessionFactory.openSession();
 		try {
-			result = sqlSession.selectOne("countPaging", criDto);
+			result = sqlSession.selectOne("countPaging");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -67,6 +65,20 @@ public class BoardDAO {
 		
 		return result;
 	}	
+	
+	public int searchTotalCount(CriteriaDTO criDto) {
+		sqlSession = sqlSessionFactory.openSession();
+		try {
+			result = sqlSession.selectOne("searchCountPaging", criDto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			sqlSession.close();
+		}
+		
+		return result;
+	}
+	
 	public int boardStore(BoardDTO bDto) {
 		sqlSession = sqlSessionFactory.openSession();
 		try {
@@ -122,16 +134,67 @@ public class BoardDAO {
 		return result;
 	}
 
-	public int boardHits(BoardDTO bDto) {
+	public int boardHits(int bno) {
 		sqlSession = sqlSessionFactory.openSession();
 		try {
-			result = sqlSession.update("boardhitsupdate", bDto);
+			result = sqlSession.update("boardhitsupdate", bno);
 			sqlSession.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			sqlSession.close();
 		}
+		return result;
+	}
+
+	public List<BoardDTO> boardSearch(CriteriaDTO criDto) {
+		sqlSession = sqlSessionFactory.openSession();
+		List<BoardDTO> list = new ArrayList<>();
+		try {
+			list = sqlSession.selectList("boardSearch", criDto);
+			
+			System.out.println(list.size());
+			for (BoardDTO boardDTO : list) {
+				System.out.println("번호 : " + boardDTO.getBno() + "  작성자 : " + boardDTO.getWriter() + "  제목 : " + boardDTO.getTitle() + "  내용 : " + boardDTO.getContent() + "  조회수 : " + boardDTO.getHits() + "  작성일 : " + boardDTO.getRegdate());
+			}			
+			System.out.println();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			sqlSession.close();
+		}		
+		return list;
+	}
+
+	public List<BoardDTO> boardCategory(CriteriaDTO criDto) {
+		sqlSession = sqlSessionFactory.openSession();
+		List<BoardDTO> list = new ArrayList<>();
+		try {
+			list = sqlSession.selectList("boardCategoryView", criDto);
+			
+			System.out.println(list.size());
+			for (BoardDTO boardDTO : list) {
+				System.out.println("번호 : " + boardDTO.getBno() + "  작성자 : " + boardDTO.getWriter() + "  제목 : " + boardDTO.getTitle() + "  내용 : " + boardDTO.getContent() + "  조회수 : " + boardDTO.getHits() + "  작성일 : " + boardDTO.getRegdate());
+			}			
+			System.out.println();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			sqlSession.close();
+		}		
+		return list;
+	}
+
+	public int categoryTotalCount(CriteriaDTO criDto) {
+		sqlSession = sqlSessionFactory.openSession();
+		try {
+			result = sqlSession.selectOne("categoryCountPaging", criDto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			sqlSession.close();
+		}
+		
 		return result;
 	}
 	
