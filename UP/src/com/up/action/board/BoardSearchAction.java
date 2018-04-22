@@ -1,6 +1,7 @@
 package com.up.action.board;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -66,6 +67,10 @@ public class BoardSearchAction implements Action{
 		
 		request.setAttribute("pageMaker", pageMaker);
 		request.setAttribute("flag", flag);
+		
+		Date today = new Date();
+		
+		request.setAttribute("today", today);
 		
 		ActionForward forward = new ActionForward();
 		forward.setPath(url);

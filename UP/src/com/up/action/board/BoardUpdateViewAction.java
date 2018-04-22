@@ -10,6 +10,7 @@ import com.up.action.Action;
 import com.up.action.ActionForward;
 import com.up.dao.BoardDAO;
 import com.up.dto.BoardDTO;
+import com.up.dto.NextPreDTO;
 
 public class BoardUpdateViewAction implements Action{
 
@@ -22,10 +23,9 @@ public class BoardUpdateViewAction implements Action{
 		System.out.println("게시글 번호 : " + bno);
 				 
 		BoardDAO bDao = BoardDAO.getInstance();
-		BoardDTO bDto =bDao.boardDetail(bno);
+		NextPreDTO npDto =bDao.boardDetail(bno);
 		
-		request.setAttribute("boardUpdate", bDto);
-		
+		request.setAttribute("boardUpdate", npDto);
 		ActionForward forward = new ActionForward();
 		forward.setPath(url);
 		forward.setRedirect(false);		

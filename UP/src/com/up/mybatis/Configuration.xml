@@ -16,6 +16,7 @@
 		<typeAlias type="com.up.dto.BoardDTO"  alias="bDTO"/>
 		<typeAlias type="com.up.dto.BoardReplyDTO"  alias="rDTO"/>
 		<typeAlias type="com.up.dto.CriteriaDTO"  alias="cDTO"/>
+		<typeAlias type="com.up.dto.NextPreDTO"  alias="npDTO"/>
 	</typeAliases>
 	
 	<!-- DB접속 정보 셋팅 -->

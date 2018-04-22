@@ -46,7 +46,7 @@ public class BoardReplyDAO {
 		return result;
 	}
 	
-	public List<BoardReplyDTO> boardReplyView(int bno) {
+	public List<BoardReplyDTO> boardReplyView(Integer bno) {
 		List<BoardReplyDTO> list = null;
 		sqlSession = sqlSessionFactory.openSession();
 		try {
@@ -64,6 +64,19 @@ public class BoardReplyDAO {
 		sqlSession = sqlSessionFactory.openSession();
 		try {
 			result = sqlSession.delete("boardReplyDelete", rno);
+			sqlSession.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			sqlSession.close();
+		}
+		return result;
+	}
+
+	public int boardReplyUpdate(BoardReplyDTO rDto) {
+		sqlSession = sqlSessionFactory.openSession();
+		try {
+			result = sqlSession.update("boardReplyUpdate", rDto);
 			sqlSession.commit();
 		} catch (Exception e) {
 			e.printStackTrace();

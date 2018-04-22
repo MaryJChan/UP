@@ -1,6 +1,7 @@
 package com.up.action.board;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -61,6 +62,11 @@ public class BoardAction implements Action{
 		
 		request.setAttribute("pageMaker", pageMaker);
 		request.setAttribute("flag", flag);
+		
+		// 오늘 날짜를 보내준다
+		Date today = new Date();
+		
+		request.setAttribute("today", today);
 		
 		ActionForward forward = new ActionForward();
 		forward.setPath(url);

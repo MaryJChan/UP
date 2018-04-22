@@ -40,9 +40,29 @@
 		VALUES (seq_tblboard_bno.nextval, #{title}, #{category}, #{content}, #{writer})
 	</insert>
 	
-	<select id="boarddetailview" resultType="bDTO" parameterType="Integer">
-		SELECT * FROM tblboard
-		WHERE bno = #{bno}
+	<select id="boarddetailview" resultType="npDTO" parameterType="Integer">
+		<!-- SELECT * FROM tblboard
+		WHERE bno = #{bno} -->
+		SELECT * FROM (
+			SELECT
+				bno, 
+				title, 
+				category,
+				content,				
+				writer, 
+				hits,
+				goodcnt,
+				regdate, 
+				LEAD(bno, 1 ) OVER (ORDER BY bno DESC) AS next_article_bno, 
+				LEAD(TITLE, 1 , '다음글 없음') OVER (ORDER BY bno DESC) AS next_title, 
+				LEAD(writer, 1 , '') OVER (ORDER BY bno DESC) AS next_writer, 
+				LEAD(regdate, 1 , '') OVER (ORDER BY bno DESC) AS next_regdate, 
+				LAG(bno, 1) OVER (ORDER BY bno DESC ) AS  pre_article_bno, 
+				LAG(TITLE, 1 , '이전글 없음') OVER (ORDER BY bno DESC ) pre_title, 
+				LAG(writer, 1) OVER (ORDER BY bno DESC ) AS  pre_writer, 
+				LAG(regdate, 1) OVER (ORDER BY bno DESC ) AS pre_regdate
+			FROM tblboard) 
+		WHERE bno=#{bno}
 	</select>
 	
 	<update id="boardupdate" parameterType="bDTO">
@@ -51,7 +71,7 @@
 		WHERE bno = #{bno}
 	</update>
 	
-	<update id="boardhitsupdate">
+	<update id="boardhitsupdate" parameterType="Integer">
 		UPDATE tblboard SET
 		hits = hits + 1
 		WHERE bno = #{bno}
@@ -59,6 +79,11 @@
 	
 	<delete id="boarddelete" parameterType="Integer">
 		DELETE FROM tblboard
+		WHERE bno = #{bno}
+	</delete>
+	
+	<delete id="boardReplyDelete2" parameterType="Integer">
+		DELETE FROM boardreply
 		WHERE bno = #{bno}
 	</delete>
 	
@@ -141,8 +166,10 @@
 			SELECT * FROM (
 				SELECT rownum rnum, a.*
 				FROM (
-					SELECT *
-					FROM tblboard
+					SELECT b.*, (SELECT COUNT(*)
+									 	 FROM boardreply d
+										 WHERE b.bno = d.bno) replycnt
+					FROM tblboard b
 					WHERE bno > 0
 					ORDER BY bno desc
 				) a
@@ -156,7 +183,7 @@
 		VALUES (seq_boardreply_rno.nextval, #{bno}, #{sessionUser}, #{replyComment})
 	</insert>
 	
-	<select id="boardReplyView" resultType="rDTO">
+	<select id="boardReplyView" resultType="rDTO" parameterType="Integer">
 		SELECT * FROM boardreply
 		WHERE bno = #{bno}
 		ORDER BY rno DESC
@@ -171,8 +198,10 @@
 			SELECT * FROM (
 				SELECT rownum rnum, a.*
 				FROM (
-					SELECT *
-					FROM tblboard
+					SELECT b.*, (SELECT COUNT(*)
+									 	 FROM boardreply d
+										 WHERE b.bno = d.bno) replycnt
+					FROM tblboard b
 					<choose>
 						<when test="category.equals('전체')">
 							<choose>					
@@ -233,8 +262,10 @@
 		SELECT * FROM (
 				SELECT rownum rnum, a.*
 				FROM (
-					SELECT *
-					FROM tblboard
+					SELECT b.*, (SELECT COUNT(*)
+									 	 FROM boardreply d
+										 WHERE b.bno = d.bno) replycnt
+					FROM tblboard b
 					<choose>					
 						<when test="category.equals('전체')">
 						</when>
@@ -247,5 +278,11 @@
 			)
 		WHERE rnum BETWEEN #{pageStart} AND #{perPageNum}
 	</select>
+	
+	<update id="boardReplyUpdate" parameterType="rDTO">
+		UPDATE boardreply SET 
+		replycomment = #{replyComment} 
+		WHERE rno = #{rno}
+	</update>
 	
 </mapper>

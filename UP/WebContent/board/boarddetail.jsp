@@ -22,6 +22,8 @@
 		text-decoration: none;
 		color: #555;
 	}
+	
+	/* ----------------------------------------- 상세 게시글 출력CSS ----------------------------------------- */
 	#bdetail_wrap {
 		width: 750px;
 		margin: 100px auto;
@@ -60,11 +62,8 @@
 		padding: 0 0 15px 0;
 		background-color: #f4f4f4;
 	}
-	#bdreply_store {
-		padding-top: 15px;
-		margin: 0 10px;
-	}
-	#bdtail_comment_write {
+	
+	#bdtail_comment_write, .bdtail_reply_write {
 		width: 636px;
 		height: 36px;
 		margin-left: 10px;		
@@ -74,26 +73,26 @@
 		outline: none;
 		resize: none;
 	}
-	#bdtail_registration {
+	#bdtail_registration, .bdtail_update_registration {
 		display: inline-block;
 		width: 55px;
 		height: 52px;
 		position: absolute;
-		right: 10px;
+		right: 20px;
 		bottom: 15px;
 		text-align: center;
 	}
-	#bdtail_registration_img {
+	#bdtail_registration_img, .bdtail_update_img {
 		height: 52px;		
 		position: absolute;
 		right: 0px;
 	}
-	.bdtail_registration_btn_css {
+	.bdtail_registration_btn_css, .bdtail_update_btn_css {
 		display: inline-block;
 		width: 55px;
 		height: 52px;
 		position: absolute;
-		right: 10px;
+		right: 0px;
 	}	
 	#bdtail_footer {
 		padding: 10px;
@@ -108,6 +107,13 @@
 		margin: 0 10px;
 		height: 38px;		
 	}
+	
+	
+	/* 댓글 CSS */
+	#bdreply_store, .bdreply_update {
+		padding-top: 15px;
+		margin: 0 10px;
+	}
 	.commend_registration_wrap {
 		position: relative;		
 	}
@@ -120,7 +126,12 @@
 	}
 	.command_registration_contents {
 		padding: 5px 10px 15px 10px;
+		border-bottom: 1px dotted #ccc;		
 		margin: 0 10px;
+	}
+	#none_reply {
+		padding: 15px 10px;
+		text-align: center;
 	}
 	.commend_user {
 		padding-right: 5px;
@@ -146,8 +157,7 @@
 		font-weight: bold;
 	}
 	.reply_registration_title_wrap {
-		margin: 0 10px;
-		border-top: 1px dotted #ccc;		
+		margin: 0 10px;		
 		padding: 15px 10px 10px 50px;
 	}
 	.reply_registration_contents {
@@ -245,8 +255,8 @@
 		margin-left: 30px;
 	}
 	#bdtail_comment_count_wrap {
-		margin: 0 10px;
-		padding: 10px;
+		padding: 10px 20px;
+		background-color: white;
 	}
 	#nologin_commend_wirte {
 		position: absolute;
@@ -261,17 +271,81 @@
 		display: none;
 	}
 	#board_comment_option {
-		position: absolute;
-		top: 15px;
-		right: 10px;
+		float: right;
+	}
+	.board_nexrPre_wrap {
+		margin: 0 10px;
+		height: 38px;
+		border-bottom: 1px dotted #ccc;
+	}
+	.board_nextPre_tag {
+		padding: 10px;
+		float: left;
+	}
+	.nextPre_btn{
+		width: 50px;
+	}
+	.nextPre_title{
+		width: 360px;
+	}
+	.nextPre_writer{
+		width: 120px;
+	}
+	.nextPre_regdate{
+	
+	}
+	.nextPre_title_fix {
+		color: #9c9c9c;
+	}
+	.delete_window_text {
+		display: inline-block;
+		margin: 0 124px!important;
+		text-align: center;
+	}
+	.reply_text {
+		width: 710px;
+		border: none;
+		background-color: #f4f4f4;
+		color: #9c9c9c;
+		outline: none;
+	}
+	.bdreply_update {
+		display: inline-block;
+	}
+	.bdreply_update {
+		padding-bottom: 15px;
+		margin: 0px;
+	}
+	.command_update_line {
+		margin: 0 10px;
+		border-bottom: 1px dotted #ccc;
+		display: none;
+	}
+	.command_update_line_position {
+		position: relative;
+		width: 740px;
 	}
 </style>
 <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
 <script type="text/javascript">
+	function comment_list() {
+		var bno = $("#bno").val();
+		$.ajax({
+			type: "post",
+			url: "commentlist.bizpoll",
+			data: "bno=" + bno,
+			success: function(result) {				
+				$("#commentList").html(result);
+			}
+		});
+	}
+	
 	$(document).ready(function(){		
 		var boardWriter = '<%=request.getAttribute("writer") %>';
 		var sessionUser = '<%=session.getAttribute("sid") %>';
 
+		comment_list();
+		
 		if(boardWriter == sessionUser) {
 			$("#bdtail_footer").css("display", "block");
 		} else {
@@ -280,11 +354,13 @@
 	});		
 	
 	
+	
 	//댓글 작성 Ajax	
 	$(document).on("click", "#bdtail_registration_img", function(){	
 		var bno = '<%=request.getAttribute("bno") %>';				
 		var sessionUser = '<%=session.getAttribute("sid") %>';
 		var replyComment = $("#bdtail_comment_write").val();
+		$("#bdtail_comment_write").val("");
 		$.ajax({
 			// 가야할 서블릿 지정
 			url : "boardreplystore.bizpoll",
@@ -297,7 +373,8 @@
 			//성공했을때	
 			success : function(data) {
 				if (data.flag == "1") {
-					location.href = "boarddetail.bizpoll?bno=" + bno;
+					comment_list();
+					/* location.href = "boarddetail.bizpoll?bno=" + bno; */
 				} else if (data.flag == "0") {
 					alert("게시글 등록 실패");
 				}
@@ -324,7 +401,7 @@
 			//성공했을때	
 			success : function(data) {
 				if (data.flag == "1") {
-					location.reload();
+					comment_list();
 				} else if (data.flag == "0") {
 					alert("댓글 삭제 실패");
 				}
@@ -336,11 +413,48 @@
 		});
 	});
 	
-	/* $(document).on("click", ".command_reply", function(){
-		var $textarea = $('<textarea id="rerply_command_write_box"></textarea>');
-		$(".commend_registration_wrap").append($textarea);
-	}); */
+	$(document).on("click", ".board_comment_update", function(){
+		var rno = $(this).attr("data_num");
+		var text = $("div[data_num="+rno+"]");
+		
+		if($(text).is(":visible")){
+			text.css("display", "none");
+		}else{
+			text.css("display", "block");
+		}
+	});
 	
+	$(document).on("click", ".bdtail_update_img", function(){
+		/* var bno = ${boardDetailList.bno}; */
+		var rno = $(this).attr("data_num");
+		var replyComment = $("textarea[data_num="+rno+"]").val();
+		<%-- var sessionUser = '<%=session.getAttribute("sid") %>';
+		alert(sessionuser); --%>
+		
+		$.ajax({
+			// 가야할 서블릿 지정
+			url : "replyupdate.bizpoll",
+			// 방식 지정 [GET | POST]
+			type : "POST",
+			// 타입 지정
+			dataType : "JSON",
+			// 쿼리스트링과 같은 =에 공백X     //data를 dataTpye가방에 담아 type방식으로 url로 보냄
+			data : "rno=" + rno + "&replyComment=" + replyComment,
+			//성공했을때	
+			success : function(data) {
+				if (data.flag == "1") {
+					comment_list();
+				} else if (data.flag == "0") {
+					alert("댓글 수정 실패");
+				}
+			},
+			//실패했을떄
+			error : function(data) {
+				alert("System Error!!!");
+			}
+		});
+		
+	});
 </script>
 
 </head>
@@ -348,7 +462,7 @@
 	<div id="bdetail_wrap">
 		<div id="bdtail_header">
 			<div id="bdtail_title">
-				${boardDetailList.title}
+				[${boardDetailList.category}] ${boardDetailList.title}
 			</div>			
 		</div>
 		<div id="bdtail_header2">
@@ -373,7 +487,7 @@
 					Date : 
 				</span>
 				<span id="bdtail_date">
-					<fmt:formatDate pattern="yyyy-MM-dd hh:mm" value="${boardDetailList.regdate}"/>
+					<fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${boardDetailList.regdate}"/>
 				</span>				
 			</span>
 			<span id="bdtail_header4">	
@@ -388,59 +502,8 @@
 		<div id="bdtail_contents">
 			${boardDetailList.content}
 		</div>
-		<div id="bdtail_comment_count_wrap">
-			<span id="comment_count_fix">
-				댓글 : 
-			</span>
-			<span id="comment_count">
-				${boardReply.size()}
-			</span>
-		</div>
-		<div id="bdtail_comment_wrap">
-			<c:forEach items="${boardReply}" var="reply">
-				<div class="commend_registration_wrap">
-					<div class="command_registration_title_wrap">
-						<a href="#" class="commend_user">
-							${reply.sessionUser}
-						</a>
-						<span class="command_date">
-							<fmt:formatDate pattern="yyyy-MM-dd hh:mm" value="${reply.regdate}"/>
-						</span>
-						<a href="#" class="command_reply">
-							답글
-						</a>
-					</div>		
-					<c:if test="${fn:trim(sessionScope.loginUser.mid) eq fn:trim(reply.sessionUser)}">	
-						<span id="board_comment_option">
-							<a href="#" class="board_comment_update" data_num="${reply.rno}">
-								수정
-							</a>
-							<span>|</span>
-							<a href="#" class="board_comment_delete" data_num="${reply.rno}">
-								삭제
-							</a>
-						</span>
-					</c:if>	
-					<div class="command_registration_contents">
-						${reply.replyComment}
-					</div>
-				</div>			
-				<div class="reply_registration_wrap">
-					<div class="reply_registration_title_wrap">
-						<span id="reply_check">ㄴ</span>
-						<a href="#" class="reply_user">
-							dddddd
-						</a>
-						<span class="reply_date">
-							2018-04-10 14:22
-						</span>					
-					</div>					
-					<div class="reply_registration_contents">
-						저두영
-					</div>
-				</div>
-			</c:forEach>
-			
+		<div id="bdtail_comment_wrap">			
+			<div id="commentList"></div>
 			<div id="command_line">
 			<c:choose>
 				<c:when test="${empty sessionScope.loginUser}">
@@ -453,6 +516,8 @@
 						</span>
 					</span>
 					<form action="boarddetail.bizpoll" method="GET" name="bdreply_store"  id="bdreply_store">
+						<input type="hidden" name="bno" id="bno"  value="${boardDetailList.bno}">
+						<input type="hidden" name="hits" id="hits"  value="${boardDetailList.hits}">
 						<textarea name="bdtail_comment_write" id="bdtail_comment_write" readonly></textarea>					
 					</form>
 					<span id="bdtail_registration">
@@ -468,7 +533,7 @@
 					<form action="boarddetail.bizpoll" method="GET" name="bdreply_store"  id="bdreply_store">
 						<textarea name="bdtail_comment_write" id="bdtail_comment_write"></textarea>					
 						<input type="hidden" name="bno" id="bno"  value="${boardDetailList.bno}">
-						<input type="hidden" name="hits" hits="hits"  value="${boardDetailList.hits}">
+						<input type="hidden" name="hits" id="hits"  value="${boardDetailList.hits}">
 					</form>
 					<span id="bdtail_registration">
 						<a href="#" id="bdtail_registration_btn" class="bdtail_registration_btn_css">등록
@@ -479,6 +544,62 @@
 			</c:choose>
 			</div>			
 		</div>
+		<c:if test="${fn:trim(boardDetailList.pre_title) ne '이전글 없음'}">
+			<div class="board_nexrPre_wrap">
+				<span class="board_nextPre_tag nextPre_btn">
+					<a href="boarddetail.bizpoll?bno=${boardDetailList.pre_article_bno}">
+						이전글
+					</a>
+				</span>
+				<span class="board_nextPre_tag nextPre_title">
+					<a href="boarddetail.bizpoll?bno=${boardDetailList.pre_article_bno}">
+						<span class="nextPre_title_fix">제목 : </span>
+						[${boardDetailList.category}] ${boardDetailList.pre_title}
+					</a>
+				</span>
+				<span class="board_nextPre_tag nextPre_writer">
+					 작성자 : ${boardDetailList.pre_writer}
+				</span>
+				<span class="board_nextPre_tag nextPre_regdate">
+					<fmt:formatDate value="${today}" pattern="yyyy-MM-dd" var="today2"/>
+					<fmt:formatDate value="${boardDetailList.pre_regdate}" pattern="yyyy-MM-dd" var="regdate2"/>					
+					<c:if test="${today2 == regdate2}">
+						작성일 : <fmt:formatDate pattern="HH:mm" value="${boardDetailList.pre_regdate}"/>
+					</c:if>
+					<c:if test="${today2 != regdate2}">
+						작성일 : <fmt:formatDate pattern="yyyy-MM-dd" value="${boardDetailList.pre_regdate}"/>
+					</c:if>					 
+				</span>
+			</div>
+		</c:if>		
+		<c:if test="${fn:trim(boardDetailList.next_title) ne '다음글 없음'}">
+			<div class="board_nexrPre_wrap">
+				<span class="board_nextPre_tag nextPre_btn">
+					<a href="boarddetail.bizpoll?bno=${boardDetailList.next_article_bno}">
+						다음글
+					</a>
+				</span>
+				<span class="board_nextPre_tag nextPre_title">
+					<a href="boarddetail.bizpoll?bno=${boardDetailList.next_article_bno}">
+						<span class="nextPre_title_fix">제목 : </span>
+						[${boardDetailList.category}] ${boardDetailList.next_title}
+					</a>
+				</span>
+				<span class="board_nextPre_tag nextPre_writer">
+					 작성자 : ${boardDetailList.next_writer}
+				</span>
+				<span class="board_nextPre_tag nextPre_regdate">
+					<fmt:formatDate value="${today}" pattern="yyyy-MM-dd" var="today2"/>
+					<fmt:formatDate value="${boardDetailList.next_regdate}" pattern="yyyy-MM-dd" var="regdate2"/>					
+					<c:if test="${today2 == regdate2}">
+						작성일 : <fmt:formatDate pattern="HH:mm" value="${boardDetailList.next_regdate}"/>
+					</c:if>
+					<c:if test="${today2 != regdate2}">
+						작성일 : <fmt:formatDate pattern="yyyy-MM-dd" value="${boardDetailList.next_regdate}"/>
+					</c:if>					 
+				</span>
+			</div>
+		</c:if>
 		<div id="bdtail_option">
 			<span id="bdtail_footer">
 				<span id="bdtail_update">
@@ -486,7 +607,7 @@
 				</span>
 				<span class="bdtail_share">|</span>
 				<span id="bdtail_delete">
-					<a href="boarddelete.bizpoll?bno=${boardDetailList.bno}" id="bdtail_btn_delete">삭제</a>
+					<a href="#" id="bdtail_btn_delete">삭제</a>
 				</span>
 			</span>
 			<span id="bdtail_footer2">
@@ -508,25 +629,45 @@
 				</span>
 			</span>
 		</div>
-	</div>
-	<div id="myboard_modal" class="board_modal">
-		<div class="board_modal-content">
-			<span class="delete_close">&times;</span>			
-			<div id="delete_window_wrap">
-				<div id="delete_window_text">
-					  게시글을 삭제하시겠습니까?
-				</div>
-				<div id="delete_window_select">
-					<a href="#" id="select_true" class="delete_selectbox">
-						확인	
-					</a>
-					<a href="#" id="select_false" class="delete_selectbox">
-						취소
-					</a>					
+	</div>	
+	<c:if test="${!empty boardReply}">
+		<div id="myboard_modal" class="board_modal">
+			<div class="board_modal-content">
+				<span class="delete_close">&times;</span>			
+				<div id="delete_window_wrap">
+					<div id="delete_window_text">
+						  댓글이 달린 게시글은 삭제할수 없습니다.
+					</div>
+					<div id="delete_window_select">
+						<a href="#" id="select_false" class="delete_selectbox delete_window_text">
+							확인	
+						</a>					
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	</c:if>
+	<c:if test="${empty boardReply}">
+		<div id="myboard_modal" class="board_modal">
+			<div class="board_modal-content">
+				<span class="delete_close">&times;</span>			
+				<div id="delete_window_wrap">
+					<div id="delete_window_text">
+						  게시글을 삭제하시겠습니까?
+					</div>
+					<div id="delete_window_select">
+						<a href="boarddelete.bizpoll?bno=${boardDetailList.bno}" id="select_true" class="delete_selectbox">
+							확인	
+						</a>
+						<a href="#" id="select_false" class="delete_selectbox">
+							취소
+						</a>					
+					</div>
+				</div>
+			</div>
+		</div>
+	</c:if>
+	
 	<script>
 		
 		// Get the board_modal
@@ -545,10 +686,11 @@
 		// When the user clicks the button, open the board_modal 
 		btn_delete.onclick = function() {
 			board_modal.style.display = "block";
-		}
+		}	
+		
 		nologin_command_btn.onclick = function() {
 			modal.style.display = "block";
-		}		
+		}
 		if(sessionUser == null) {
 			bdtail_login_write.onclick = function() {
 				modal.style.display = "block";

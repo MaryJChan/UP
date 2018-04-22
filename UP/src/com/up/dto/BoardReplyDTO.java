@@ -9,7 +9,13 @@ public class BoardReplyDTO {
 	private String replyComment;
 	private Date regdate;
 	
-	public BoardReplyDTO(){};
+	public BoardReplyDTO(){};	
+	
+	public BoardReplyDTO(int rno, String replyComment) {
+		super();
+		this.rno = rno;
+		this.replyComment = replyComment;
+	}
 	
 	public BoardReplyDTO(int bno, String sessionUser, String replyComment) {
 		super();

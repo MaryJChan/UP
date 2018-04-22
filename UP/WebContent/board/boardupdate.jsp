@@ -146,12 +146,24 @@
 </style>
 <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
 <script type="text/javascript">
-	$(document).ready(function(){
+	$(document).ready(function(){				
+		var category_value = $("#category_value").val();
+		var bdupdate_category = $("#bdupdate_category");
+		
+		if (category_value == "상품 문의") {
+			bdupdate_category.val("상품 문의").prop("selected", true);
+		} else if (category_value == "배송 문의") {
+			bdupdate_category.val("배송 문의").prop("selected", true);
+		} else if (category_value == "기타 문의") {
+			bdupdate_category.val("기타 문의").prop("selected", true);
+		}
+		
 		$("#bdupdate_title").val("${boardUpdate.title}");
 		$("#bdupdate_content").val("${boardUpdate.content}");
 		$("#bdupdate_store").on("click", function(){
 			$("#bdupdate_post").submit();
-		});
+		});		
+		
 	});
 </script>
 </head>
@@ -188,6 +200,7 @@
 			<div id="bdupdate_content_wrap">
 				<textarea name="bdupdate_content" id="bdupdate_content" placeholder="내용을 입력하세요."></textarea>
 			</div>
+			<input type="hidden"  name="category_value" id="category_value" value="${boardUpdate.category}">
 		</form>
 		<span id="bdupdate_cancle_wrap" class="bdupdate_btn_wrap">
 			<a href="board.bizpoll" id="bdupdate_cancle" >취  소</a>

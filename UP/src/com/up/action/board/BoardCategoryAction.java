@@ -1,6 +1,7 @@
 package com.up.action.board;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -54,6 +55,10 @@ public class BoardCategoryAction implements Action{
 		pageMaker.setTotalCount(result);
 		
 		request.setAttribute("pageMaker", pageMaker);
+		
+		Date today = new Date();
+		
+		request.setAttribute("today", today);
 		
 		ActionForward forward = new ActionForward();
 		forward.setPath(url);
