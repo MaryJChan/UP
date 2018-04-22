@@ -63,7 +63,7 @@
 		background-color: #f4f4f4;
 	}
 	
-	#bdtail_comment_write, .bdtail_reply_write {
+	#bdtail_comment_write, .bdtail_reply_write, .bdtail_recommand_write {
 		width: 636px;
 		height: 36px;
 		margin-left: 10px;		
@@ -73,7 +73,7 @@
 		outline: none;
 		resize: none;
 	}
-	#bdtail_registration, .bdtail_update_registration {
+	#bdtail_registration, .bdtail_update_registration, .bdtail_recommand_write_registration {
 		display: inline-block;
 		width: 55px;
 		height: 52px;
@@ -82,12 +82,12 @@
 		bottom: 15px;
 		text-align: center;
 	}
-	#bdtail_registration_img, .bdtail_update_img {
+	#bdtail_registration_img, .bdtail_update_img, .recommand_write_img {
 		height: 52px;		
 		position: absolute;
 		right: 0px;
 	}
-	.bdtail_registration_btn_css, .bdtail_update_btn_css {
+	.bdtail_registration_btn_css, .bdtail_update_btn_css, .recommand_write_btn_css {
 		display: inline-block;
 		width: 55px;
 		height: 52px;
@@ -110,7 +110,7 @@
 	
 	
 	/* 댓글 CSS */
-	#bdreply_store, .bdreply_update {
+	#bdreply_store, .bdreply_update, .recommand_store {
 		padding-top: 15px;
 		margin: 0 10px;
 	}
@@ -270,7 +270,7 @@
 	.none_text {
 		display: none;
 	}
-	#board_comment_option {
+	.board_comment_option, .board_recomment_option {
 		float: right;
 	}
 	.board_nexrPre_wrap {
@@ -309,19 +309,17 @@
 		color: #9c9c9c;
 		outline: none;
 	}
-	.bdreply_update {
-		display: inline-block;
-	}
-	.bdreply_update {
+	.bdreply_update, .recommand_store {
 		padding-bottom: 15px;
 		margin: 0px;
+		display: inline-block;
 	}
-	.command_update_line {
+	.command_update_line, .recommand_store_line{
 		margin: 0 10px;
 		border-bottom: 1px dotted #ccc;
 		display: none;
 	}
-	.command_update_line_position {
+	.command_update_line_position, .recommand_store_line_position {
 		position: relative;
 		width: 740px;
 	}
@@ -413,17 +411,29 @@
 		});
 	});
 	
+	// 댓글 수정 버튼 클릭시 화면변경 소스
 	$(document).on("click", ".board_comment_update", function(){
 		var rno = $(this).attr("data_num");
 		var text = $("div[data_num="+rno+"]");
+		var reply_text = $("input[data_num=" + rno + "]").val();
+		var reply_text_write = $("textarea[data_num=" + rno + "]");
 		
-		if($(text).is(":visible")){
-			text.css("display", "none");
+		if($(text.first()).is(":visible")){
+			text.first().css("display", "none");
+			$("#command_line").css("display", "block");		
+			$("#bdtail_comment_write").focus();		
 		}else{
-			text.css("display", "block");
+			$(".recommand_store_line").css("display", "none");
+			$(".command_update_line").css("display", "none");
+			$("#command_line").css("display", "none");
+			text.first().css("display", "block");
+			reply_text_write.first().val(reply_text);
+			reply_text_write.first().focus();
 		}
 	});
 	
+	
+	// 댓글 수정
 	$(document).on("click", ".bdtail_update_img", function(){
 		/* var bno = ${boardDetailList.bno}; */
 		var rno = $(this).attr("data_num");
@@ -444,6 +454,7 @@
 			success : function(data) {
 				if (data.flag == "1") {
 					comment_list();
+					$("#command_line").css("display", "block");
 				} else if (data.flag == "0") {
 					alert("댓글 수정 실패");
 				}
@@ -455,6 +466,59 @@
 		});
 		
 	});
+	
+	// 답글 버튼 클릭시 화면변경 소스
+	$(document).on("click", ".command_reply", function(){
+		var rno = $(this).attr("data_num");
+		var text = $("div[data_num="+rno+"]");
+		var reply_text_write = $("textarea[data_num=" + rno + "]");
+		
+		if($(text.last()).is(":visible")){
+			text.last().css("display", "none");
+			$("#command_line").css("display", "block");
+			$("#bdtail_comment_write").focus();		
+		}else{
+			$(".recommand_store_line").css("display", "none");
+			$(".command_update_line").css("display", "none");
+			$("#command_line").css("display", "none");
+			text.last().css("display", "block");
+			reply_text_write.last().focus();
+		}
+	});
+	
+	// 답글 등록
+	$(document).on("click", ".recommand_write_img", function(){
+		var bno = ${boardDetailList.bno};
+		var rno = $(this).attr("data_num");
+		var recomment = $("textarea[data_num="+rno+"]").last().val();
+		var sessionUser = '<%=session.getAttribute("sid") %>';
+		
+		$.ajax({
+			// 가야할 서블릿 지정
+			url : "recommentstore.bizpoll",
+			// 방식 지정 [GET | POST]
+			type : "POST",
+			// 타입 지정
+			dataType : "JSON",
+			// 쿼리스트링과 같은 =에 공백X     //data를 dataTpye가방에 담아 type방식으로 url로 보냄
+			data : "bno=" + bno + "&rno=" + rno + "&recomment=" + recomment + "&sessionUser=" + sessionUser,
+			//성공했을때	
+			success : function(data) {
+				if (data.flag == "1") {
+					comment_list();
+					$("#command_line").css("display", "block");
+				} else if (data.flag == "0") {
+					alert("답글 등록 실패");
+				}
+			},
+			//실패했을떄
+			error : function(data) {
+				alert("System Error!!!");
+			}
+		});
+		
+	});
+	
 </script>
 
 </head>
@@ -531,7 +595,7 @@
 							로그인
 					</span>
 					<form action="boarddetail.bizpoll" method="GET" name="bdreply_store"  id="bdreply_store">
-						<textarea name="bdtail_comment_write" id="bdtail_comment_write"></textarea>					
+						<textarea name="bdtail_comment_write" id="bdtail_comment_write" placeholder="댓글을 입력하세요."></textarea>					
 						<input type="hidden" name="bno" id="bno"  value="${boardDetailList.bno}">
 						<input type="hidden" name="hits" id="hits"  value="${boardDetailList.hits}">
 					</form>

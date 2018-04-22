@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.up.action.Action;
 import com.up.action.ActionForward;
+import com.up.dao.BoardRecommentDAO;
 import com.up.dao.BoardReplyDAO;
+import com.up.dto.BoardRecommentDTO;
 import com.up.dto.BoardReplyDTO;
 
 public class CommentListAction implements Action{
@@ -23,8 +25,15 @@ public class CommentListAction implements Action{
 		System.out.println(bno);
 		BoardReplyDAO rDao = BoardReplyDAO.getInstance();
 		List<BoardReplyDTO> list = rDao.boardReplyView(bno);
+		
 				
 		request.setAttribute("boardReply", list);
+		
+		// 2차 댓글 출력 코드
+		BoardRecommentDAO rcDao = BoardRecommentDAO.getInstance();
+		List<BoardRecommentDTO> list2 = rcDao.boardRecommentView(bno);
+		
+		request.setAttribute("boardRecomment", list2);	
 		
 		ActionForward forward = new ActionForward();
 		forward.setPath(url);

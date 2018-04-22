@@ -285,4 +285,15 @@
 		WHERE rno = #{rno}
 	</update>
 	
+	<insert id="boardRecommentStore" parameterType = "rcDTO">
+		INSERT INTO boardrecomment(rcno, bno, rno, sessionuser, recomment)
+		VALUES (seq_boardrecomment_rcno.nextval, #{bno}, #{rno}, #{sessionUser}, #{recomment})
+	</insert>
+	
+	<select id="boardRecommentView" resultType="rcDTO">
+		SELECT * FROM boardrecomment
+		WHERE bno = #{bno}
+		ORDER BY rcno DESC
+	</select>
+	
 </mapper>

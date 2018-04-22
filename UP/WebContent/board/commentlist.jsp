@@ -36,13 +36,13 @@
 					${reply.sessionUser}
 				</a>
 				<span class="command_date">
-					<fmt:formatDate pattern="yyyy-MM-dd hh:mm" value="${reply.regdate}"/>
+					<fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${reply.regdate}"/>
 				</span>
-				<a href="#" class="command_reply">
-					답글
-				</a>
-				<c:if test="${fn:trim(sessionScope.loginUser.mid) eq fn:trim(reply.sessionUser)}">	
-					<span id="board_comment_option">
+				<c:if test="${fn:trim(sessionScope.loginUser.mid) eq fn:trim(reply.sessionUser)}">
+					<a href="#" class="command_reply" data_num="${reply.rno}">
+						답글
+					</a>				
+					<span class="board_comment_option">
 						<a href="#" class="board_comment_update" data_num="${reply.rno}">
 							수정
 						</a>
@@ -69,19 +69,47 @@
 					</a>
 				</span>	
 			</div>
-		</div>
-		<div class="reply_registration_wrap">
-			<div class="reply_registration_title_wrap">
-				<span id="reply_check">ㄴ</span>
-				<a href="#" class="reply_user">
-					dddddd
-				</a>
-				<span class="reply_date">
-					2018-04-10 14:22
-				</span>					
-			</div>					
-			<div class="reply_registration_contents">
-				저두영
+		</div>		
+		<c:forEach items="${boardRecomment}" var= "rcView">
+			<c:if test="${reply.rno == rcView.rno}">
+				<div class="reply_registration_wrap">
+					<div class="reply_registration_title_wrap">
+						<span id="reply_check">ㄴ</span>
+						<a href="#" class="reply_user">
+							${rcView.sessionUser}
+						</a>
+						<span class="reply_date">
+							<fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${rcView.regdate}"/>
+						</span>
+						<c:if test="${fn:trim(sessionScope.loginUser.mid) eq fn:trim(reply.sessionUser)}">
+							<span class="board_recomment_option">
+								<a href="#" class="board_recomment_update" data_num="${rcView.rcno}">
+									수정
+								</a>
+								<span>|</span>
+								<a href="#" class="board_recomment_delete" data_num="${rcView.rcno}">
+									삭제
+								</a>
+							</span>
+						</c:if>						
+					</div>					
+					<div class="reply_registration_contents">
+						${rcView.recomment}
+					</div>
+				</div>
+			</c:if>
+		</c:forEach>				
+		<div class="recommand_store_line"  data_num="${reply.rno}">
+			<div class="recommand_store_line_position">
+				<form action="recommand.bizpoll" method="GET" name="recommand_store"  class="recommand_store">
+					<textarea name="bdtail_recommand_write" class="bdtail_recommand_write"   data_num="${reply.rno}" placeholder="답글을 입력해주세요."></textarea>					
+					<input type="hidden" name="rno" class="rno"  value="${reply.rno}">
+				</form>
+				<span class="bdtail_recommand_write_registration">
+					<a href="#" class="recommand_write_btn_css" >등록
+						<img class="recommand_write_img" alt="bdtail_registration_img" src="image/up_boardwrite.png" data_num="${reply.rno}">
+					</a>
+				</span>	
 			</div>
 		</div>
 	</c:forEach>

@@ -24,6 +24,7 @@ import com.up.action.board.BoardSearchAction;
 import com.up.action.board.BoardUpdateAction;
 import com.up.action.board.BoardUpdateViewAction;
 import com.up.action.board.CommentListAction;
+import com.up.action.board.RecommentStoreAction;
 import com.up.action.board.ReplyUpdateAction;
 import com.up.action.index.IndexAction;
 import com.up.action.login.LoginAjaxCkAction;
@@ -130,6 +131,9 @@ public class BizpollFrontController extends HttpServlet {
 			forward = action.excute(request, response);
 		} else if (command.equals("/replyupdate.bizpoll")) {
 			action = new ReplyUpdateAction();			
+			forward = action.excute(request, response);
+		} else if (command.equals("/recommentstore.bizpoll")) {
+			action = new RecommentStoreAction();			
 			forward = action.excute(request, response);
 		}
 		// ======= 공통분기 작업 ======= //

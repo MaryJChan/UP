@@ -12,8 +12,10 @@ import javax.servlet.http.HttpSession;
 import com.up.action.Action;
 import com.up.action.ActionForward;
 import com.up.dao.BoardDAO;
+import com.up.dao.BoardRecommentDAO;
 import com.up.dao.BoardReplyDAO;
 import com.up.dto.BoardDTO;
+import com.up.dto.BoardRecommentDTO;
 import com.up.dto.BoardReplyDTO;
 import com.up.dto.NextPreDTO;
 
@@ -25,6 +27,7 @@ public class BoardDetailAction implements Action{
 		String url = "board/boarddetail.jsp";		
 		
 		List<BoardReplyDTO> list = null;
+		List<BoardRecommentDTO> list2 = null;
 		
 		int bno = Integer.parseInt(request.getParameter("bno"));
 		System.out.println("게시글 번호 : " + bno);
@@ -43,6 +46,7 @@ public class BoardDetailAction implements Action{
 			System.out.println("조회수 수정 실패");
 		}
 		
+		// 이전글 다음글 출력 코드
 		npDto = bDao.boardDetail(bno);
 		System.out.println("번호 : " + npDto.getBno() + "  제목 : " + npDto.getTitle() + " 카테고리 : " + npDto.getCategory() + "  내용" + npDto.getContent() + "  작성자 : " + npDto.getWriter() + "  조회수 : " + npDto.getHits() + " 추천수 : " + npDto.getGoodcnt() + "  작성일 : " + npDto.getRegdate());
 		System.out.println("이전글 번호 : " + npDto.getPre_article_bno() + " 이전글 제목 : " + npDto.getPre_title() + " 이전글 작성자 : " + npDto.getPre_writer() + " 이전글 작성일 : " + npDto.getPre_regdate());
@@ -51,15 +55,15 @@ public class BoardDetailAction implements Action{
 		request.setAttribute("writer", npDto.getWriter());
 		request.setAttribute("bno", npDto.getBno());
 		
-		
+		// 1차 댓글 출력 코드
 		System.out.println(bno);
 		BoardReplyDAO rDao = BoardReplyDAO.getInstance();
 		list = rDao.boardReplyView(bno);		
 		request.setAttribute("boardReply", list);		
 		
-		Date today = new Date();
-		
-		request.setAttribute("today", today);
+		// new
+		Date today = new Date();		
+		request.setAttribute("today", today);	
 		
 		ActionForward forward = new ActionForward();
 		forward.setPath(url);

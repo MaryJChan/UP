@@ -2,35 +2,40 @@ package com.up.dto;
 
 import java.util.Date;
 
-public class BoardReplyDTO {
-	private int rno;
+public class BoardRecommentDTO {
+	private int rcno;	
 	private int bno;
+	private int rno;
 	private String sessionUser;
-	private String replyComment;
+	private String recomment;
 	private Date regdate;
 	
-	public BoardReplyDTO(){};	
-	
-	public BoardReplyDTO(int rno, String replyComment) {
+	public BoardRecommentDTO ( ) {}	
+
+	public BoardRecommentDTO(int bno, int rno, String sessionUser, String recomment) {
 		super();
+		this.bno = bno;
 		this.rno = rno;
-		this.replyComment = replyComment;
+		this.sessionUser = sessionUser;
+		this.recomment = recomment;
 	}
 	
-	public BoardReplyDTO(int bno, String sessionUser, String replyComment) {
+	public BoardRecommentDTO(int rcno, int bno, int rno, String sessionUser, String recomment, Date regdate) {
 		super();
+		this.rcno = rcno;
 		this.bno = bno;
-		this.sessionUser = sessionUser;
-		this.replyComment = replyComment;
-	}	
-
-	public BoardReplyDTO(int rno, int bno, String sessionUser, String replyComment, Date regdate) {
-		super();
 		this.rno = rno;
-		this.bno = bno;
 		this.sessionUser = sessionUser;
-		this.replyComment = replyComment;
+		this.recomment = recomment;
 		this.regdate = regdate;
+	}
+
+	public int getRcno() {
+		return rcno;
+	}
+
+	public void setRcno(int rcno) {
+		this.rcno = rcno;
 	}
 
 	public int getRno() {
@@ -57,13 +62,13 @@ public class BoardReplyDTO {
 		this.sessionUser = sessionUser;
 	}
 
-	public String getReplyComment() {
-		return replyComment;
+	public String getRecomment() {
+		return recomment;
 	}
 
-	public void setReplyComment(String replyComment) {
-		this.replyComment = replyComment;
-	}		
+	public void setRecomment(String recomment) {
+		this.recomment = recomment;
+	}
 
 	public Date getRegdate() {
 		return regdate;
@@ -71,6 +76,6 @@ public class BoardReplyDTO {
 
 	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
-	}
+	}	
 	
 }
