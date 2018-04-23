@@ -18,7 +18,7 @@
 			댓글 : 
 		</span>
 		<span id="comment_count">
-			${boardReply.size()}
+			${boardReply.size()+boardRecomment.size()}
 		</span>
 	</div>	
 	<c:if test="${empty boardReply}">

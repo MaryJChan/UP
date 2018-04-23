@@ -22,6 +22,7 @@ public class BoardCategoryAction implements Action{
 			throws ServletException, IOException {
 		
 		String url = "board/board.jsp";	
+		int flag = 2;		
 		
 		// criDto 계산하기
 		CriteriaDTO criDto = new CriteriaDTO();
@@ -55,6 +56,7 @@ public class BoardCategoryAction implements Action{
 		pageMaker.setTotalCount(result);
 		
 		request.setAttribute("pageMaker", pageMaker);
+		request.setAttribute("flag", flag);
 		
 		Date today = new Date();
 		

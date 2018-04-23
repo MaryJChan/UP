@@ -11,6 +11,7 @@ public class BoardDTO {
 	private String  writer;
 	private int hits;
 	private int replycnt;	
+	private int recommentcnt;	
 	private int goodcnt;	
 	private Date regdate;
 	
@@ -124,6 +125,14 @@ public class BoardDTO {
 		this.replycnt = replycnt;
 	}
 
+	public int getRecommentcnt() {
+		return recommentcnt;
+	}
+
+	public void setRecommentcnt(int recommentcnt) {
+		this.recommentcnt = recommentcnt;
+	}
+	
 	public int getGoodcnt() {
 		return goodcnt;
 	}

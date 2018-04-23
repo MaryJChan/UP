@@ -34,15 +34,6 @@
 		border-bottom: 1px solid #ccc;
 		position: relative;
 	}
-	#bdregister_title_fix {
-		display: inline-block;
-		width:120px;
-		height: 32px;		
-		line-height: 32px;
-		padding-left: 20px;
-		font-size: 12px;
-		float: left;
-	}
 	#bdregister_title {
 		display: inline-block;
 		width: 236px;
@@ -54,14 +45,7 @@
 		outline: none;
 		padding: 7px;
 	}
-	#bdregister_category_wrap {
-		height: 32px;		
-		padding-top: 5px;
-		padding-bottom: 5px;
-		border-bottom: 1px solid #ccc;
-		margin: 0 10px;
-	}
-	#bdregister_category_fix {
+	.bdregister_header_fix {
 		display: inline-block;
 		width:120px;
 		height: 32px;		
@@ -77,22 +61,14 @@
 		padding: 5px;
 		font-size: 13px;
 	}
-	#bdregister_writer_wrap {
+	.bdregister_header_wrap {
 		height: 32px;		
 		padding-top: 5px;
 		padding-bottom: 5px;
 		border-bottom: 1px solid #ccc;
 		margin: 0 10px;
 	}
-	#bdregister_writer_fix {
-		display: inline-block;
-		width:120px;
-		height: 32px;		
-		line-height: 32px;
-		padding-left: 20px;
-		font-size: 12px;
-		float: left;
-	}
+	
 	#bdregister_writer {
 		display: inline-block;
 		width: 150px;
@@ -153,15 +129,71 @@
 		margin: 0 auto;
 		padding: 10px 0 20px;
 	}
+	#bdregister_file_label_wrap {
+		display: inline-block;
+		height: 32px;
+		position: relative;
+		margin-right: 20px;
+		width: 570px;
+	}
+	#bdregister_file {
+		display: none;
+	}
+	#bdregister_file_label_title {
+		display: inline-block;
+		padding: 7px;
+		width: 473px;
+		height: 20px;
+		line-height: 20px;
+		position: absolute;
+		top: -1px;
+		left: 0px;
+		box-shadow: 0px 0px 5px #d8d8d8;
+	}
+	#bdregister_file_label {
+		padding: 7px 5px;
+		width: 65px;
+		height: 20px;
+		display: inline-block; 
+		cursor: pointer;
+		text-align: center;
+		line-height: 20px;
+		box-shadow: 0px 0px 5px #d8d8d8;
+		position: absolute;
+		right: 0;
+		top: -1px;
+	}
 </style>
 <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#bdregister_title").focus();
-		$("#bdregister_title").val("");
-		$("#bdregister_content").val("");
-		$("#bdregister_store").on("click", function(){
-			$("#bdregister_post").submit();
+		
+		var bdregister_title = $("#bdregister_title");
+		var bdregister_category = $("#bdregister_category");
+		var bdregister_content = $("#bdregister_content");
+				
+		$("#bdregister_store").on("click", function(){			
+			if(bdregister_title.val() == ""){
+				alert("제목을 입력하지 않았습니다..");
+				bdregister_title.focus();
+				return false;
+			} else if (bdregister_category.val() == "") {
+				alert("카테고리를 선택하지 않았습니다.");
+				bdregister_category.focus();
+				return false;
+			} else if (bdregister_content.val() == "") {
+				alert("내용을 입력하지 않았습니다.");
+				bdregister_content.focus();
+				return false;
+			} else {
+				$("#bdregister_post").submit();
+			}			
+		});
+		
+		$("#bdregister_file").on("change", function(){
+			var fileName = $(this).val();
+			$("#bdregister_file_label_title").text(fileName);
 		});
 	});
 </script>
@@ -170,14 +202,14 @@
 	<div id="bdregister_wrap">
 		<h1 class="title_r">Q & A</h1>
 		<form action="boardregisterstore.bizpoll" method="POST" name="bdregister_post" id="bdregister_post">
-			<div id="bdregister_title_wrap">
-				<span id="bdregister_title_fix">
+			<div id="bdregister_title_wrap" class="bdregister_header_wrap">
+				<span id="bdregister_title_fix" class="bdregister_header_fix">
 					제 목 : 
 				</span>
 				<input type="text" name="bdregister_title" id="bdregister_title" placeholder="제목을 입력하세요.">
 			</div>
-			<div id="bdregister_category_wrap">
-				<span id="bdregister_category_fix">
+			<div id="bdregister_category_wrap" class="bdregister_header_wrap">
+				<span id="bdregister_category_fix" class="bdregister_header_fix">
 					카테고리 : 
 				</span>
 				<select name="bdregister_category" id="bdregister_category">
@@ -187,11 +219,22 @@
 					<option value="기타 문의">기타 문의</option>
 				</select>
 			</div>
-			<div id="bdregister_writer_wrap">
-				<span id="bdregister_writer_fix">
+			<div id="bdregister_writer_wrap" class="bdregister_header_wrap">
+				<span id="bdregister_writer_fix" class="bdregister_header_fix">
 					작성자 : 
 				</span>
 				<input type="text" id="bdregister_writer"  name="bdregister_writer"  value= "${sessionScope.loginUser.mid}" readonly>
+			</div>
+			<div id="bdregister_file_wrap" class="bdregister_header_wrap">
+				<span id="bdregister_file_fix" class="bdregister_header_fix">
+					첨부파일 : 
+				</span>
+				<span id="bdregister_file_label_wrap">
+					<span id= "bdregister_file_label_title">
+					</span>
+					<input type="file" id="bdregister_file"  name="bdregister_file">		
+					<label for="bdregister_file" id="bdregister_file_label">파일 선택</label>		
+				</span>
 			</div>
 			<div id="bdregister_content_wrap">
 				<textarea name="bdregister_content" id="bdregister_content" placeholder="내용을 입력하세요."></textarea>

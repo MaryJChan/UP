@@ -168,7 +168,10 @@
 				FROM (
 					SELECT b.*, (SELECT COUNT(*)
 									 	 FROM boardreply d
-										 WHERE b.bno = d.bno) replycnt
+										 WHERE b.bno = d.bno) replycnt, 
+										 (SELECT COUNT(*) 
+										 FROM boardrecomment drc 
+										 WHERE b.bno = drc.bno) recommentcnt 
 					FROM tblboard b
 					WHERE bno > 0
 					ORDER BY bno desc
@@ -200,7 +203,10 @@
 				FROM (
 					SELECT b.*, (SELECT COUNT(*)
 									 	 FROM boardreply d
-										 WHERE b.bno = d.bno) replycnt
+										 WHERE b.bno = d.bno) replycnt, 
+										 (SELECT COUNT(*) 
+										 FROM boardrecomment drc 
+										 WHERE b.bno = drc.bno) recommentcnt 
 					FROM tblboard b
 					<choose>
 						<when test="category.equals('전체')">
@@ -264,7 +270,10 @@
 				FROM (
 					SELECT b.*, (SELECT COUNT(*)
 									 	 FROM boardreply d
-										 WHERE b.bno = d.bno) replycnt
+										 WHERE b.bno = d.bno) replycnt, 
+										 (SELECT COUNT(*) 
+										 FROM boardrecomment drc 
+										 WHERE b.bno = drc.bno) recommentcnt 
 					FROM tblboard b
 					<choose>					
 						<when test="category.equals('전체')">

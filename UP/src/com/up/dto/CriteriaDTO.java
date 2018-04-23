@@ -2,13 +2,12 @@ package com.up.dto;
 
 
 // 검색기준 또는 분류기준
-public class CriteriaDTO {	
+public class CriteriaDTO {
 	private String keyword;
 	private String searchOption;
 	private String category;
 	private int page;					// 페이지번호(하단의 번호들 클릭)
 	private int perPageNum;		// 한 페이지에 보여줄 게시글 수
-	
 	
 	
 

@@ -323,6 +323,21 @@
 		position: relative;
 		width: 740px;
 	}
+	#bdtail_file_download_wrap{
+		margin: 0 10px;
+		padding: 10px;
+		position: relative;
+	}
+	#bdtail_file_download__position {
+		display: inline-block;
+		float: right;
+	}
+	#bdtail_file_download_fix {
+		display: inline-block;
+	}
+	#bdtail_file_download_btn {
+		display: inline-block;
+	}
 </style>
 <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
 <script type="text/javascript">
@@ -359,29 +374,36 @@
 		var sessionUser = '<%=session.getAttribute("sid") %>';
 		var replyComment = $("#bdtail_comment_write").val();
 		$("#bdtail_comment_write").val("");
-		$.ajax({
-			// 가야할 서블릿 지정
-			url : "boardreplystore.bizpoll",
-			// 방식 지정 [GET | POST]
-			type : "POST",
-			// 타입 지정
-			dataType : "JSON",
-			// 쿼리스트링과 같은 =에 공백X     //data를 dataTpye가방에 담아 type방식으로 url로 보냄
-			data : "bno=" + bno + "&sessionUser=" + sessionUser + "&replyComment=" + replyComment,
-			//성공했을때	
-			success : function(data) {
-				if (data.flag == "1") {
-					comment_list();
-					/* location.href = "boarddetail.bizpoll?bno=" + bno; */
-				} else if (data.flag == "0") {
-					alert("게시글 등록 실패");
+		if(replyComment == "") {
+			alert("댓글을 입력하지 않았습니다.");
+			$("#bdtail_comment_write").focus();
+			return false;
+		} else {
+			$.ajax({
+				// 가야할 서블릿 지정
+				url : "boardreplystore.bizpoll",
+				// 방식 지정 [GET | POST]
+				type : "POST",
+				// 타입 지정
+				dataType : "JSON",
+				// 쿼리스트링과 같은 =에 공백X     //data를 dataTpye가방에 담아 type방식으로 url로 보냄
+				data : "bno=" + bno + "&sessionUser=" + sessionUser + "&replyComment=" + replyComment,
+				//성공했을때	
+				success : function(data) {
+					if (data.flag == "1") {
+						comment_list();
+						/* location.href = "boarddetail.bizpoll?bno=" + bno; */
+					} else if (data.flag == "0") {
+						alert("댓글 등록 실패");
+					}
+				},
+				//실패했을떄
+				error : function(data) {
+					alert("System Error!!!");
 				}
-			},
-			//실패했을떄
-			error : function(data) {
-				alert("System Error!!!");
-			}
-		});			
+			});
+		}
+					
 	});			
 	
 	//댓글 삭제 Ajax
@@ -493,30 +515,35 @@
 		var recomment = $("textarea[data_num="+rno+"]").last().val();
 		var sessionUser = '<%=session.getAttribute("sid") %>';
 		
-		$.ajax({
-			// 가야할 서블릿 지정
-			url : "recommentstore.bizpoll",
-			// 방식 지정 [GET | POST]
-			type : "POST",
-			// 타입 지정
-			dataType : "JSON",
-			// 쿼리스트링과 같은 =에 공백X     //data를 dataTpye가방에 담아 type방식으로 url로 보냄
-			data : "bno=" + bno + "&rno=" + rno + "&recomment=" + recomment + "&sessionUser=" + sessionUser,
-			//성공했을때	
-			success : function(data) {
-				if (data.flag == "1") {
-					comment_list();
-					$("#command_line").css("display", "block");
-				} else if (data.flag == "0") {
-					alert("답글 등록 실패");
+		if(recomment == "") {
+			alert("답글을 입력하지 않았습니다.");
+			$("textarea[data_num="+rno+"]").last().focus();
+			return false;
+		} else {
+			$.ajax({
+				// 가야할 서블릿 지정
+				url : "recommentstore.bizpoll",
+				// 방식 지정 [GET | POST]
+				type : "POST",
+				// 타입 지정
+				dataType : "JSON",
+				// 쿼리스트링과 같은 =에 공백X     //data를 dataTpye가방에 담아 type방식으로 url로 보냄
+				data : "bno=" + bno + "&rno=" + rno + "&recomment=" + recomment + "&sessionUser=" + sessionUser,
+				//성공했을때	
+				success : function(data) {
+					if (data.flag == "1") {
+						comment_list();
+						$("#command_line").css("display", "block");
+					} else if (data.flag == "0") {
+						alert("답글 등록 실패");
+					}
+				},
+				//실패했을떄
+				error : function(data) {
+					alert("System Error!!!");
 				}
-			},
-			//실패했을떄
-			error : function(data) {
-				alert("System Error!!!");
-			}
-		});
-		
+			});
+		}		
 	});
 	
 </script>
@@ -561,6 +588,16 @@
 				<span id="bdtail_grade">
 					A
 				</span>
+			</span>
+		</div>
+		<div id="bdtail_file_download_wrap">
+			<span id="bdtail_file_download__position">
+				<span id="bdtail_file_download_fix">
+					첨부파일 : 
+				</span>
+				<a href="#" id="bdtail_file_download_btn">
+					아직은 없음 ㅎㅎ
+				</a>
 			</span>
 		</div>
 		<div id="bdtail_contents">
@@ -628,7 +665,7 @@
 					<fmt:formatDate value="${today}" pattern="yyyy-MM-dd" var="today2"/>
 					<fmt:formatDate value="${boardDetailList.pre_regdate}" pattern="yyyy-MM-dd" var="regdate2"/>					
 					<c:if test="${today2 == regdate2}">
-						작성일 : <fmt:formatDate pattern="HH:mm" value="${boardDetailList.pre_regdate}"/>
+						작성일 : <fmt:formatDate pattern="MM-dd HH:mm" value="${boardDetailList.pre_regdate}"/>
 					</c:if>
 					<c:if test="${today2 != regdate2}">
 						작성일 : <fmt:formatDate pattern="yyyy-MM-dd" value="${boardDetailList.pre_regdate}"/>
@@ -656,7 +693,7 @@
 					<fmt:formatDate value="${today}" pattern="yyyy-MM-dd" var="today2"/>
 					<fmt:formatDate value="${boardDetailList.next_regdate}" pattern="yyyy-MM-dd" var="regdate2"/>					
 					<c:if test="${today2 == regdate2}">
-						작성일 : <fmt:formatDate pattern="HH:mm" value="${boardDetailList.next_regdate}"/>
+						작성일 : <fmt:formatDate pattern="MM-dd HH:mm" value="${boardDetailList.next_regdate}"/>
 					</c:if>
 					<c:if test="${today2 != regdate2}">
 						작성일 : <fmt:formatDate pattern="yyyy-MM-dd" value="${boardDetailList.next_regdate}"/>

@@ -215,6 +215,9 @@
 		border-radius: 5px;
 		padding: 1px 3px;
 	}
+	#board_file_view{
+		margin: auto;
+	}
 </style>
 
 <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
@@ -290,6 +293,9 @@
 				<c:when test="${empty boardList}">
 					<div class="board_view_q board_none_list">
 						<c:choose>
+							<c:when test="${flag != 1}">
+								게시글이 없습니다.
+							</c:when>
 							<c:when test="${flag == 1}">
 								<span class="search_result">"${pageMaker.criDto.keyword}"</span>
 								로 검색한 결과는 총
@@ -308,8 +314,9 @@
 							<a href="boarddetail.bizpoll?bno=${list.bno}&hits=${list.hits}" class="board_view_a a_boarder_title" >
 								[${list.category}] ${list.title} 
 								<c:if test="${list.replycnt != 0}">
-									[${list.replycnt}]
+									(${list.replycnt + list.recommentcnt})
 								</c:if>
+								<img src="image/photo.png" id="board_file_view"></img>
 								<c:if test="${today2 == regdate2}">
 									<span class="new_time">New</span>
 								</c:if>
@@ -382,6 +389,9 @@
 				<c:if test="${flag == 1}">
 					<a href="boardsearch.bizpoll?page=${idx}&search_select=${pageMaker.criDto.searchOption}&SearchWd=${pageMaker.criDto.keyword}&category_value=${pageMaker.criDto.category}"<c:out value="${pageMaker.criDto.page == idx? 'class=active' : ' '}"/>>${idx}</a>
 				</c:if>
+				<c:if test="${flag == 2}">
+					<a href="boardcategory.bizpoll?page=${idx}&category=${pageMaker.criDto.category}"<c:out value="${pageMaker.criDto.page == idx? 'class=active' : ' '}"/>>${idx}</a>
+				</c:if>				
 			</c:forEach>
 			<c:if test="${pageMaker.next}">
 				<a href="board.bizpoll?page=${pageMaker.endPage+1}">&raquo;</a>
