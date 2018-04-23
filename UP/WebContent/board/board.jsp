@@ -311,7 +311,7 @@
 							<span class="board_view_a a_boarder_num">
 								${list.bno}
 							</span>
-							<a href="boarddetail.bizpoll?bno=${list.bno}&hits=${list.hits}" class="board_view_a a_boarder_title" >
+							<a href="boarddetail.bizpoll?bno=${list.bno}&hits=${list.hits}&sessionuser=${sessionScope.loginUser.mid}" class="board_view_a a_boarder_title" >
 								[${list.category}] ${list.title} 
 								<c:if test="${list.replycnt != 0}">
 									(${list.replycnt + list.recommentcnt})

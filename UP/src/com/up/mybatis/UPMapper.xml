@@ -197,6 +197,11 @@
 		WHERE rno = #{rno}
 	</delete>
 	
+	<delete id="boardRecommentDelete2" parameterType="Integer">
+		DELETE FROM boardrecomment
+		WHERE rno = #{rno}
+	</delete>
+	
 	<select id="boardSearch" resultType="bDTO" parameterType="cDTO">		
 			SELECT * FROM (
 				SELECT rownum rnum, a.*
@@ -302,7 +307,54 @@
 	<select id="boardRecommentView" resultType="rcDTO">
 		SELECT * FROM boardrecomment
 		WHERE bno = #{bno}
-		ORDER BY rcno DESC
+		ORDER BY rcno ASC
 	</select>
 	
+	<select id="boardFavoriteCheck" resultType="fDTO">
+		SELECT * FROM favoriteboard
+		WHERE bno = #{bno} AND sessionuser = #{sessionUser}
+	</select>
+	
+	<insert id="boardFavoriteInsert" parameterType="fDTO">
+		INSERT INTO favoriteboard (fno, bno, sessionuser)
+		VALUES (seq_favoriteboard_fno.nextval, #{bno}, #{sessionUser})
+	</insert>
+	
+	<select id="boardFavoriteSelect" resultType="fDTO">
+		SELECT * FROM favoriteboard
+		WHERE bno = #{bno} AND sessionuser = #{sessionUser}
+	</select>
+	
+	<update id="boardFavoriteUpdate" parameterType="fDTO">
+		UPDATE favoriteboard SET
+		<choose>					
+			<when test="useyn eq 'N'.toString()">
+				useyn = 'Y' 
+			</when>
+			<when test="useyn eq 'Y'.toString()">
+				useyn = 'N' 
+			</when>
+		</choose>
+		WHERE bno = #{bno} AND sessionuser = #{sessionUser}
+	</update>
+	
+	<!-- bno 번 게시글의 전체 좋아요 수 UPDATE -->
+	<update id="boardGoodcntUpdate">
+		UPDATE tblboard SET
+		<choose>
+			<when test="useyn eq 'N'.toString()">
+				goodcnt = goodcnt + 1
+			</when>
+			<when test="useyn eq 'Y'.toString()">
+				goodcnt = goodcnt - 1
+			</when>		
+		</choose>		
+		WHERE bno = #{bno}
+	</update>
+	
+	<!-- bno 번 게시글의 전체 좋아요 수 SELECT -->
+	<select id="boardGoodcntSelect" resultType="int" parameterType="Integer">
+		SELECT goodcnt FROM tblboard 
+		WHERE bno = #{bno}
+	</select>
 </mapper>

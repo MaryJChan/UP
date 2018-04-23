@@ -13,6 +13,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 
 import com.sun.org.apache.bcel.internal.generic.IREM;
 import com.up.dto.BoardDTO;
+import com.up.dto.BoardFavoriteDTO;
 import com.up.dto.CriteriaDTO;
 import com.up.dto.NextPreDTO;
 import com.up.mybatis.SqlMapConfig;
@@ -147,7 +148,7 @@ public class BoardDAO {
 		return result;
 	}
 
-	public int boardHits(int bno, HttpSession countSession) {
+	public void boardHits(Integer bno, HttpSession countSession) {
 		sqlSession = sqlSessionFactory.openSession();
 		try {
 			long update_time = 0;
@@ -155,7 +156,7 @@ public class BoardDAO {
 			// 조회수를 증가할 때 생기는 read_time_게시글 번호가 없으면
 			// 현재 처음 조회수를 1증가하는 경우임
 			if(countSession.getAttribute("read_time_" + bno) != null) {
-				update_time = (long)countSession.getAttribute("read_time_" + bno);
+				update_time = (int)countSession.getAttribute("read_time_" + bno);
 			}
 			
 			// 현재 시간을 담는 변수
@@ -168,14 +169,18 @@ public class BoardDAO {
 				sqlSession.commit();
 				
 				countSession.setAttribute("read_time_" + bno, bno);
+				
+				if (result > 0) {
+					System.out.println("조회수 수정 완료");
+				} else {
+					System.out.println("조회수 수정 실패");
+				}
 			}			
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			sqlSession.close();
 		}
-		return result;
 	}
 
 	public List<BoardDTO> boardSearch(CriteriaDTO criDto) {
@@ -227,6 +232,35 @@ public class BoardDAO {
 		}
 		
 		return result;
+	}
+
+	public int boardGoodcntUpdate(BoardFavoriteDTO fDto) {
+		sqlSession = sqlSessionFactory.openSession();
+		try {
+			result = sqlSession.update("boardGoodcntUpdate", fDto);
+			sqlSession.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			sqlSession.close();
+		}
+		
+		return result;
+	}
+
+	public int boardGoodcntselect(Integer bno) {
+		int goodcnt = 0;
+		
+		sqlSession = sqlSessionFactory.openSession();
+		try {
+			goodcnt = sqlSession.selectOne("boardGoodcntSelect", bno);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			sqlSession.close();
+		}
+		
+		return goodcnt;
 	}
 	
 }

@@ -63,8 +63,19 @@ public class BoardReplyDAO {
 	public int boardReplyDelete(Integer rno) {
 		sqlSession = sqlSessionFactory.openSession();
 		try {
+			int result2 = sqlSession.delete("boardRecommentDelete2", rno);
+			sqlSession.commit();
+			
+			if(result2 > 0) {
+				System.out.println("댓글 하위 리뎃 삭제 완료");
+			} else {
+				System.out.println("댓글 하위 리뎃 삭제 실패");
+			}
+			
 			result = sqlSession.delete("boardReplyDelete", rno);
 			sqlSession.commit();
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

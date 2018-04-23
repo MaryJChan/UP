@@ -11,14 +11,34 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var favorite_board_check = $("#favorite_board_check").val();
+		var bdtail_favorite_btn = $("#bdtail_favorite_btn");
+		if(favorite_board_check == "Y"){
+			bdtail_favorite_btn.attr("src", "image/favorite.png");
+		} else if (favorite_board_check == "N"){
+			bdtail_favorite_btn.attr("src", "image/nonefavorite.png");
+		}
+	});
+</script>
 </head>
 <body>
+	<c:if test="${favoriteBoard != null}">
+		<input type="hidden" id="favorite_board_check" value="${favoriteBoard.useyn}">
+	</c:if>
 	<div id="bdtail_comment_count_wrap">
 		<span id="comment_count_fix">
 			댓글 : 
 		</span>
 		<span id="comment_count">
 			${boardReply.size()+boardRecomment.size()}
+		</span>
+		<span id="bdtail_favorite_wrap">
+			<img alt="" src="image/nonefavorite.png" id="bdtail_favorite_btn">
+			<span id="bdtail_favorite_fix">
+				${goodcnt}
+			</span>
 		</span>
 	</div>	
 	<c:if test="${empty boardReply}">
@@ -95,6 +115,19 @@
 					</div>					
 					<div class="reply_registration_contents">
 						${rcView.recomment}
+					</div>
+				</div>
+				<div class="recommand_update_line"  data_num="${rcView.rcno}">
+					<div class="recommand_update_line_position">
+						<form action="recommand.bizpoll" method="GET" name="recommand_update"  class="recommand_update">
+							<textarea name="bdtail_recommand_update_write" class="bdtail_recommand_update_write"   data_num="${rcView.rcno}">${rcView.recomment}</textarea>					
+							<input type="hidden" name="rno" class="rno"  value="${rcView.rcno}">
+						</form>
+						<span class="bdtail_recommand_write_update">
+							<a href="#" class="recommand_update_btn_css" >등록
+								<img class="recommand_update_img" alt="bdtail_registration_img" src="image/up_boardwrite.png" data_num="${rcView.rcno}">
+							</a>
+						</span>	
 					</div>
 				</div>
 			</c:if>

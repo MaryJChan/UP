@@ -63,7 +63,7 @@
 		background-color: #f4f4f4;
 	}
 	
-	#bdtail_comment_write, .bdtail_reply_write, .bdtail_recommand_write {
+	#bdtail_comment_write, .bdtail_reply_write, .bdtail_recommand_write, .bdtail_recommand_update_write {
 		width: 636px;
 		height: 36px;
 		margin-left: 10px;		
@@ -73,7 +73,7 @@
 		outline: none;
 		resize: none;
 	}
-	#bdtail_registration, .bdtail_update_registration, .bdtail_recommand_write_registration {
+	#bdtail_registration, .bdtail_update_registration, .bdtail_recommand_write_registration, .bdtail_recommand_write_update {
 		display: inline-block;
 		width: 55px;
 		height: 52px;
@@ -82,12 +82,12 @@
 		bottom: 15px;
 		text-align: center;
 	}
-	#bdtail_registration_img, .bdtail_update_img, .recommand_write_img {
+	#bdtail_registration_img, .bdtail_update_img, .recommand_write_img, .recommand_update_img {
 		height: 52px;		
 		position: absolute;
 		right: 0px;
 	}
-	.bdtail_registration_btn_css, .bdtail_update_btn_css, .recommand_write_btn_css {
+	.bdtail_registration_btn_css, .bdtail_update_btn_css, .recommand_write_btn_css, .recommand_update_btn_css {
 		display: inline-block;
 		width: 55px;
 		height: 52px;
@@ -110,7 +110,7 @@
 	
 	
 	/* 댓글 CSS */
-	#bdreply_store, .bdreply_update, .recommand_store {
+	#bdreply_store, .bdreply_update, .recommand_store, .recommand_update {
 		padding-top: 15px;
 		margin: 0 10px;
 	}
@@ -309,17 +309,20 @@
 		color: #9c9c9c;
 		outline: none;
 	}
-	.bdreply_update, .recommand_store {
+	.bdreply_update, .recommand_store, .recommand_update {
 		padding-bottom: 15px;
 		margin: 0px;
 		display: inline-block;
 	}
-	.command_update_line, .recommand_store_line{
+	.command_update_line, .recommand_store_line, .recommand_update_line{
 		margin: 0 10px;
 		border-bottom: 1px dotted #ccc;
 		display: none;
 	}
-	.command_update_line_position, .recommand_store_line_position {
+	.recommand_update_line {
+		display: block;
+	}
+	.command_update_line_position, .recommand_store_line_position, .recommand_update_line_position {
 		position: relative;
 		width: 740px;
 	}
@@ -338,15 +341,30 @@
 	#bdtail_file_download_btn {
 		display: inline-block;
 	}
+	#bdtail_favorite_wrap {
+		display: inline-block;
+		float: right;
+	}
+	#bdtail_favorite_fix {
+		display: inline-block; 
+		font-size: 19px;
+		height: 19px;
+		line-height: 19px;
+		padding: 0 5px;
+	}
+	#bdtail_favorite_btn {
+		cursor: pointer;
+	}
 </style>
 <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
 <script type="text/javascript">
 	function comment_list() {
+		var sessionUser = '<%=session.getAttribute("sid") %>';
 		var bno = $("#bno").val();
 		$.ajax({
 			type: "post",
 			url: "commentlist.bizpoll",
-			data: "bno=" + bno,
+			data: "bno=" + bno + "&sessionUser=" + sessionUser,
 			success: function(result) {				
 				$("#commentList").html(result);
 			}
@@ -364,9 +382,37 @@
 		} else {
 			$("#bdtail_footer").css("display", "none");
 		}
+	
 	});		
 	
-	
+	// 좋아요 클릭 Ajax	
+	$(document).on("click", "#bdtail_favorite_btn", function(){	
+		var bno = ${boardDetailList.bno};
+		var sessionUser = '<%=session.getAttribute("sid") %>';
+		
+		$.ajax({
+			// 가야할 서블릿 지정
+			url : "boardfavoriteupdate.bizpoll",
+			// 방식 지정 [GET | POST]
+			type : "POST",
+			// 타입 지정
+			dataType : "JSON",
+			// 쿼리스트링과 같은 =에 공백X     //data를 dataTpye가방에 담아 type방식으로 url로 보냄
+			data : "bno=" + bno + "&sessionUser=" + sessionUser,
+			//성공했을때	
+			success : function(data) {
+				if (data.flag == "1") {
+					comment_list();
+				} else if (data.flag == "0") {
+				}
+			},
+			//실패했을떄
+			error : function(data) {
+				alert("System Error!!!");
+			}
+		});	
+					
+	});		
 	
 	//댓글 작성 Ajax	
 	$(document).on("click", "#bdtail_registration_img", function(){	

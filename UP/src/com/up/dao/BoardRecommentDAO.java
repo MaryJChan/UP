@@ -13,7 +13,7 @@ import com.up.dto.BoardReplyDTO;
 import com.up.mybatis.SqlMapConfig;
 
 public class BoardRecommentDAO {
-	// MyBatis 세팅값 호출
+		// MyBatis 세팅값 호출
 		SqlSessionFactory sqlSessionFactory = SqlMapConfig.getSqlSession();
 		// mapper에 접근하기 위한 SqlSession
 		SqlSession sqlSession;

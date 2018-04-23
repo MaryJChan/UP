@@ -12,10 +12,7 @@ import javax.servlet.http.HttpSession;
 import com.up.action.Action;
 import com.up.action.ActionForward;
 import com.up.dao.BoardDAO;
-import com.up.dao.BoardRecommentDAO;
 import com.up.dao.BoardReplyDAO;
-import com.up.dto.BoardDTO;
-import com.up.dto.BoardRecommentDTO;
 import com.up.dto.BoardReplyDTO;
 import com.up.dto.NextPreDTO;
 
@@ -27,9 +24,8 @@ public class BoardDetailAction implements Action{
 		String url = "board/boarddetail.jsp";		
 		
 		List<BoardReplyDTO> list = null;
-		List<BoardRecommentDTO> list2 = null;
 		
-		int bno = Integer.parseInt(request.getParameter("bno"));
+		Integer bno = Integer.parseInt(request.getParameter("bno"));
 		System.out.println("게시글 번호 : " + bno);
 		
 		BoardDAO bDao = BoardDAO.getInstance();
@@ -38,14 +34,8 @@ public class BoardDetailAction implements Action{
 		// 조회수 1증가
 		// Session을 활용한 조회수 증가 방지
 		HttpSession session = request.getSession();
-		int result = bDao.boardHits(bno, session);
-		
-		if (result > 0) {
-			System.out.println("조회수 수정 완료");
-		} else {
-			System.out.println("조회수 수정 실패");
-		}
-		
+		bDao.boardHits(bno, session);
+				
 		// 이전글 다음글 출력 코드
 		npDto = bDao.boardDetail(bno);
 		System.out.println("번호 : " + npDto.getBno() + "  제목 : " + npDto.getTitle() + " 카테고리 : " + npDto.getCategory() + "  내용" + npDto.getContent() + "  작성자 : " + npDto.getWriter() + "  조회수 : " + npDto.getHits() + " 추천수 : " + npDto.getGoodcnt() + "  작성일 : " + npDto.getRegdate());

@@ -7,10 +7,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sun.corba.se.impl.protocol.BootstrapServerRequestDispatcher;
 import com.up.action.Action;
 import com.up.action.ActionForward;
+import com.up.dao.BoardDAO;
+import com.up.dao.BoardFavoriteDAO;
 import com.up.dao.BoardRecommentDAO;
 import com.up.dao.BoardReplyDAO;
+import com.up.dto.BoardFavoriteDTO;
 import com.up.dto.BoardRecommentDTO;
 import com.up.dto.BoardReplyDTO;
 
@@ -22,7 +26,8 @@ public class CommentListAction implements Action{
 		String url = "board/commentlist.jsp";
 		
 		Integer bno = Integer.parseInt(request.getParameter("bno"));
-		System.out.println(bno);
+		String sessionUser = request.getParameter("sessionUser");
+		
 		BoardReplyDAO rDao = BoardReplyDAO.getInstance();
 		List<BoardReplyDTO> list = rDao.boardReplyView(bno);
 		
@@ -33,7 +38,20 @@ public class CommentListAction implements Action{
 		BoardRecommentDAO rcDao = BoardRecommentDAO.getInstance();
 		List<BoardRecommentDTO> list2 = rcDao.boardRecommentView(bno);
 		
-		request.setAttribute("boardRecomment", list2);	
+		request.setAttribute("boardRecomment", list2);
+		
+		// 좋아요 확인
+		if(!sessionUser.equals("null")) {
+			BoardFavoriteDTO fDto = new BoardFavoriteDTO(bno, sessionUser);
+			BoardFavoriteDAO fDao = BoardFavoriteDAO.getInstance();
+			fDto = fDao.boardFavoriteSelect(fDto);
+			
+			request.setAttribute("favoriteBoard", fDto);
+		}
+		BoardDAO bDao = BoardDAO.getInstance();
+		int goodcnt = bDao.boardGoodcntselect(bno);
+		
+		request.setAttribute("goodcnt", goodcnt);
 		
 		ActionForward forward = new ActionForward();
 		forward.setPath(url);
