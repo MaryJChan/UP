@@ -13,27 +13,24 @@ import com.up.action.ActionForward;
 import com.up.dao.BoardReplyDAO;
 import com.up.dto.BoardReplyDTO;
 
-public class ReplyUpdateAction implements Action{
+// 댓글 삭제 페이지
+public class BoardDetailReplyDeleteAction implements Action{
 
 	@Override
 	public ActionForward excute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		JSONObject jObj = new JSONObject();
 		
-		int rno = Integer.parseInt(request.getParameter("rno"));
-		String replyComment = request.getParameter("replyComment");
-		System.out.println("rno = " + rno + "   replyComment = " + replyComment);
+		Integer rno = Integer.parseInt(request.getParameter("rno"));
+		System.out.println("rno = " + rno);
 		
-		BoardReplyDTO rDto = new BoardReplyDTO(rno, replyComment);
 		BoardReplyDAO rDao = BoardReplyDAO.getInstance();
-		int flag = rDao.boardReplyUpdate(rDto);
+		int flag = rDao.boardReplyDelete(rno);
 		
 		if(flag > 0) {
 			flag = 1;
-			System.out.println("댓글 수정 성공");
 		} else {
 			flag = 0;
-			System.out.println("댓글 수정 실패");
 		}
 		
 		jObj.put("flag", flag);

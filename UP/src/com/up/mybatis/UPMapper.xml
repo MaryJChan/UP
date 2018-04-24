@@ -210,7 +210,7 @@
 		WHERE rno = #{rno}
 	</delete>
 	
-	<select id="boardSearch" resultType="bDTO" parameterType="cDTO">		
+	<select id="boardOption" resultType="bDTO" parameterType="cDTO">		
 			SELECT * FROM (
 				SELECT rownum rnum, a.*
 				FROM (
@@ -271,34 +271,48 @@
 							</choose>
 						</otherwise>						
 					</choose>					
-					ORDER BY bno desc
+					ORDER BY 
+					<choose>
+						<when test="lineup.equals('번 호 ↓')">
+							bno DESC
+						</when>
+						<when test="lineup.equals('번 호 ↑')">
+							bno ASC
+						</when>
+						<when test="lineup.equals('제목 ↓')">
+							title DESC,bno DESC
+						</when>
+						<when test="lineup.equals('제목 ↑')">
+							title ASC,bno DESC
+						</when>
+						<when test="lineup.equals('작성자 ↓')">
+							writer DESC,bno DESC
+						</when>
+						<when test="lineup.equals('작성자 ↑')">
+							writer ASC,bno DESC
+						</when>
+						<when test="lineup.equals('작성일 ↓')">
+							regdate DESC,bno DESC
+						</when>
+						<when test="lineup.equals('작성일 ↑')">
+							regdate ASC,bno DESC
+						</when>
+						<when test="lineup.equals('조회수 ↓')">
+							hits DESC,bno DESC
+						</when>
+						<when test="lineup.equals('조회수 ↑')">
+							hits ASC,bno DESC
+						</when>
+						<when test="lineup.equals('추천수 ↓')">
+							goodcnt DESC,bno DESC
+						</when>
+						<when test="lineup.equals('추천수 ↑')">
+							goodcnt ASC,bno DESC
+						</when>
+					</choose>					
 				) a
 			)
 		WHERE rnum BETWEEN #{pageStart} AND #{perPageNum}		
-	</select>
-	
-	<select id="boardCategoryView" resultType="bDTO" parameterType="cDTO">
-		SELECT * FROM (
-				SELECT rownum rnum, a.*
-				FROM (
-					SELECT b.*, (SELECT COUNT(*)
-									 	 FROM boardreply d
-										 WHERE b.bno = d.bno) replycnt, 
-										 (SELECT COUNT(*) 
-										 FROM boardrecomment drc 
-										 WHERE b.bno = drc.bno) recommentcnt 
-					FROM tblboard b
-					<choose>					
-						<when test="category.equals('전체')">
-						</when>
-						<otherwise>
-							WHERE category = #{category}
-						</otherwise>
-					</choose>
-					ORDER BY bno desc
-				) a
-			)
-		WHERE rnum BETWEEN #{pageStart} AND #{perPageNum}
 	</select>
 	
 	<update id="boardReplyUpdate" parameterType="rDTO">

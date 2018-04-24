@@ -13,7 +13,7 @@ import com.up.action.ActionForward;
 import com.up.dao.BoardReplyDAO;
 import com.up.dto.BoardReplyDTO;
 
-public class BoardReplyAction implements Action{
+public class BoardDetailReplyAction implements Action{
 
 	@Override
 	public ActionForward excute(HttpServletRequest request, HttpServletResponse response)

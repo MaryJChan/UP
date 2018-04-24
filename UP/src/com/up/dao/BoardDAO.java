@@ -183,30 +183,11 @@ public class BoardDAO {
 		}
 	}
 
-	public List<BoardDTO> boardSearch(CriteriaDTO criDto) {
+	public List<BoardDTO> boardOption(CriteriaDTO criDto) {
 		sqlSession = sqlSessionFactory.openSession();
 		List<BoardDTO> list = new ArrayList<>();
 		try {
-			list = sqlSession.selectList("boardSearch", criDto);
-			
-			System.out.println(list.size());
-			for (BoardDTO boardDTO : list) {
-				System.out.println("번호 : " + boardDTO.getBno() + "  작성자 : " + boardDTO.getWriter() + "  제목 : " + boardDTO.getTitle() + "  내용 : " + boardDTO.getContent() + "  조회수 : " + boardDTO.getHits() + "  작성일 : " + boardDTO.getRegdate());
-			}			
-			System.out.println();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			sqlSession.close();
-		}		
-		return list;
-	}
-
-	public List<BoardDTO> boardCategory(CriteriaDTO criDto) {
-		sqlSession = sqlSessionFactory.openSession();
-		List<BoardDTO> list = new ArrayList<>();
-		try {
-			list = sqlSession.selectList("boardCategoryView", criDto);
+			list = sqlSession.selectList("boardOption", criDto);				
 			
 			System.out.println(list.size());
 			for (BoardDTO boardDTO : list) {

@@ -10,7 +10,7 @@ import com.up.action.Action;
 import com.up.action.ActionForward;
 import com.up.dao.BoardDAO;
 
-public class BoardDeleteAction implements Action{
+public class BoardDetailDeleteAction implements Action{
 
 	@Override
 	public ActionForward excute(HttpServletRequest request, HttpServletResponse response)

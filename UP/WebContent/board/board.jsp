@@ -86,19 +86,22 @@
 		font-size: 14px;
 	}
 	#board_num {
-		width: 50px;
+		width: 47px;
 	}
 	#board_title {
-		width: 410px;
+		width: 360px;
 	}
 	#board_user {
-		width: 90px;
+		width: 70px;
 	}
 	#board_day {
 		width: 75px;
 	}
 	#board_click {
-		width: 50px;		
+		width: 55px;		
+	}
+	#board_goodcnt {
+		width: 55px;
 	}
 	.share_attr {
 		font-weight: lighter;
@@ -107,6 +110,7 @@
 	.board_attr_option {
 		text-align: center;
 		display: inline-block;
+		cursor: pointer;
 	}
 	.board_view_a {
 		color: #666;
@@ -115,16 +119,16 @@
 		display: inline-block;
 	}
 	.a_boarder_num {
-		width: 50px;
+		width: 47px;
 	}
 	.a_boarder_title {
-		width: 410px;
+		width: 360px;
 		text-align:  left;
 		padding-left: 8px;
 		padding-right: 0;
 	}
 	.a_boarder_user {
-		width: 90px;
+		width: 70px;
 	}
 	.a_boarder_day {
 		width: 75px;
@@ -132,8 +136,14 @@
 		padding-right: 5px;
 	}
 	.a_boarder_click {
-		width: 49px;
-		padding: 0;
+		width: 54px;
+		padding-left: 3px;
+		padding-right: 5px;
+	}
+	.a_boarder_goodcnt {
+		width: 57px;
+		padding-left: 3px;
+		padding-right: 0px;
 	}
 	.pagination {
 		text-align: center;
@@ -223,6 +233,7 @@
 <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
+		// 카테고리 선택시 페이지 이동후 카테고리 셀렉트박스 고정 코딩
 		var category_value = $("#category_value").val();
 		var board_category = $("#board_category");
 		if (category_value == "전체") {
@@ -235,6 +246,7 @@
 			board_category.val("기타 문의").prop("selected", true);
 		}
 		
+		// 검색 옵션 선택후 검색시 페이지 이동후 검색옵션 셀렉트박스 고정 코딩
 		var searchOption_value = $("#searchOption_value").val();
 		var search_select = $("#search_select");
 		if (searchOption_value == "제목") {
@@ -247,9 +259,102 @@
 			search_select.val("제목+내용").prop("selected", true);
 		}
 		
+		// 컬럼별 정렬 선택시 페이지 이동후 컬럼 고정 코딩
+		var lineup = $("#board_lineup_value").val();
+		var board_num = $("#board_num");
+		var board_title = $("#board_title");
+		var board_user = $("#board_user");
+		var board_day = $("#board_day");
+		var board_click = $("#board_click");
+		var board_goodcnt = $("#board_goodcnt");
+		if(lineup == "번 호 ↓"){
+			board_num.text(lineup);
+			board_num.css("color", "#d60013");
+		} else if(lineup == "번 호 ↑") {
+			board_num.text(lineup);
+			board_num.css("color", "#d60013");
+		} else if(lineup == "제목 ↓") {
+			board_title.text(lineup);
+			board_title.css("color", "#d60013");
+		} else if(lineup == "제목 ↑") {
+			board_title.text(lineup);
+			board_title.css("color", "#d60013");
+		} else if(lineup == "작성자 ↓") {
+			board_user.text(lineup);
+			board_user.css("color", "#d60013");
+		} else if(lineup == "작성자 ↑") {
+			board_user.text(lineup);
+			board_user.css("color", "#d60013");
+		} else if(lineup == "작성일 ↓") {
+			board_day.text(lineup);
+			board_day.css("color", "#d60013");
+		} else if(lineup == "작성일 ↑") {
+			board_day.text(lineup);
+			board_day.css("color", "#d60013");
+		} else if(lineup == "조회수 ↓") {
+			board_click.text(lineup);
+			board_click.css("color", "#d60013");
+		} else if(lineup == "조회수 ↑") {
+			board_click.text(lineup);
+			board_click.css("color", "#d60013");
+		} else if(lineup == "추천수 ↓") {
+			board_goodcnt.text(lineup);
+			board_goodcnt.css("color", "#d60013");
+		} else if(lineup == "추천수 ↑") {
+			board_goodcnt.text(lineup);
+			board_goodcnt.css("color", "#d60013");
+		}
+		
+		// 로그인 하지 않은 상태에서 글쓰기 버튼 클릭시 로그인 모달창 띄우는 코딩
 		$("#nologin_write").on("click", function(){
 			$("#myModal").css("display", "block");
 		});
+	});
+	
+		
+	$(document).on("click", ".board_attr_option", function(){		
+		$(".board_attr_option").css("color", "#333");		
+		
+		var lineup_text = $(this).text();				
+		var lineup_none = $("#board_lineup_value");
+		var lineup = $("#board_lineup_value").val();
+		
+		$("#board_num").text("번 호");
+		$("#board_title").text("제목");
+		$("#board_user").text("작성자");
+		$("#board_day").text("작성일");
+		$("#board_click").text("조회수");
+		$("#board_goodcnt").text("추천수");
+		
+		if(lineup_text == "번 호 ↓"){
+			$(this).text("번 호 ↑").css("color", "#d60013");			
+		} else if(lineup_text == "번 호 ↑" || lineup_text == "번 호") {
+			$(this).text("번 호 ↓").css("color", "#d60013");
+		} else if(lineup_text == "제목 ↓") {
+			$(this).text("제목 ↑").css("color", "#d60013");
+		} else if(lineup_text == "제목 ↑" || lineup_text == "제목") {
+			$(this).text("제목 ↓").css("color", "#d60013");
+		} else if(lineup_text == "작성자 ↓") {
+			$(this).text("작성자 ↑").css("color", "#d60013");
+		} else if(lineup_text == "작성자 ↑" || lineup_text == "작성자") {
+			$(this).text("작성자 ↓").css("color", "#d60013");
+		} else if(lineup_text == "작성일 ↓") {
+			$(this).text("작성일 ↑").css("color", "#d60013");
+		} else if(lineup_text == "작성일 ↑" || lineup_text == "작성일") {
+			$(this).text("작성일 ↓").css("color", "#d60013");
+		} else if(lineup_text == "조회수 ↓") {
+			$(this).text("조회수 ↑").css("color", "#d60013");
+		} else if(lineup_text == "조회수 ↑" || lineup_text == "조회수") {
+			$(this).text("조회수 ↓").css("color", "#d60013");
+		} else if(lineup_text == "추천수 ↓") {
+			$(this).text("추천수 ↑").css("color", "#d60013");
+		} else if(lineup_text == "추천수 ↑" || lineup_text == "추천수") {
+			$(this).text("추천수 ↓").css("color", "#d60013");
+		}
+		lineup_none.val($(this).text());
+		var category_value = $("#board_category").val();
+		var board_lineup_value = $("#board_lineup_value").val();
+		location.href="boardoption.bizpoll?category_value="+category_value + "&board_lineup_value=" + board_lineup_value + "&search_select=제목&SearchWd=";
 	});
 	
 	$(document).on("click", "#search_btn", function(){
@@ -257,13 +362,14 @@
 	});
 	
 	$(document).on("change", "#board_category", function(){
-		var category = $(this).val();
-		location.href="boardcategory.bizpoll?category="+category;
+		var category_value = $(this).val();
+		var board_lineup_value = $("#board_lineup_value").val();
+		location.href="boardoption.bizpoll?category_value="+category_value + "&board_lineup_value=" + board_lineup_value + "&search_select=제목&SearchWd=";
 	});
 </script>
 </head>
 <body>
-	<div id="wrap_board">
+	<div id="wrap_board">		
 		<h1 class="title_r">Q & A 게시판</h1>		
 		<div id="board_category_wrap">			
 			<select name="board_category" id="board_category">
@@ -285,9 +391,11 @@
 				<span class="share_attr">|</span>
 				<span id="board_user" class="board_attr_option">작성자</span>
 				<span class="share_attr">|</span>
-				<span id="board_day" class="board_attr_option">날짜</span>
+				<span id="board_day" class="board_attr_option">작성일</span>
 				<span class="share_attr">|</span>
 				<span id="board_click" class="board_attr_option">조회수</span>
+				<span class="share_attr">|</span>
+				<span id="board_goodcnt" class="board_attr_option">추천수</span>
 			</div>
 			<c:choose>
 				<c:when test="${empty boardList}">
@@ -327,31 +435,30 @@
 							<a href="#" class="board_view_a a_boarder_user">
 								${list.writer}
 							</a>
-							<span class="board_view_a a_boarder_day" >
-							
+							<span class="board_view_a a_boarder_day" >							
 								<fmt:formatDate value="${today}" pattern="yyyy-MM-dd" var="today2"/>
-								<fmt:formatDate value="${list.regdate}" pattern="yyyy-MM-dd" var="regdate2"/>
-								
+								<fmt:formatDate value="${list.regdate}" pattern="yyyy-MM-dd" var="regdate2"/>								
 								<c:if test="${today2 == regdate2}">
 									<fmt:formatDate pattern="HH:mm" value="${list.regdate}"/>
 								</c:if>
 								<c:if test="${today2 != regdate2}">
 									<fmt:formatDate pattern="yyyy-MM-dd" value="${list.regdate}"/>
-								</c:if>
-							
-								
+								</c:if>							
 							</span>
 							<span class="board_view_a a_boarder_click">
 								${list.hits}
-							</span>				
+							</span>			
+							<span class="board_view_a a_boarder_goodcnt">
+								${list.goodcnt}
+							</span>	
 						</div>
 					</c:forEach>
 				</c:otherwise>
 			</c:choose>						
 		</div>		
 		<div id="board_tail_wrap">			
-			<form action="boardsearch.bizpoll" name="search_board" id="search_board"  method="GET">
-				<span>				
+			<form action="boardoption.bizpoll" name="search_board" id="search_board"  method="GET">
+				<span>									
 					<select id="search_select" name="search_select">
 						<option class="select_value"  value="제목">제목</option>
 						<option class="select_value"  value="작성자">작성자</option>
@@ -362,6 +469,7 @@
 				<span class="faqs_search">					
 					<input type="hidden" name="category_value" id="category_value" value="${pageMaker.criDto.category}">
 					<input type="hidden" name="searchOption_value" id="searchOption_value" value="${pageMaker.criDto.searchOption}">
+					<input type="hidden" id="board_lineup_value" name="board_lineup_value" value="${pageMaker.criDto.lineup}">
 					<input type="text" name="SearchWd" id="SearchWd" class="sr_input">					
 					<a href="#"  id="search_btn">검색</a>
 				</span>
@@ -375,10 +483,8 @@
 						<a href="boardregisterview.bizpoll"  id="board_write_button" class="board_write_btn">글쓰기</a>
 					</c:otherwise>
 				</c:choose>
-			</span>			
-			
-		</div>
-		
+			</span>						
+		</div>		
 		<div class="pagination">
 			<c:if test="${pageMaker.prev}">
 				<a href="board.bizpoll?page=${pageMaker.startPage-1}">&laquo;</a>
@@ -390,11 +496,8 @@
 					<a href="board.bizpoll?page=${idx}"<c:out value="${pageMaker.criDto.page == idx? 'class=active' : ' '}"/>>${idx}</a>
 				</c:if>
 				<c:if test="${flag == 1}">
-					<a href="boardsearch.bizpoll?page=${idx}&search_select=${pageMaker.criDto.searchOption}&SearchWd=${pageMaker.criDto.keyword}&category_value=${pageMaker.criDto.category}"<c:out value="${pageMaker.criDto.page == idx? 'class=active' : ' '}"/>>${idx}</a>
-				</c:if>
-				<c:if test="${flag == 2}">
-					<a href="boardcategory.bizpoll?page=${idx}&category=${pageMaker.criDto.category}"<c:out value="${pageMaker.criDto.page == idx? 'class=active' : ' '}"/>>${idx}</a>
-				</c:if>				
+					<a href="boardoption.bizpoll?page=${idx}&search_select=${pageMaker.criDto.searchOption}&SearchWd=${pageMaker.criDto.keyword}&category_value=${pageMaker.criDto.category}"<c:out value="${pageMaker.criDto.page == idx? 'class=active' : ' '}"/>>${idx}</a>
+				</c:if>	
 			</c:forEach>
 			<c:if test="${pageMaker.next}">
 				<a href="board.bizpoll?page=${pageMaker.endPage+1}">&raquo;</a>

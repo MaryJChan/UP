@@ -18,7 +18,7 @@ import com.up.dto.BoardFavoriteDTO;
 import com.up.dto.BoardRecommentDTO;
 import com.up.dto.BoardReplyDTO;
 
-public class CommentListAction implements Action{
+public class BoardDetailCommentListAction implements Action{
 
 	@Override
 	public ActionForward excute(HttpServletRequest request, HttpServletResponse response)

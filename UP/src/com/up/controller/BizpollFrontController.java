@@ -13,21 +13,20 @@ import com.up.action.Action;
 
 import com.up.action.ActionForward;
 import com.up.action.board.BoardAction;
-import com.up.action.board.BoardCategoryAction;
-import com.up.action.board.BoardDeleteAction;
+import com.up.action.board.BoardDetailDeleteAction;
 import com.up.action.board.BoardDetailAction;
-import com.up.action.board.BoardDownload;
+import com.up.action.board.BoardDetailDownload;
 import com.up.action.board.BoardFavoriteUpdateAjaxAction;
 import com.up.action.board.BoardRegisterStoreAction;
 import com.up.action.board.BoardRegisterViewAction;
-import com.up.action.board.BoardReplyAction;
-import com.up.action.board.BoardReplyDeleteAction;
-import com.up.action.board.BoardSearchAction;
+import com.up.action.board.BoardDetailReplyAction;
+import com.up.action.board.BoardDetailReplyDeleteAction;
+import com.up.action.board.BoardOptionAction;
 import com.up.action.board.BoardUpdateAction;
 import com.up.action.board.BoardUpdateViewAction;
-import com.up.action.board.CommentListAction;
-import com.up.action.board.RecommentStoreAction;
-import com.up.action.board.ReplyUpdateAction;
+import com.up.action.board.BoardDetailCommentListAction;
+import com.up.action.board.BoardDetailRecommentStoreAction;
+import com.up.action.board.BoardDetailReplyUpdateAction;
 import com.up.action.index.IndexAction;
 import com.up.action.login.LoginAjaxCkAction;
 import com.up.action.login.LogoutAjaxAction;
@@ -114,34 +113,31 @@ public class BizpollFrontController extends HttpServlet {
 			action = new BoardUpdateAction();			
 			forward = action.excute(request, response);
 		} else if (command.equals("/boarddelete.bizpoll")) {
-			action = new BoardDeleteAction();			
+			action = new BoardDetailDeleteAction();			
 			forward = action.excute(request, response);
 		} else if (command.equals("/boardreplystore.bizpoll")) {
-			action = new BoardReplyAction();			
+			action = new BoardDetailReplyAction();			
 			forward = action.excute(request, response);
 		} else if (command.equals("/replydelete.bizpoll")) {
-			action = new BoardReplyDeleteAction();			
+			action = new BoardDetailReplyDeleteAction();			
 			forward = action.excute(request, response);
-		} else if (command.equals("/boardsearch.bizpoll")) {
-			action = new BoardSearchAction();			
-			forward = action.excute(request, response);
-		} else if (command.equals("/boardcategory.bizpoll")) {
-			action = new BoardCategoryAction();			
+		} else if (command.equals("/boardoption.bizpoll")) {
+			action = new BoardOptionAction();			
 			forward = action.excute(request, response);
 		} else if (command.equals("/commentlist.bizpoll")) {
-			action = new CommentListAction();			
+			action = new BoardDetailCommentListAction();			
 			forward = action.excute(request, response);
 		} else if (command.equals("/replyupdate.bizpoll")) {
-			action = new ReplyUpdateAction();			
+			action = new BoardDetailReplyUpdateAction();			
 			forward = action.excute(request, response);
 		} else if (command.equals("/recommentstore.bizpoll")) {
-			action = new RecommentStoreAction();			
+			action = new BoardDetailRecommentStoreAction();			
 			forward = action.excute(request, response);
 		} else if (command.equals("/boardfavoriteupdate.bizpoll")) {
 			action = new BoardFavoriteUpdateAjaxAction();			
 			forward = action.excute(request, response);
 		} else if (command.equals("/boarddownload.bizpoll")) {
-			action = new BoardDownload();			
+			action = new BoardDetailDownload();			
 			forward = action.excute(request, response);
 		}
 		// ======= 공통분기 작업 ======= //

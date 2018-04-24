@@ -15,7 +15,7 @@ import com.up.dto.BoardDTO;
 import com.up.dto.CriteriaDTO;
 import com.up.dto.PageMakerDTO;
 
-public class BoardSearchAction implements Action{
+public class BoardOptionAction implements Action{
 
 	@Override
 	public ActionForward excute(HttpServletRequest request, HttpServletResponse response)
@@ -40,21 +40,20 @@ public class BoardSearchAction implements Action{
 		String searchOption = request.getParameter("search_select");
 		String keyword = request.getParameter("SearchWd");
 		String category = request.getParameter("category_value");
-		
-		if(category == "") {
-			category = "전체";
-		}
+		String lineup = request.getParameter("board_lineup_value");
 		
 		System.out.println(searchOption);
 		System.out.println(keyword);
 		System.out.println(category);
+		System.out.println(lineup);
 				
 		// criDto에 keyword값 추가
 		criDto.setKeyword(keyword);
 		criDto.setSearchOption(searchOption);
 		criDto.setCategory(category);
+		criDto.setLineup(lineup);
 		
-		List<BoardDTO> boardList = bDao.boardSearch(criDto);
+		List<BoardDTO> boardList = bDao.boardOption(criDto);
 	
 		request.setAttribute("boardList", boardList);			
 		

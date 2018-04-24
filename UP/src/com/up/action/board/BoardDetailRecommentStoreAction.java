@@ -15,7 +15,7 @@ import com.up.dao.BoardReplyDAO;
 import com.up.dto.BoardRecommentDTO;
 import com.up.dto.BoardReplyDTO;
 
-public class RecommentStoreAction implements Action{
+public class BoardDetailRecommentStoreAction implements Action{
 
 	@Override
 	public ActionForward excute(HttpServletRequest request, HttpServletResponse response)

@@ -5,7 +5,8 @@ package com.up.dto;
 public class CriteriaDTO {
 	private String keyword;
 	private String searchOption;
-	private String category;
+	private String category = "전체";
+	private String lineup = "번 호 ↓";
 	private int page;					// 페이지번호(하단의 번호들 클릭)
 	private int perPageNum;		// 한 페이지에 보여줄 게시글 수
 	
@@ -80,6 +81,14 @@ public class CriteriaDTO {
 
 	public void setCategory(String category) {
 		this.category = category;
-	}	
+	}
+
+	public String getLineup() {
+		return lineup;
+	}
+
+	public void setLineup(String lineup) {
+		this.lineup = lineup;
+	}		
 
 }

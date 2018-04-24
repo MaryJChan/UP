@@ -13,7 +13,7 @@ import com.up.action.ActionForward;
 import com.up.common.Constants;
 import com.up.dao.BoardDAO;
 
-public class BoardDownload implements Action{
+public class BoardDetailDownload implements Action{
 
 	@Override
 	public ActionForward excute(HttpServletRequest request, HttpServletResponse response)
