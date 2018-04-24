@@ -637,14 +637,16 @@
 			</span>
 		</div>
 		<div id="bdtail_file_download_wrap">
-			<span id="bdtail_file_download__position">
-				<span id="bdtail_file_download_fix">
-					첨부파일 : 
+			<c:if test="${boardDetailList.filesize > 0}">
+				<span id="bdtail_file_download__position">
+					<span id="bdtail_file_download_fix">
+						첨부파일 : 
+					</span>
+					<a href="boarddownload.bizpoll?bno=${boardDetailList.bno}" id="bdtail_file_download_btn">
+						${boardDetailList.filename}
+					</a>
 				</span>
-				<a href="#" id="bdtail_file_download_btn">
-					아직은 없음 ㅎㅎ
-				</a>
-			</span>
+			</c:if>
 		</div>
 		<div id="bdtail_contents">
 			${boardDetailList.content}

@@ -58,10 +58,12 @@
 				<span class="command_date">
 					<fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${reply.regdate}"/>
 				</span>
-				<c:if test="${fn:trim(sessionScope.loginUser.mid) eq fn:trim(reply.sessionUser)}">
+				<c:if test="${!empty sessionScope.loginUser}">
 					<a href="#" class="command_reply" data_num="${reply.rno}">
 						답글
-					</a>				
+					</a>	
+				</c:if>
+				<c:if test="${fn:trim(sessionScope.loginUser.mid) eq fn:trim(reply.sessionUser)}">			
 					<span class="board_comment_option">
 						<a href="#" class="board_comment_update" data_num="${reply.rno}">
 							수정
@@ -101,7 +103,7 @@
 						<span class="reply_date">
 							<fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${rcView.regdate}"/>
 						</span>
-						<c:if test="${fn:trim(sessionScope.loginUser.mid) eq fn:trim(reply.sessionUser)}">
+						<c:if test="${fn:trim(sessionScope.loginUser.mid) eq fn:trim(rcView.sessionUser)}">
 							<span class="board_recomment_option">
 								<a href="#" class="board_recomment_update" data_num="${rcView.rcno}">
 									수정

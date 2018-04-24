@@ -35,9 +35,11 @@
 		ORDER BY bno DESC
 	</select>
 	
+	<!-- 시퀀스와 동일한 기능을하는 서브쿼리 -->
+	<!-- ref는 bno와 같은 값을 사용해야한다 -->
 	<insert id="boardstore" parameterType="bDTO">
-		INSERT INTO tblboard(bno, title, category, content, writer) 
-		VALUES (seq_tblboard_bno.nextval, #{title}, #{category}, #{content}, #{writer})
+		INSERT INTO tblboard(bno, title, category, content, writer, filename, filesize, ref, re_step, re_level) 
+		VALUES ((SELECT nvl(max(bno)+1, 1) from tblboard), #{title}, #{category}, #{content}, #{writer}, #{filename}, #{filesize}, (SELECT nvl(max(bno)+1, 1) from tblboard), 1, 0)
 	</insert>
 	
 	<select id="boarddetailview" resultType="npDTO" parameterType="Integer">
@@ -52,6 +54,11 @@
 				writer, 
 				hits,
 				goodcnt,
+				filename,
+				filesize,
+				ref,
+				re_step,
+				re_level,
 				regdate, 
 				LEAD(bno, 1 ) OVER (ORDER BY bno DESC) AS next_article_bno, 
 				LEAD(TITLE, 1 , '다음글 없음') OVER (ORDER BY bno DESC) AS next_title, 
@@ -355,6 +362,12 @@
 	<!-- bno 번 게시글의 전체 좋아요 수 SELECT -->
 	<select id="boardGoodcntSelect" resultType="int" parameterType="Integer">
 		SELECT goodcnt FROM tblboard 
+		WHERE bno = #{bno}
+	</select>
+	
+	<!-- bno번 게시글의 filename을 SELECT -->
+	<select id="getFileName" resultType="String" parameterType="Integer">
+		SELECT filename FROM tblboard
 		WHERE bno = #{bno}
 	</select>
 </mapper>

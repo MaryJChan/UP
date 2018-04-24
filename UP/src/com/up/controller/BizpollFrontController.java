@@ -16,6 +16,7 @@ import com.up.action.board.BoardAction;
 import com.up.action.board.BoardCategoryAction;
 import com.up.action.board.BoardDeleteAction;
 import com.up.action.board.BoardDetailAction;
+import com.up.action.board.BoardDownload;
 import com.up.action.board.BoardFavoriteUpdateAjaxAction;
 import com.up.action.board.BoardRegisterStoreAction;
 import com.up.action.board.BoardRegisterViewAction;
@@ -138,6 +139,9 @@ public class BizpollFrontController extends HttpServlet {
 			forward = action.excute(request, response);
 		} else if (command.equals("/boardfavoriteupdate.bizpoll")) {
 			action = new BoardFavoriteUpdateAjaxAction();			
+			forward = action.excute(request, response);
+		} else if (command.equals("/boarddownload.bizpoll")) {
+			action = new BoardDownload();			
 			forward = action.excute(request, response);
 		}
 		// ======= 공통분기 작업 ======= //

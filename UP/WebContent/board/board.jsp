@@ -216,6 +216,7 @@
 		padding: 1px 3px;
 	}
 	#board_file_view{
+		display: inline-block;
 		margin: auto;
 	}
 </style>
@@ -316,7 +317,9 @@
 								<c:if test="${list.replycnt != 0}">
 									(${list.replycnt + list.recommentcnt})
 								</c:if>
-								<img src="image/photo.png" id="board_file_view"></img>
+								<c:if test="${list.filesize > 0}">
+									<img src="image/photo.png" id="board_file_view"></img>
+								</c:if>
 								<c:if test="${today2 == regdate2}">
 									<span class="new_time">New</span>
 								</c:if>

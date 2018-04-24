@@ -150,13 +150,14 @@ public class BoardDAO {
 
 	public void boardHits(Integer bno, HttpSession countSession) {
 		sqlSession = sqlSessionFactory.openSession();
+		int result = 0;
 		try {
 			long update_time = 0;
 			
 			// 조회수를 증가할 때 생기는 read_time_게시글 번호가 없으면
 			// 현재 처음 조회수를 1증가하는 경우임
 			if(countSession.getAttribute("read_time_" + bno) != null) {
-				update_time = (int)countSession.getAttribute("read_time_" + bno);
+				update_time = (long)countSession.getAttribute("read_time_" + bno);
 			}
 			
 			// 현재 시간을 담는 변수
@@ -168,14 +169,13 @@ public class BoardDAO {
 				result = sqlSession.update("boardhitsupdate", bno);
 				sqlSession.commit();
 				
-				countSession.setAttribute("read_time_" + bno, bno);
-				
-				if (result > 0) {
-					System.out.println("조회수 수정 완료");
-				} else {
-					System.out.println("조회수 수정 실패");
-				}
-			}			
+				countSession.setAttribute("read_time_" + bno, current_time);			
+			}		
+			if (result > 0) {
+				System.out.println("조회수 수정 완료");
+			} else {
+				System.out.println("조회수 수정 실패");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -261,6 +261,19 @@ public class BoardDAO {
 		}
 		
 		return goodcnt;
+	}
+
+	public String getFileName(Integer bno) {
+		String result = null;
+		sqlSession = sqlSessionFactory.openSession();
+		try {
+			result = sqlSession.selectOne("getFileName", bno);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			sqlSession.close();
+		}
+		return result;
 	}
 	
 }

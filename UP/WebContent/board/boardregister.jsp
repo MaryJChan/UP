@@ -201,7 +201,8 @@
 <body>
 	<div id="bdregister_wrap">
 		<h1 class="title_r">Q & A</h1>
-		<form action="boardregisterstore.bizpoll" method="POST" name="bdregister_post" id="bdregister_post">
+		<!-- 파일 다운로드하기 위해 form의 method는 POST 를 사용, enctype="multipart/form-data"속성 추가 -->
+		<form action="boardregisterstore.bizpoll" method="POST" name="bdregister_post" id="bdregister_post" enctype="multipart/form-data">
 			<div id="bdregister_title_wrap" class="bdregister_header_wrap">
 				<span id="bdregister_title_fix" class="bdregister_header_fix">
 					제 목 : 
