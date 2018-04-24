@@ -205,7 +205,6 @@
 	#board_total_count_view {
 		height: 37px;
 		line-height:37px;
-		float: right;
 		padding: 0 5px;
 	}
 	.new_time {
@@ -298,8 +297,9 @@
 								게시글이 없습니다.
 							</c:when>
 							<c:when test="${flag == 1}">
+								[ ${pageMaker.criDto.category} ] ${pageMaker.criDto.searchOption}에 
 								<span class="search_result">"${pageMaker.criDto.keyword}"</span>
-								로 검색한 결과는 총
+								가 포함된 검색한 결과는 총
 								<span class="search_result">${pageMaker.totalCount}</span>
 								건 입니다.
 							</c:when>

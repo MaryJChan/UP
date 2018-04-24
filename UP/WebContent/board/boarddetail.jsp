@@ -645,6 +645,7 @@
 					<a href="boarddownload.bizpoll?bno=${boardDetailList.bno}" id="bdtail_file_download_btn">
 						${boardDetailList.filename}
 					</a>
+					<span>${boardDetailList.downcnt}</span>
 				</span>
 			</c:if>
 		</div>

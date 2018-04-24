@@ -17,7 +17,7 @@ public class BoardDownload implements Action{
 
 	@Override
 	public ActionForward excute(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws ServletException, IOException {		
 		
 		// 게시글 파일 다운로드
 		// 클라이언트										서버
@@ -71,7 +71,9 @@ public class BoardDownload implements Action{
 		out.flush();			// out.flush(); 처리 필수 (남아있는 데이터까지 받아준다.)
 		out.close();			// out.close(); fis.close(); 객체 닫기
 		fis.close();
-
+		
+		bDao.updateDowncnt(bno);
+		
 		return null;
 	}
 

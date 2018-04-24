@@ -15,6 +15,7 @@ public class BoardDTO {
 	private int goodcnt;	
 	private String filename;
 	private int filesize;
+	private int downcnt;
 	private int ref;
 	private int re_step;
 	private int re_level;
@@ -168,6 +169,14 @@ public class BoardDTO {
 
 	public void setFilesize(int filesize) {
 		this.filesize = filesize;
+	}	
+
+	public int getDowncnt() {
+		return downcnt;
+	}
+
+	public void setDowncnt(int downcnt) {
+		this.downcnt = downcnt;
 	}
 
 	public int getRef() {

@@ -56,6 +56,7 @@
 				goodcnt,
 				filename,
 				filesize,
+				downcnt,
 				ref,
 				re_step,
 				re_level,
@@ -370,4 +371,11 @@
 		SELECT filename FROM tblboard
 		WHERE bno = #{bno}
 	</select>
+	
+	<!-- bno번 게시글의 파일 다운시 downcnt횟수 증가 -->
+	<update id="updateDowncnt" parameterType="Integer">
+		UPDATE tblboard SET
+		downcnt = downcnt + 1
+		WHERE bno = #{bno}
+	</update>
 </mapper>

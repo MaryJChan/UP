@@ -275,5 +275,23 @@ public class BoardDAO {
 		}
 		return result;
 	}
+
+	public void updateDowncnt(Integer bno) {
+		int result = 0;
+		sqlSession = sqlSessionFactory.openSession();
+		try {
+			result = sqlSession.update("updateDowncnt", bno);
+			sqlSession.commit();
+			if(result > 0) {
+				System.out.println("다운횟수 증가 성공");
+			} else {
+				System.out.println("다운횟수 증가 실패");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			sqlSession.close();
+		}
+	}
 	
 }
