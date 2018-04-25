@@ -48,6 +48,7 @@
 		SELECT * FROM (
 			SELECT
 				bno, 
+				bnoup,
 				title, 
 				category,
 				content,				
@@ -61,14 +62,14 @@
 				re_step,
 				re_level,
 				regdate, 
-				LEAD(bno, 1 ) OVER (ORDER BY bno ASC) AS next_article_bno, 
-				LEAD(TITLE, 1 , '다음글 없음') OVER (ORDER BY bno ASC) AS next_title, 
-				LEAD(writer, 1 , '') OVER (ORDER BY bno ASC) AS next_writer, 
-				LEAD(regdate, 1 , '') OVER (ORDER BY bno ASC) AS next_regdate, 
-				LAG(bno, 1) OVER (ORDER BY bno ASC ) AS pre_article_bno, 
-				LAG(TITLE, 1 , '이전글 없음') OVER (ORDER BY bno ASC ) pre_title, 
-				LAG(writer, 1) OVER (ORDER BY bno ASC ) AS pre_writer, 
-				LAG(regdate, 1) OVER (ORDER BY bno ASC ) AS pre_regdate
+				LEAD(bno, 1 ) OVER (ORDER BY bnoup ASC) AS next_article_bno, 
+				LEAD(TITLE, 1 , '다음글 없음') OVER (ORDER BY bnoup ASC) AS next_title, 
+				LEAD(writer, 1 , '') OVER (ORDER BY bnoup ASC) AS next_writer, 
+				LEAD(regdate, 1 , '') OVER (ORDER BY bnoup ASC) AS next_regdate, 
+				LAG(bno, 1) OVER (ORDER BY bnoup ASC ) AS pre_article_bno, 
+				LAG(TITLE, 1 , '이전글 없음') OVER (ORDER BY bnoup ASC ) pre_title, 
+				LAG(writer, 1) OVER (ORDER BY bnoup ASC ) AS pre_writer, 
+				LAG(regdate, 1) OVER (ORDER BY bnoup ASC ) AS pre_regdate
 			FROM tblboard) 
 		WHERE bno=#{bno}
 	</select>
@@ -417,4 +418,17 @@
 		INSERT INTO tblboard(bno, bnoup, title, category, content, writer, filename, filesize, ref, re_step, re_level) 
 		VALUES ((SELECT nvl(max(bno)+1, 1) from tblboard), #{bnoup}, #{title}, #{category}, #{content}, #{writer}, #{filename}, #{filesize}, #{ref}, #{re_step}, #{re_level})
 	</insert>
+	
+	<!-- 상세페이지 등급 출력 -->
+	<select id="boardWriterGrade" resultType="String">
+		SELECT mgrade FROM member
+		WHERE mid = #{writer}
+	</select>
+	
+	<!-- bnoup번 게시글 삭제시 bnoup > #{bnoup}인 bnoup을 -1로 UPDATE -->
+	<update id="boardUpdatebnoup" parameterType="Integer">
+		UPDATE tblboard SET
+		bnoup = bnoup - 1
+		WHERE bnoup > #{bnoup}
+	</update>
 </mapper>

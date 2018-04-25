@@ -54,6 +54,12 @@
 		font-size: 12px;
 		float: left;
 	}
+	#bdanswer_title_fix2 {
+		display: inline-block;
+		height: 20px;
+		padding: 7px 0 7px 7px;
+		line-height: 20px;
+	}
 	#bdanswer_category {
 		display: inline-block;
 		width: 150px;
@@ -84,7 +90,10 @@
 		padding-bottom: 10px;
 		border-bottom: 1px solid #ccc;
 	}
-	.bdanswer_content_class {
+	#bdanswer_content {
+		padding: 7px 0;
+		height: 486px;
+		margin: 0 10px;
 		width: 690px;
 		font-size:13px;
 		line-height: 16px;			
@@ -92,15 +101,6 @@
 		border: none;
 		outline:none;		
 		resize: none;
-	}
-	#bdanswer_content1 {
-		padding-top: 7px;
-		height: 130px;
-	}
-	#bdanswer_content2 {
-		padding-bottom: 7px;
-		height: 356px;
-		margin: 0 10px;
 	}
 	.bdanswer_btn_wrap {
 		display: inline-block;
@@ -169,12 +169,71 @@
 		right: 0;
 		top: -1px;
 	}
+	/* 모달 창  */
+	/* The board_modal (background) */
+	.board_modal {
+		display: none; /* Hidden by default */
+		position: fixed; /* Stay in place */
+		z-index: 1; /* Sit on top */
+		padding-top: 250px; /* Location of the box */
+		left: 0;
+		top: 0;
+		width: 100%; /* Full width */
+		height: 100%; /* Full height */
+		overflow: auto; /* Enable scroll if needed */
+		background-color: rgb(0, 0, 0); /* Fallback color */
+		background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+	}
+	/* board_modal Content */
+	.register_modal-content {
+		background-color: #fefefe;
+		margin: auto;
+		padding: 20px;
+		border: 1px solid #888;
+		width: 300px;
+		height: 250px;
+	}	
+	/* The Close Button */
+	.register_close {
+		color: #aaaaaa;
+		float: right;
+		font-size: 28px;
+		font-weight: bold;
+		cursor: pointer;
+	}	
+	.register_close:hover, .register_close:focus {
+		color: #000;
+		text-decoration: none;
+		cursor: pointer;
+	}
+	#register_window_text {
+		height: 180px;
+		line-height: 210px;
+		color: #666;
+		text-align: center;
+		font-size: 16px;
+	}
+	#register_window_select {
+		padding-top: 10px;
+		height: 32px;
+	}
+	#select_false {
+		border: 1px solid #ccc;
+		display: inline-block;
+		margin: 0 124px!important;
+		text-align: center;
+		width: 50px;
+		height: 30px;
+		line-height: 30px;
+		font-size: 14px;
+	}
+	
+	
+	
 </style>
-<script type="text/javascript" src="js/jquery-3.3.1.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		var bdanswer_category_value = "${boardAnswerView.category}";
-		var bdanswer_title = $("#bdanswer_title");
 		var bdanswer_category = $("#bdanswer_category");
 		var bdanswer_content = $("#bdanswer_content");				
 
@@ -183,24 +242,16 @@
 		bdanswer_category.val(bdanswer_category_value).prop("selected", true);
 		
 		$(bdanswer_category).attr("disabled", "true");
-				
-		$("#bdanswer_store").on("click", function(){			
-			if(bdanswer_title.val() == ""){
-				alert("제목을 입력하지 않았습니다..");
-				bdanswer_title.focus();
-				return false;
-			} else if (bdanswer_category.val() == "") {
-				alert("카테고리를 선택하지 않았습니다.");
-				bdanswer_category.focus();
-				return false;
-			} else if (bdanswer_content.val() == "") {
-				alert("내용을 입력하지 않았습니다.");
+		
+		$("#bdanswer_store").on("click", function(){		
+			if (bdanswer_content.val() == "") {
+				$("#register_window_text").text("내용을 입력하지 않았습니다.");
 				bdanswer_content.focus();
-				return false;
+				$("#myboard_modal").css("display", "block");
 			} else {
 				$("#bdanswer_post").submit();
 			}			
-		});	
+		});
 		
 		$("#bdanswer_file").on("change", function(){
 			var fileName = $(this).val();
@@ -221,7 +272,8 @@
 				<span id="bdanswer_title_fix" class="bdanswer_header_fix">
 					제 목 : 
 				</span>
-				<input type="text" name="bdanswer_title" id="bdanswer_title" value="RE : ${boardAnswerView.title}" readonly>
+				<span id="bdanswer_title_fix2">RE : </span>
+				<input type="text" name="bdanswer_title" id="bdanswer_title" value="${boardAnswerView.title}" readonly>
 			</div>
 			<div id="bdanswer_category_wrap" class="bdanswer_header_wrap">
 				<span id="bdanswer_category_fix" class="bdanswer_header_fix">
@@ -252,8 +304,7 @@
 				</span>
 			</div>
 			<div id="bdanswer_content_wrap">
-				<textarea name="bdanswer_content1" id="bdanswer_content1" class="bdanswer_content_class" readonly>${boardAnswerView.content}</textarea>
-				<textarea name="bdanswer_content2" id="bdanswer_content2" class="bdanswer_content_class"></textarea>
+				<textarea name="bdanswer_content" id="bdanswer_content" class="bdanswer_content_class">${boardAnswerView.content}</textarea>
 			</div>
 		</form>
 		<div id="bdanswer_tail_wrap">
@@ -265,5 +316,42 @@
 			</span>		
 		</div>
 	</div>
+	<div id="myboard_modal" class="board_modal">
+		<div class="register_modal-content">
+			<span class="register_close">&times;</span>			
+			<div id="register_window_wrap">
+				<div id="register_window_text">
+				</div>
+				<div id="register_window_select">
+					<a href="#" id="select_false">
+						확인	
+					</a>					
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>		
+		// Get the board_modal
+		var board_modal = document.getElementById("myboard_modal");
+		
+		// Get the <span> element that closes the board_modal
+		var register_btn = document.getElementById("select_false");
+		var register_close = document.getElementsByClassName("register_close")[0];
+		
+		// When the user clicks on <span> (x), close the board_modal
+		register_btn.onclick = function() {
+			board_modal.style.display = "none";
+		}
+		register_close.onclick = function() {
+			board_modal.style.display = "none";
+		}
+		
+		// When the user clicks anywhere outside of the board_modal, close it
+		window.onclick = function(event) {
+			if (event.target == board_modal) {
+				board_modal.style.display = "none";
+			}
+		}
+	</script>
 </body>
 </html>

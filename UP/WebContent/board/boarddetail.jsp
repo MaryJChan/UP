@@ -214,7 +214,7 @@
 		cursor: pointer;
 	}
 	
-	.close:hover, .close:focus {
+	.delete_close:hover, .delete_close:focus {
 		color: #000;
 		text-decoration: none;
 		cursor: pointer;
@@ -244,8 +244,6 @@
 	}
 	#select_false {
 		border: 1px solid #ccc;		
-		float: right;
-		margin-right: 30px;		
 	}
 	#select_true {
 		border: 1px solid #e51130;
@@ -355,6 +353,10 @@
 	#bdtail_favorite_btn {
 		cursor: pointer;
 	}
+	#bdtail_answer_register {
+		padding: 10px;
+		float: left;
+	}
 </style>
 <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
 <script type="text/javascript">
@@ -384,13 +386,22 @@
 	
 	});		
 	
+	// 비로그인상태로 댓글창 클릭시 모달창 출력
+	$(document).on("click", "#nologin_commend_wirte_btn", function(){
+		$("#myModal").css("display", "block");
+	});
+	
 	// 답글쓰기 클릭
-	<%-- $(document).on("click", "#bdtail_answer_btn", function(){
+	$(document).on("click", "#bdtail_answer_btn", function(){
 		var sessionUser = '<%=session.getAttribute("sid") %>';
+		var bno = ${boardDetailList.bno};
+		var url = "boardanswerview.bizpoll?bno=" + bno;
 		if(sessionUser != "null") {
-			location.herf="boardupdateview.bizpoll?bno=${boardDetailList.bno}";
+			$(location).attr("href", url);
+		} else {
+			$("#myModal").css("display", "block");
 		}
-	}); --%>
+	})
 	
 	// 좋아요 클릭 Ajax	
 	$(document).on("click", "#bdtail_favorite_btn", function(){	
@@ -639,7 +650,7 @@
 					Grade : 
 				</span>
 				<span id="bdtail_grade">
-					A
+					${BoardWriterGrade}
 				</span>
 			</span>
 		</div>
@@ -684,9 +695,6 @@
 					</span>
 				</c:when>
 				<c:otherwise>
-					<span id="nologin_commend_wirte_btn" class="none_text">
-							로그인
-					</span>
 					<form action="boarddetail.bizpoll" method="GET" name="bdreply_store"  id="bdreply_store">
 						<textarea name="bdtail_comment_write" id="bdtail_comment_write" placeholder="댓글을 입력하세요."></textarea>					
 						<input type="hidden" name="bno" id="bno"  value="${boardDetailList.bno}">
@@ -758,19 +766,17 @@
 			</div>
 		</c:if>
 		<div id="bdtail_option">
-			<c:if test="${!empty sessionScope.loginUser && boardDetailList.writer == sessionScope.loginUser.mid}">
-				<span id="bdtail_footer">
-					<span id="bdtail_update">
-						<a href="boardupdateview.bizpoll?bno=${boardDetailList.bno}" id="bdtail_btn_update">수정</a>
-					</span>
-					<span class="bdtail_share">|</span>
-					<span id="bdtail_delete">
-						<a href="#" id="bdtail_btn_delete">삭제</a>
-					</span>
+			<span id="bdtail_footer">
+				<span id="bdtail_update">
+					<a href="boardupdateview.bizpoll?bno=${boardDetailList.bno}" id="bdtail_btn_update">수정</a>
 				</span>
-			</c:if>
-			<span>
-				<a href="boardanswerview.bizpoll?bno=${boardDetailList.bno}"  id="bdtail_answer_btn">답글 쓰기</a>
+				<span class="bdtail_share">|</span>
+				<span id="bdtail_delete">
+					<a href="#" id="bdtail_btn_delete">삭제</a>
+				</span>
+			</span>
+			<span id="bdtail_answer_register">
+				<a href="#"  id="bdtail_answer_btn">답글 쓰기</a>
 			</span>
 			<span id="bdtail_footer2">
 				<c:choose>
@@ -818,7 +824,7 @@
 						  게시글을 삭제하시겠습니까?
 					</div>
 					<div id="delete_window_select">
-						<a href="boarddelete.bizpoll?bno=${boardDetailList.bno}" id="select_true" class="delete_selectbox">
+						<a href="boarddelete.bizpoll?bnoup=${boardDetailList.bnoup}&bno=${boardDetailList.bno}" id="select_true" class="delete_selectbox">
 							확인	
 						</a>
 						<a href="#" id="select_false" class="delete_selectbox">
@@ -830,42 +836,30 @@
 		</div>
 	</c:if>
 	
-	<script>
-		
+	<script>		
 		// Get the board_modal
 		var board_modal = document.getElementById("myboard_modal");
 
 		// Get the button that opens the board_modal
 		var btn_delete = document.getElementById("bdtail_btn_delete");
-		var nologin_command_btn = document.getElementById("nologin_commend_wirte_btn");
-		var bdtail_login_write = document.getElementById("bdtail_write");
-		var sessionUser = '<%=session.getAttribute("sid") %>';
 		
 		// Get the <span> element that closes the board_modal
-		var delete_span = document.getElementsByClassName("delete_close")[0];
 		var delete_btn = document.getElementById("select_false");
+		var delete_close = document.getElementsByClassName("delete_close")[0];
 		
 		// When the user clicks the button, open the board_modal 
 		btn_delete.onclick = function() {
 			board_modal.style.display = "block";
 		}	
 		
-		nologin_command_btn.onclick = function() {
-			modal.style.display = "block";
-		}
-		if(sessionUser == null) {
-			bdtail_login_write.onclick = function() {
-				modal.style.display = "block";
-			}		
-		}		
-		
 		// When the user clicks on <span> (x), close the board_modal
-		delete_span.onclick = function() {
-			board_modal.style.display = "none";
-		}
 		delete_btn.onclick = function() {
 			board_modal.style.display = "none";
 		}
+		delete_close.onclick = function() {
+			board_modal.style.display = "none";
+		}
+		
 		// When the user clicks anywhere outside of the board_modal, close it
 		window.onclick = function(event) {
 			if (event.target == board_modal) {

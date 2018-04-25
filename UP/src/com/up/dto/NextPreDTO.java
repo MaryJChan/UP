@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class NextPreDTO {
 	private int bno;
+	private int bnoup;
 	private String title;
 	private String writer;
 	private String category;
@@ -56,6 +57,14 @@ public class NextPreDTO {
 
 	public void setBno(int bno) {
 		this.bno = bno;
+	}
+
+	public int getBnoup() {
+		return bnoup;
+	}
+
+	public void setBnoup(int bnoup) {
+		this.bnoup = bnoup;
 	}
 
 	public String getTitle() {

@@ -162,8 +162,67 @@
 		right: 0;
 		top: -1px;
 	}
+	/* 모달 창  */
+	/* The board_modal (background) */
+	.board_modal {
+		display: none; /* Hidden by default */
+		position: fixed; /* Stay in place */
+		z-index: 1; /* Sit on top */
+		padding-top: 250px; /* Location of the box */
+		left: 0;
+		top: 0;
+		width: 100%; /* Full width */
+		height: 100%; /* Full height */
+		overflow: auto; /* Enable scroll if needed */
+		background-color: rgb(0, 0, 0); /* Fallback color */
+		background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+	}
+	/* board_modal Content */
+	.register_modal-content {
+		background-color: #fefefe;
+		margin: auto;
+		padding: 20px;
+		border: 1px solid #888;
+		width: 300px;
+		height: 250px;
+	}	
+	/* The Close Button */
+	.register_close {
+		color: #aaaaaa;
+		float: right;
+		font-size: 28px;
+		font-weight: bold;
+		cursor: pointer;
+	}	
+	.register_close:hover, .register_close:focus {
+		color: #000;
+		text-decoration: none;
+		cursor: pointer;
+	}
+	#register_window_text {
+		height: 180px;
+		line-height: 210px;
+		color: #666;
+		text-align: center;
+		font-size: 16px;
+	}
+	#register_window_select {
+		padding-top: 10px;
+		height: 32px;
+	}
+	#select_false {
+		border: 1px solid #ccc;
+		display: inline-block;
+		margin: 0 124px!important;
+		text-align: center;
+		width: 50px;
+		height: 30px;
+		line-height: 30px;
+		font-size: 14px;
+	}
+	
+	
 </style>
-<script type="text/javascript" src="js/jquery-3.3.1.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#bdregister_title").focus();
@@ -174,17 +233,17 @@
 				
 		$("#bdregister_store").on("click", function(){			
 			if(bdregister_title.val() == ""){
-				alert("제목을 입력하지 않았습니다..");
+				$("#register_window_text").text("제목을 입력하지 않았습니다.");
 				bdregister_title.focus();
-				return false;
+				$("#myboard_modal").css("display", "block");
 			} else if (bdregister_category.val() == "") {
-				alert("카테고리를 선택하지 않았습니다.");
+				$("#register_window_text").text("카테고리를 선택하지 않았습니다.");
 				bdregister_category.focus();
-				return false;
+				$("#myboard_modal").css("display", "block");
 			} else if (bdregister_content.val() == "") {
-				alert("내용을 입력하지 않았습니다.");
+				$("#register_window_text").text("내용을 입력하지 않았습니다.");
 				bdregister_content.focus();
-				return false;
+				$("#myboard_modal").css("display", "block");
 			} else {
 				$("#bdregister_post").submit();
 			}			
@@ -249,5 +308,42 @@
 			</span>		
 		</div>
 	</div>
+	<div id="myboard_modal" class="board_modal">
+		<div class="register_modal-content">
+			<span class="register_close">&times;</span>			
+			<div id="register_window_wrap">
+				<div id="register_window_text">
+				</div>
+				<div id="register_window_select">
+					<a href="#" id="select_false">
+						확인	
+					</a>					
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>		
+		// Get the board_modal
+		var board_modal = document.getElementById("myboard_modal");
+		
+		// Get the <span> element that closes the board_modal
+		var register_btn = document.getElementById("select_false");
+		var register_close = document.getElementsByClassName("register_close")[0];
+		
+		// When the user clicks on <span> (x), close the board_modal
+		register_btn.onclick = function() {
+			board_modal.style.display = "none";
+		}
+		register_close.onclick = function() {
+			board_modal.style.display = "none";
+		}
+		
+		// When the user clicks anywhere outside of the board_modal, close it
+		window.onclick = function(event) {
+			if (event.target == board_modal) {
+				board_modal.style.display = "none";
+			}
+		}
+	</script>
 </body>
 </html>

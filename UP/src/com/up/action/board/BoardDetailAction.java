@@ -55,6 +55,10 @@ public class BoardDetailAction implements Action{
 		Date today = new Date();		
 		request.setAttribute("today", today);	
 		
+		// 작성자 등급 출력 코드
+		String grade = rDao.boardWriterGrade(npDto.getWriter());
+		request.setAttribute("BoardWriterGrade", grade);
+		
 		ActionForward forward = new ActionForward();
 		forward.setPath(url);
 		forward.setRedirect(false);		

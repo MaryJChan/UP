@@ -423,8 +423,11 @@
 							</span>
 							<a href="boarddetail.bizpoll?bno=${list.bno}&hits=${list.hits}&sessionuser=${sessionScope.loginUser.mid}" class="board_view_a a_boarder_title" >
 								<c:forEach var = "i" begin = "1" end = "${list.re_level}">
-									&nbsp;&nbsp;
+									&nbsp;&nbsp;&nbsp;&nbsp;
 								</c:forEach>
+								<c:if test="${list.re_step != 1}">
+									┖  RE : 
+								</c:if>
 								[${list.category}] ${list.title} 
 								<c:if test="${list.replycnt != 0}">
 									(${list.replycnt + list.recommentcnt})

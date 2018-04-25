@@ -96,5 +96,19 @@ public class BoardReplyDAO {
 		}
 		return result;
 	}
+
+	public String boardWriterGrade(String writer) {
+		sqlSession = sqlSessionFactory.openSession();
+		String grade = null;
+		try {
+			grade = sqlSession.selectOne("boardWriterGrade", writer);
+			sqlSession.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			sqlSession.close();
+		}
+		return grade;
+	}
 	
 }

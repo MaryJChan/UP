@@ -39,9 +39,7 @@ public class BoardAnswerRegisterAction implements Action{
 		Integer bnoup = Integer.parseInt(multi.getParameter("parent_bnoup"));
 		String title = multi.getParameter("bdanswer_title");
 		/*String category = multi.getParameter("bdanswer_category");*/
-		String content1 = multi.getParameter("bdanswer_content1");
-		String content2 = multi.getParameter("bdanswer_content2");
-		String content = content1 + "\n" + content2;
+		String content = multi.getParameter("bdanswer_content");
 		String writer = multi.getParameter("bdanswer_writer");
 		String filename = " "; //공백
 		int filesize = 0;
