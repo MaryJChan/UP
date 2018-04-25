@@ -84,10 +84,10 @@ public class BoardDAO {
 		return result;
 	}
 	
-	public int boardStore(BoardDTO bDto) {
+	public int boardRegister(BoardDTO bDto) {
 		sqlSession = sqlSessionFactory.openSession();
 		try {
-			result = sqlSession.insert("boardstore", bDto);
+			result = sqlSession.insert("boardRegister", bDto);
 			sqlSession.commit();
 			System.out.println("boardStore결과 : " + result);
 		} catch (Exception e) {
@@ -267,6 +267,58 @@ public class BoardDAO {
 				System.out.println("다운횟수 증가 성공");
 			} else {
 				System.out.println("다운횟수 증가 실패");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			sqlSession.close();
+		}
+	}
+
+	public BoardDTO BoardAnswerView(Integer bno) {
+		BoardDTO bDto = null;
+		sqlSession = sqlSessionFactory.openSession();
+		try {
+			bDto = sqlSession.selectOne("boardAnswerBiew", bno);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			sqlSession.close();
+		}
+		
+		return bDto;
+		
+	}
+
+	// 답글의 순서 조정
+	public void boardUpdateStep(BoardDTO bDto) {
+		sqlSession = sqlSessionFactory.openSession();
+		try {
+			result = sqlSession.update("boardUpdateStep", bDto);
+			sqlSession.commit();
+			int result2 = sqlSession.update("boardUpdateBnoup", bDto);
+			sqlSession.commit();
+			if(result > 0 && result2 > 0) {
+				System.out.println("답글 및 bnoup 순서조정 성공");
+			} else {
+				System.out.println("답글 및 bnoup 순서조정 실패");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			sqlSession.close();
+		}
+	}
+
+	public void boardAnswerRegister(BoardDTO bDto) {
+		sqlSession = sqlSessionFactory.openSession();
+		try {
+			result = sqlSession.insert("boardAnswerRegister", bDto);
+			sqlSession.commit();
+			if(result > 0) {
+				System.out.println("답글 등록 성공");
+			} else {
+				System.out.println("답글 등록 실패");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

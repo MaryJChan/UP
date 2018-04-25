@@ -37,9 +37,9 @@
 	
 	<!-- 시퀀스와 동일한 기능을하는 서브쿼리 -->
 	<!-- ref는 bno와 같은 값을 사용해야한다 -->
-	<insert id="boardstore" parameterType="bDTO">
-		INSERT INTO tblboard(bno, title, category, content, writer, filename, filesize, ref, re_step, re_level) 
-		VALUES ((SELECT nvl(max(bno)+1, 1) from tblboard), #{title}, #{category}, #{content}, #{writer}, #{filename}, #{filesize}, (SELECT nvl(max(bno)+1, 1) from tblboard), 1, 0)
+	<insert id="boardRegister" parameterType="bDTO">
+		INSERT INTO tblboard(bno, bnoup, title, category, content, writer, filename, filesize, ref, re_step, re_level) 
+		VALUES ((SELECT nvl(max(bno)+1, 1) from tblboard), (SELECT nvl(max(bnoup)+1, 1) from tblboard), #{title}, #{category}, #{content}, #{writer}, #{filename}, #{filesize}, (SELECT nvl(max(bno)+1, 1) from tblboard), 1, 0)
 	</insert>
 	
 	<select id="boarddetailview" resultType="npDTO" parameterType="Integer">
@@ -61,16 +61,21 @@
 				re_step,
 				re_level,
 				regdate, 
-				LEAD(bno, 1 ) OVER (ORDER BY bno DESC) AS next_article_bno, 
-				LEAD(TITLE, 1 , '다음글 없음') OVER (ORDER BY bno DESC) AS next_title, 
-				LEAD(writer, 1 , '') OVER (ORDER BY bno DESC) AS next_writer, 
-				LEAD(regdate, 1 , '') OVER (ORDER BY bno DESC) AS next_regdate, 
-				LAG(bno, 1) OVER (ORDER BY bno DESC ) AS  pre_article_bno, 
-				LAG(TITLE, 1 , '이전글 없음') OVER (ORDER BY bno DESC ) pre_title, 
-				LAG(writer, 1) OVER (ORDER BY bno DESC ) AS  pre_writer, 
-				LAG(regdate, 1) OVER (ORDER BY bno DESC ) AS pre_regdate
+				LEAD(bno, 1 ) OVER (ORDER BY bno ASC) AS next_article_bno, 
+				LEAD(TITLE, 1 , '다음글 없음') OVER (ORDER BY bno ASC) AS next_title, 
+				LEAD(writer, 1 , '') OVER (ORDER BY bno ASC) AS next_writer, 
+				LEAD(regdate, 1 , '') OVER (ORDER BY bno ASC) AS next_regdate, 
+				LAG(bno, 1) OVER (ORDER BY bno ASC ) AS pre_article_bno, 
+				LAG(TITLE, 1 , '이전글 없음') OVER (ORDER BY bno ASC ) pre_title, 
+				LAG(writer, 1) OVER (ORDER BY bno ASC ) AS pre_writer, 
+				LAG(regdate, 1) OVER (ORDER BY bno ASC ) AS pre_regdate
 			FROM tblboard) 
 		WHERE bno=#{bno}
+	</select>
+	
+	<select id="boardAnswerBiew" resultType="bDTO">
+		SELECT * FROM tblboard
+		WHERE bno = #{bno}
 	</select>
 	
 	<update id="boardupdate" parameterType="bDTO">
@@ -182,7 +187,7 @@
 										 WHERE b.bno = drc.bno) recommentcnt 
 					FROM tblboard b
 					WHERE bno > 0
-					ORDER BY bno desc
+					ORDER BY bnoup DESC
 				) a
 			)
 			WHERE rnum BETWEEN #{pageStart} AND #{perPageNum}
@@ -274,40 +279,40 @@
 					ORDER BY 
 					<choose>
 						<when test="lineup.equals('번 호 ↓')">
-							bno DESC
+							bnoup DESC
 						</when>
 						<when test="lineup.equals('번 호 ↑')">
-							bno ASC
+							bnoup ASC
 						</when>
 						<when test="lineup.equals('제목 ↓')">
-							title DESC,bno DESC
+							title DESC,bnoup DESC
 						</when>
 						<when test="lineup.equals('제목 ↑')">
-							title ASC,bno DESC
+							title ASC,bnoup DESC
 						</when>
 						<when test="lineup.equals('작성자 ↓')">
-							writer DESC,bno DESC
+							writer DESC,bnoup DESC
 						</when>
 						<when test="lineup.equals('작성자 ↑')">
-							writer ASC,bno DESC
+							writer ASC,bnoup DESC
 						</when>
 						<when test="lineup.equals('작성일 ↓')">
-							regdate DESC,bno DESC
+							regdate DESC,bnoup DESC
 						</when>
 						<when test="lineup.equals('작성일 ↑')">
-							regdate ASC,bno DESC
+							regdate ASC,bnoup DESC
 						</when>
 						<when test="lineup.equals('조회수 ↓')">
-							hits DESC,bno DESC
+							hits DESC,bnoup DESC
 						</when>
 						<when test="lineup.equals('조회수 ↑')">
-							hits ASC,bno DESC
+							hits ASC,bnoup DESC
 						</when>
 						<when test="lineup.equals('추천수 ↓')">
-							goodcnt DESC,bno DESC
+							goodcnt DESC,bnoup DESC
 						</when>
 						<when test="lineup.equals('추천수 ↑')">
-							goodcnt ASC,bno DESC
+							goodcnt ASC,bnoup DESC
 						</when>
 					</choose>					
 				) a
@@ -392,4 +397,24 @@
 		downcnt = downcnt + 1
 		WHERE bno = #{bno}
 	</update>
+	
+	<!-- ref번 답글 등록시 ref번 게시글의 re_step >= #{re_step}인  ref_step을 +1 증가 -->
+	<update id="boardUpdateStep" parameterType="bDTO">
+		UPDATE tblboard SET
+		re_step = re_step+1
+		WHERE ref = #{ref} AND re_step >= #{re_step}
+	</update>
+	
+	<!-- ref번 답글 등록시 bnoup번 게시글의 bnoup >= #{bnoup}인  bnoup을 +1 증가 -->
+	<update id="boardUpdateBnoup" parameterType="bDTO">
+		UPDATE tblboard SET
+		bnoup = bnoup + 1
+		WHERE bnoup >= #{bnoup}
+	</update>
+	
+	<!-- 답글 등록 -->
+	<insert id="boardAnswerRegister" parameterType="bDTO">
+		INSERT INTO tblboard(bno, bnoup, title, category, content, writer, filename, filesize, ref, re_step, re_level) 
+		VALUES ((SELECT nvl(max(bno)+1, 1) from tblboard), #{bnoup}, #{title}, #{category}, #{content}, #{writer}, #{filename}, #{filesize}, #{ref}, #{re_step}, #{re_level})
+	</insert>
 </mapper>

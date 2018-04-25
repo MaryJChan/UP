@@ -196,10 +196,11 @@
 	#board_category_wrap {
 		margin: 0 10px;
 		height: 27px;
-		padding: 0 0 10px 5px;
+		padding: 0 5px 10px 5px;
 	}
 	#board_category {
 		height: 27px;
+		float: right;
 	}
 	.board_none_list {
 		text-align: center;
@@ -215,7 +216,6 @@
 	#board_total_count_view {
 		height: 37px;
 		line-height:37px;
-		padding: 0 5px;
 	}
 	.new_time {
 		background-color: #FF8224;
@@ -371,17 +371,18 @@
 <body>
 	<div id="wrap_board">		
 		<h1 class="title_r">Q & A 게시판</h1>		
-		<div id="board_category_wrap">			
+		<div id="board_category_wrap">		
+			<span id="board_total_count_view">
+				총 
+				<span class="search_result">${pageMaker.totalCount}</span>
+				건의 게시글 출력
+			</span>		
 			<select name="board_category" id="board_category">
 				<option value="전체">카테고리 선택</option>
 				<option value="상품 문의">상품 문의</option>
 				<option value="배송 문의">배송 문의</option>
 				<option value="기타 문의">기타 문의</option>
-			</select>
-			<span id="board_total_count_view">
-					<span class="search_result">${pageMaker.totalCount}</span>
-					건의 게시글 출력
-			</span>	
+			</select>			
 		</div>			
 		<div class="board_box">			
 			<div id="board_attr">
@@ -418,9 +419,12 @@
 					<c:forEach items="${boardList}" var="list">
 						<div class="board_view_q">
 							<span class="board_view_a a_boarder_num">
-								${list.bno}
+								${list.bnoup} 
 							</span>
 							<a href="boarddetail.bizpoll?bno=${list.bno}&hits=${list.hits}&sessionuser=${sessionScope.loginUser.mid}" class="board_view_a a_boarder_title" >
+								<c:forEach var = "i" begin = "1" end = "${list.re_level}">
+									&nbsp;&nbsp;
+								</c:forEach>
 								[${list.category}] ${list.title} 
 								<c:if test="${list.replycnt != 0}">
 									(${list.replycnt + list.recommentcnt})

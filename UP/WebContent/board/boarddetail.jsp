@@ -374,7 +374,6 @@
 	$(document).ready(function(){		
 		var boardWriter = '<%=request.getAttribute("writer") %>';
 		var sessionUser = '<%=session.getAttribute("sid") %>';
-
 		comment_list();
 		
 		if(boardWriter == sessionUser) {
@@ -384,6 +383,14 @@
 		}
 	
 	});		
+	
+	// 답글쓰기 클릭
+	<%-- $(document).on("click", "#bdtail_answer_btn", function(){
+		var sessionUser = '<%=session.getAttribute("sid") %>';
+		if(sessionUser != "null") {
+			location.herf="boardupdateview.bizpoll?bno=${boardDetailList.bno}";
+		}
+	}); --%>
 	
 	// 좋아요 클릭 Ajax	
 	$(document).on("click", "#bdtail_favorite_btn", function(){	
@@ -637,7 +644,7 @@
 			</span>
 		</div>
 		<div id="bdtail_file_download_wrap">
-			<c:if test="${boardDetailList.filesize > 0}">
+			<c:if test="${!empty sessionScope.loginUser && boardDetailList.filesize > 0}">
 				<span id="bdtail_file_download__position">
 					<span id="bdtail_file_download_fix">
 						첨부파일 : 
@@ -751,14 +758,19 @@
 			</div>
 		</c:if>
 		<div id="bdtail_option">
-			<span id="bdtail_footer">
-				<span id="bdtail_update">
-					<a href="boardupdateview.bizpoll?bno=${boardDetailList.bno}" id="bdtail_btn_update">수정</a>
+			<c:if test="${!empty sessionScope.loginUser && boardDetailList.writer == sessionScope.loginUser.mid}">
+				<span id="bdtail_footer">
+					<span id="bdtail_update">
+						<a href="boardupdateview.bizpoll?bno=${boardDetailList.bno}" id="bdtail_btn_update">수정</a>
+					</span>
+					<span class="bdtail_share">|</span>
+					<span id="bdtail_delete">
+						<a href="#" id="bdtail_btn_delete">삭제</a>
+					</span>
 				</span>
-				<span class="bdtail_share">|</span>
-				<span id="bdtail_delete">
-					<a href="#" id="bdtail_btn_delete">삭제</a>
-				</span>
+			</c:if>
+			<span>
+				<a href="boardanswerview.bizpoll?bno=${boardDetailList.bno}"  id="bdtail_answer_btn">답글 쓰기</a>
 			</span>
 			<span id="bdtail_footer2">
 				<c:choose>

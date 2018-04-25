@@ -13,11 +13,13 @@ import com.up.action.Action;
 
 import com.up.action.ActionForward;
 import com.up.action.board.BoardAction;
+import com.up.action.board.BoardAnswerRegisterAction;
+import com.up.action.board.BoardAnswerViewAction;
 import com.up.action.board.BoardDetailDeleteAction;
 import com.up.action.board.BoardDetailAction;
 import com.up.action.board.BoardDetailDownload;
 import com.up.action.board.BoardFavoriteUpdateAjaxAction;
-import com.up.action.board.BoardRegisterStoreAction;
+import com.up.action.board.BoardRegisterAction;
 import com.up.action.board.BoardRegisterViewAction;
 import com.up.action.board.BoardDetailReplyAction;
 import com.up.action.board.BoardDetailReplyDeleteAction;
@@ -100,8 +102,8 @@ public class BizpollFrontController extends HttpServlet {
 		} else if (command.equals("/boardregisterview.bizpoll")) {
 			action = new BoardRegisterViewAction();			
 			forward = action.excute(request, response);
-		} else if (command.equals("/boardregisterstore.bizpoll")) {
-			action = new BoardRegisterStoreAction();			
+		} else if (command.equals("/boardregister.bizpoll")) {
+			action = new BoardRegisterAction();			
 			forward = action.excute(request, response);
 		} else if (command.equals("/boarddetail.bizpoll")) {
 			action = new BoardDetailAction();			
@@ -138,6 +140,12 @@ public class BizpollFrontController extends HttpServlet {
 			forward = action.excute(request, response);
 		} else if (command.equals("/boarddownload.bizpoll")) {
 			action = new BoardDetailDownload();			
+			forward = action.excute(request, response);
+		} else if (command.equals("/boardanswerview.bizpoll")) {
+			action = new BoardAnswerViewAction();			
+			forward = action.excute(request, response);
+		} else if (command.equals("/boardanswerstore.bizpoll")) {
+			action = new BoardAnswerRegisterAction();			
 			forward = action.excute(request, response);
 		}
 		// ======= 공통분기 작업 ======= //

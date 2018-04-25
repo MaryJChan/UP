@@ -16,7 +16,7 @@ import com.up.common.Constants;
 import com.up.dao.BoardDAO;
 import com.up.dto.BoardDTO;
 
-public class BoardRegisterStoreAction implements Action{
+public class BoardRegisterAction implements Action{
 
 	@Override
 	public ActionForward excute(HttpServletRequest request, HttpServletResponse response)
@@ -73,7 +73,7 @@ public class BoardRegisterStoreAction implements Action{
 		
 		BoardDAO bDao = BoardDAO.getInstance();
 		BoardDTO bDto = new BoardDTO(title, category, content, writer, filename, filesize);
-		int result = bDao.boardStore(bDto);
+		int result = bDao.boardRegister(bDto);
 		
 		if(result > 0) {
 			System.out.println("게시글 등록 성공");

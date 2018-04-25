@@ -5,6 +5,7 @@ import java.util.Date;
 public class BoardDTO {
 	
 	private int bno;
+	private int bnoup;
 	private String title;
 	private String category;
 	private String content;
@@ -27,7 +28,7 @@ public class BoardDTO {
 		super();
 		this.bno = bno;
 		this.hits = hits;
-	}
+	}	
 
 	public BoardDTO(int bno, String title, String content) {
 		super();
@@ -62,9 +63,9 @@ public class BoardDTO {
 		this.writer = writer;
 	}
 
-	public BoardDTO(int bno, String title, String category, String content, String writer, int hits, int replycnt, int goodcnt, Date regdate) {
+	public BoardDTO(int bnoup, String title, String category, String content, String writer, int hits, int replycnt, int goodcnt, Date regdate) {
 		super();
-		this.bno = bno;
+		this.bnoup = bnoup;
 		this.title = title;
 		this.category = category;
 		this.content = content;
@@ -73,6 +74,21 @@ public class BoardDTO {
 		this.replycnt = replycnt;	
 		this.goodcnt = goodcnt;
 		this.regdate = regdate;		
+	}	
+
+	public BoardDTO(int bnoup, String title, String category, String content, String writer, String filename, int filesize,
+			int ref, int re_step, int re_level) {
+		super();
+		this.bnoup = bnoup;
+		this.title = title;
+		this.category = category;
+		this.content = content;
+		this.writer = writer;
+		this.filename = filename;
+		this.filesize = filesize;
+		this.ref = ref;
+		this.re_step = re_step;
+		this.re_level = re_level;
 	}
 
 	public int getBno() {
@@ -81,6 +97,14 @@ public class BoardDTO {
 
 	public void setBno(int bno) {
 		this.bno = bno;
+	}
+
+	public int getBnoup() {
+		return bnoup;
+	}
+
+	public void setBnoup(int bnoup) {
+		this.bnoup = bnoup;
 	}
 
 	public String getTitle() {
