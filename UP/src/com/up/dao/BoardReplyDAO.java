@@ -32,10 +32,10 @@ public class BoardReplyDAO {
 		return instance;
 	}
 	
-	public int boardReplyStore(BoardReplyDTO rDto) {
+	public int boardReplyRegister(BoardReplyDTO rDto) {
 		sqlSession = sqlSessionFactory.openSession();
 		try {
-			result = sqlSession.insert("boardReplyStore", rDto);
+			result = sqlSession.insert("boardReplyRegister", rDto);
 			sqlSession.commit();
 			System.out.println("boardReplyStore결과 : " + result);
 		} catch (Exception e) {
@@ -60,28 +60,21 @@ public class BoardReplyDAO {
 		return list;
 	}
 
-	public int boardReplyDelete(Integer rno) {
+	public void boardReplyDelete(Integer rno_step) {
 		sqlSession = sqlSessionFactory.openSession();
-		try {
-			int result2 = sqlSession.delete("boardRecommentDelete2", rno);
-			sqlSession.commit();
-			
-			if(result2 > 0) {
-				System.out.println("댓글 하위 리뎃 삭제 완료");
+		try {			
+			result = sqlSession.delete("boardReplyDelete", rno_step);
+			sqlSession.commit();			
+			if(result > 0) {
+				System.out.println("댓글 삭제 성공");
 			} else {
-				System.out.println("댓글 하위 리뎃 삭제 실패");
+				System.out.println("댓글 삭제 실패");
 			}
-			
-			result = sqlSession.delete("boardReplyDelete", rno);
-			sqlSession.commit();
-			
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			sqlSession.close();
 		}
-		return result;
 	}
 
 	public int boardReplyUpdate(BoardReplyDTO rDto) {
@@ -109,6 +102,65 @@ public class BoardReplyDAO {
 			sqlSession.close();
 		}
 		return grade;
+	}
+
+	public int boardRecommentStore(BoardReplyDTO rDto) {
+		sqlSession = sqlSessionFactory.openSession();
+		try {
+			result = sqlSession.insert("boardRecommentStore", rDto);
+			sqlSession.commit();
+			System.out.println("boardRecommentStore결과 : " + result);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			sqlSession.close();
+		}
+		return result;
+	}
+
+	public BoardReplyDTO boardReplySelect(Integer rno_step) {
+		sqlSession = sqlSessionFactory.openSession();
+		BoardReplyDTO rDto = new BoardReplyDTO();
+		try {
+			rDto = sqlSession.selectOne("boardReplySelect", rno_step);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			sqlSession.close();
+		}
+		return rDto;
+		
+	}
+
+	public void boardReplyRno_stepUpdate(Integer rno_step) {
+		sqlSession = sqlSessionFactory.openSession();
+		try {
+			result = sqlSession.update("boardReplyRno_stepUpdate", rno_step);
+			sqlSession.commit();
+			System.out.println("boardReplyRno_stepUpdate결과 : " + result);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			sqlSession.close();
+		}		
+	}
+	
+	// 게시글 삭제시 rno_step 수정
+	public void boardReplyRno_stepUpdate2(Integer rno_step) {
+		sqlSession = sqlSessionFactory.openSession();
+		try {
+			result = sqlSession.update("boardReplyRno_stepUpdate2", rno_step);
+			sqlSession.commit();
+			if(result > 0) {
+				System.out.println("rno_step 수정 성공");
+			} else {
+				System.out.println("rno_step 수정 실패");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			sqlSession.close();
+		}		
 	}
 	
 }

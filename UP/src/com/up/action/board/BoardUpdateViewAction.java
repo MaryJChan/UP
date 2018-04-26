@@ -24,7 +24,6 @@ public class BoardUpdateViewAction implements Action{
 				 
 		BoardDAO bDao = BoardDAO.getInstance();
 		NextPreDTO npDto =bDao.boardDetail(bno);
-		
 		request.setAttribute("boardUpdate", npDto);
 		ActionForward forward = new ActionForward();
 		forward.setPath(url);

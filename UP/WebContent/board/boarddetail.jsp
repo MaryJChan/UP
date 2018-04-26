@@ -56,6 +56,7 @@
 		margin: 0 10px;
 		padding: 10px 10px 50px 10px;
 		color: #777;
+		font-size: 13px;
 	}
 	#bdtail_comment_wrap {
 		position: relative;
@@ -118,11 +119,30 @@
 		position: relative;		
 	}
 	.command_registration_title_wrap:first-child {
-		padding: 15px 10px 10px 10px;	
 		margin: 0 10px;
 	}
-	.command_registration_title_wrap {
+	.command_registration_title_wrap, .command_registration_title_wrap_margin {
 		padding: 15px 10px 10px 10px;
+		display: inline-block;
+	}
+	.command_registration_title_wrap {
+		width: 710px;
+	}
+	.command_registration_title_wrap_margin {
+		width: 670px;
+	}
+	.command_registration_contents, .command_registration_contents_margin {
+		display: inline-block;
+		border-bottom: 1px dotted #ccc;
+	}
+	.command_registration_contents {
+		padding: 5px 10px 15px 10px;		
+		width: 710px;
+	}
+	.command_registration_contents_margin {
+		padding: 5px 10px 15px 50px;
+		width: 670px;
+		margin: 0 10px;
 	}
 	.command_registration_contents {
 		padding: 5px 10px 15px 10px;
@@ -302,12 +322,17 @@
 		margin: 0 124px!important;
 		text-align: center;
 	}
-	.reply_text {
-		width: 710px;
+	.reply_text, .reply_text_margin {
 		border: none;
 		background-color: #f4f4f4;
 		color: #9c9c9c;
 		outline: none;
+	}
+	.reply_text {
+		width: 710px;		
+	}
+	.reply_text_margin {
+		width: 660px;
 	}
 	.bdreply_update, .recommand_store, .recommand_update {
 		padding-bottom: 15px;
@@ -359,6 +384,15 @@
 		padding: 10px;
 		float: left;
 	}
+	.reply_margin {
+		display: inline-block;
+		width: 40px;
+		float: left;
+		padding: 15px 0 10px 0;
+		margin-left: 10px;
+		text-align: right;
+		font-weight: bold;
+	}
 </style>
 <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
 <script type="text/javascript">
@@ -391,6 +425,17 @@
 	// 비로그인상태로 댓글창 클릭시 모달창 출력
 	$(document).on("click", "#nologin_commend_wirte_btn", function(){
 		$("#myModal").css("display", "block");
+	});
+	
+	// 비로그인 상태로 글쓰기 버튼 클릭시 모달창 출력
+	$(document).on("click", "#bdtail_write_btn", function(){
+		var sessionUser = '<%=session.getAttribute("sid") %>';
+		if(sessionUser == "null") {
+			$("#myModal").css("display", "block");
+		} else {
+			location.href = "boardregisterview.bizpoll";
+		}
+	
 	});
 	
 	// 답글쓰기 클릭
@@ -447,7 +492,7 @@
 		} else {
 			$.ajax({
 				// 가야할 서블릿 지정
-				url : "boardreplystore.bizpoll",
+				url : "boardreplyregister.bizpoll",
 				// 방식 지정 [GET | POST]
 				type : "POST",
 				// 타입 지정
@@ -474,23 +519,19 @@
 	
 	//댓글 삭제 Ajax
 	$(document).on("click", ".board_comment_delete", function(){
-		var rno = $(this).attr("data_num");				
+		var rno_step = $(this).attr("data_num");				
 		 $.ajax({
 			// 가야할 서블릿 지정
-			url : "replydelete.bizpoll",
+			url : "boardreplydelete.bizpoll",
 			// 방식 지정 [GET | POST]
 			type : "POST",
 			// 타입 지정
 			dataType : "JSON",
 			// 쿼리스트링과 같은 =에 공백X     //data를 dataTpye가방에 담아 type방식으로 url로 보냄
-			data : "rno=" + rno,
+			data : "rno_step=" + rno_step,
 			//성공했을때	
 			success : function(data) {
-				if (data.flag == "1") {
-					comment_list();
-				} else if (data.flag == "0") {
-					alert("댓글 삭제 실패");
-				}
+				comment_list();
 			},
 			//실패했을떄
 			error : function(data) {
@@ -501,10 +542,10 @@
 	
 	// 댓글 수정 버튼 클릭시 화면변경 소스
 	$(document).on("click", ".board_comment_update", function(){
-		var rno = $(this).attr("data_num");
-		var text = $("div[data_num="+rno+"]");
-		var reply_text = $("input[data_num=" + rno + "]").val();
-		var reply_text_write = $("textarea[data_num=" + rno + "]");
+		var rno_step = $(this).attr("data_num");
+		var text = $("div[data_num="+rno_step+"]");
+		var reply_text = $("input[data_num=" + rno_step + "]").val();
+		var reply_text_write = $("textarea[data_num=" + rno_step + "]");
 		
 		if($(text.first()).is(":visible")){
 			text.first().css("display", "none");
@@ -518,26 +559,25 @@
 			reply_text_write.first().val(reply_text);
 			reply_text_write.first().focus();
 		}
-	});
-	
+	});	
 	
 	// 댓글 수정
 	$(document).on("click", ".bdtail_update_img", function(){
 		/* var bno = ${boardDetailList.bno}; */
-		var rno = $(this).attr("data_num");
-		var replyComment = $("textarea[data_num="+rno+"]").val();
+		var rno_step = $(this).attr("data_num");
+		var replyComment = $("textarea[data_num="+rno_step+"]").val();
 		<%-- var sessionUser = '<%=session.getAttribute("sid") %>';
 		alert(sessionuser); --%>
 		
 		$.ajax({
 			// 가야할 서블릿 지정
-			url : "replyupdate.bizpoll",
+			url : "boardreplyupdate.bizpoll",
 			// 방식 지정 [GET | POST]
 			type : "POST",
 			// 타입 지정
 			dataType : "JSON",
 			// 쿼리스트링과 같은 =에 공백X     //data를 dataTpye가방에 담아 type방식으로 url로 보냄
-			data : "rno=" + rno + "&replyComment=" + replyComment,
+			data : "rno_step=" + rno_step + "&replyComment=" + replyComment,
 			//성공했을때	
 			success : function(data) {
 				if (data.flag == "1") {
@@ -557,9 +597,9 @@
 	
 	// 답글 버튼 클릭시 화면변경 소스
 	$(document).on("click", ".command_reply", function(){
-		var rno = $(this).attr("data_num");
-		var text = $("div[data_num="+rno+"]");
-		var reply_text_write = $("textarea[data_num=" + rno + "]");
+		var rno_step = $(this).attr("data_num");
+		var text = $("div[data_num="+rno_step+"]");
+		var reply_text_write = $("textarea[data_num=" + rno_step + "]");
 		
 		if($(text.last()).is(":visible")){
 			text.last().css("display", "none");
@@ -576,25 +616,25 @@
 	
 	// 답글 등록
 	$(document).on("click", ".recommand_write_img", function(){
-		var bno = ${boardDetailList.bno};
-		var rno = $(this).attr("data_num");
-		var recomment = $("textarea[data_num="+rno+"]").last().val();
+		var bno = ${boardDetailList.bno};	
+		var rno_step = $(this).attr("data_num");
+		var replyComment = $("textarea[data_num="+rno_step+"]").last().val();
 		var sessionUser = '<%=session.getAttribute("sid") %>';
 		
-		if(recomment == "") {
+		if(replyComment == "") {
 			alert("답글을 입력하지 않았습니다.");
-			$("textarea[data_num="+rno+"]").last().focus();
+			$("textarea[data_num="+rno_step+"]").last().focus();
 			return false;
 		} else {
 			$.ajax({
 				// 가야할 서블릿 지정
-				url : "recommentstore.bizpoll",
+				url : "boardrecommentstore.bizpoll",
 				// 방식 지정 [GET | POST]
 				type : "POST",
 				// 타입 지정
 				dataType : "JSON",
 				// 쿼리스트링과 같은 =에 공백X     //data를 dataTpye가방에 담아 type방식으로 url로 보냄
-				data : "bno=" + bno + "&rno=" + rno + "&recomment=" + recomment + "&sessionUser=" + sessionUser,
+				data : "bno=" + bno + "&rno_step=" + rno_step + "&replyComment=" + replyComment + "&sessionUser=" + sessionUser,
 				//성공했을때	
 				success : function(data) {
 					if (data.flag == "1") {
@@ -670,7 +710,11 @@
 			</c:if>
 		</div>
 		<div id="bdtail_contents">
-			${fn:replace(boardDetailList.content, cn, br)}
+            <c:set var="cmt" value="${fn:replace(boardDetailList.content,crcn,br)}" />
+            <c:set var="cmt" value="${fn:replace(cmt,cr,br)}" />
+            <c:set var="cmt" value="${fn:replace(cmt,cn,br)}" />
+            <c:set var="cmt" value="${fn:replace(cmt,' ',sp)}" />
+			<c:out value="${cmt}" escapeXml="false"/>
 		</div>
 		<div id="bdtail_comment_wrap">			
 			<div id="commentList"></div>
@@ -781,18 +825,9 @@
 				<a href="#"  id="bdtail_answer_btn">답글 쓰기</a>
 			</span>
 			<span id="bdtail_footer2">
-				<c:choose>
-					<c:when test="${empty sessionScope.loginUser}">			
-						<span id="bdtail_write">
-							<a href="#">글쓰기</a>
-						</span>
-					</c:when>
-					<c:otherwise>
-						<span id="bdtail_write">
-							<a href="boardregisterview.bizpoll">글쓰기</a>
-						</span>							
-					</c:otherwise>
-				</c:choose>	
+				<span id="bdtail_write">
+					<a href="#" id="bdtail_write_btn">글쓰기</a>
+				</span>							
 				<span class="bdtail_share">|</span>
 				<span id="bdtail_list">
 					<a href="board.bizpoll">목록</a>

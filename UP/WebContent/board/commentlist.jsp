@@ -32,7 +32,7 @@
 			댓글 : 
 		</span>
 		<span id="comment_count">
-			${boardReply.size()+boardRecomment.size()}
+			${boardReply.size()}
 		</span>
 		<span id="bdtail_favorite_wrap">
 			<img alt="" src="image/nonefavorite.png" id="bdtail_favorite_btn">
@@ -44,105 +44,97 @@
 	<c:if test="${empty boardReply}">
 		<input type="hidden" value="${boardReply}" name="boardReply">
 		<div class="commend_registration_wrap">					
-			<div class="command_registration_contents" id="none_reply">
+			<span class="command_registration_contents" id="none_reply">
 				등록된 댓글이 없습니다. 댓글을 등록해주세요.
-			</div>
+			</span>
 		</div>
 	</c:if>
 	<c:forEach items="${boardReply}" var="reply">
-		<div class="commend_registration_wrap">
-			<div class="command_registration_title_wrap">
-				<a href="#" class="commend_user">
-					${reply.sessionUser}
-				</a>
-				<span class="command_date">
-					<fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${reply.regdate}"/>
-				</span>
-				<c:if test="${!empty sessionScope.loginUser}">
-					<a href="#" class="command_reply" data_num="${reply.rno}">
-						답글
-					</a>	
-				</c:if>
-				<c:if test="${fn:trim(sessionScope.loginUser.mid) eq fn:trim(reply.sessionUser)}">			
-					<span class="board_comment_option">
-						<a href="#" class="board_comment_update" data_num="${reply.rno}">
-							수정
-						</a>
-						<span>|</span>
-						<a href="#" class="board_comment_delete" data_num="${reply.rno}">
-							삭제
-						</a>
+		<c:if test="${reply.re_level == 0}">
+			<div class="commend_registration_wrap">
+				<span class="command_registration_title_wrap">
+					<a href="#" class="commend_user">
+						${reply.sessionUser}
+					</a>
+					<span class="command_date">
+						<fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${reply.regdate}"/>
 					</span>
-				</c:if>	
-			</div>						
-			<div class="command_registration_contents">
-				<input type="text" value="${reply.replyComment}" name="reply_text" class="reply_text" data_num="${reply.rno}" readonly>
-			</div>
-		</div>	
-		<div class="command_update_line"  data_num="${reply.rno}">
+					<c:if test="${!empty sessionScope.loginUser}">
+						<a href="#" class="command_reply" data_num="${reply.rno_step}">
+							답글
+						</a>	
+					</c:if>
+					<c:if test="${fn:trim(sessionScope.loginUser.mid) eq fn:trim(reply.sessionUser)}">			
+						<span class="board_comment_option">
+							<a href="#" class="board_comment_update" data_num="${reply.rno_step}">
+								수정
+							</a>
+							<span>|</span>
+							<a href="#" class="board_comment_delete" data_num="${reply.rno_step}" data_num2 = "${reply.ref}">
+								삭제
+							</a>
+						</span>
+					</c:if>	
+				</span>						
+				<span class="command_registration_contents">
+					<input type="text" value="${reply.replyComment}" name="reply_text" class="reply_text" data_num="${reply.rno_step}" readonly>
+				</span>
+			</div>	
+		</c:if>		
+		<c:if test="${reply.re_level == 1}">
+			<div class="commend_registration_wrap">
+				<span class="reply_margin">┗</span>
+				<span class="command_registration_title_wrap_margin">
+					<a href="#" class="commend_user">
+						${reply.sessionUser}
+					</a>
+					<span class="command_date">
+						<fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${reply.regdate}"/>
+					</span>
+					<c:if test="${!empty sessionScope.loginUser}">
+						<a href="#" class="command_reply" data_num="${reply.rno_step}">
+							답글
+						</a>	
+					</c:if>
+					<c:if test="${fn:trim(sessionScope.loginUser.mid) eq fn:trim(reply.sessionUser)}">			
+						<span class="board_comment_option">
+							<a href="#" class="board_comment_update" data_num="${reply.rno_step}">
+								수정
+							</a>
+							<span>|</span>
+							<a href="#" class="board_comment_delete" data_num="${reply.rno_step}" data_num2 = "${reply.ref}">
+								삭제
+							</a>
+						</span>
+					</c:if>	
+				</span>						
+				<span class="command_registration_contents_margin">
+					<input type="text" value="${reply.replyComment}" name="reply_text" class="reply_text_margin" data_num="${reply.rno_step}" readonly>
+				</span>
+			</div>	
+		</c:if>
+		<div class="command_update_line"  data_num="${reply.rno_step}">
 			<div class="command_update_line_position">
 				<form action="boarddetail.bizpoll" method="GET" name="bdreply_update"  class="bdreply_update">
-					<textarea name="bdtail_comment_update" class="bdtail_reply_write"   data_num="${reply.rno}"></textarea>					
-					<input type="hidden" name="rno" class="rno"  value="${reply.rno}">
+					<textarea name="bdtail_comment_update" class="bdtail_reply_write"   data_num="${reply.rno_step}"></textarea>					
+					<input type="hidden" name="rno" class="rno"  value="${reply.rno_step}">
 				</form>
 				<span class="bdtail_update_registration">
 					<a href="#" class="bdtail_update_btn_css" >등록
-						<img class="bdtail_update_img" alt="bdtail_registration_img" src="image/up_boardwrite.png" data_num="${reply.rno}">
+						<img class="bdtail_update_img" alt="bdtail_registration_img" src="image/up_boardwrite.png" data_num="${reply.rno_step}">
 					</a>
 				</span>	
 			</div>
-		</div>		
-		<c:forEach items="${boardRecomment}" var= "rcView">
-			<c:if test="${reply.rno == rcView.rno}">
-				<div class="reply_registration_wrap">
-					<div class="reply_registration_title_wrap">
-						<span id="reply_check">ㄴ</span>
-						<a href="#" class="reply_user">
-							${rcView.sessionUser}
-						</a>
-						<span class="reply_date">
-							<fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${rcView.regdate}"/>
-						</span>
-						<c:if test="${fn:trim(sessionScope.loginUser.mid) eq fn:trim(rcView.sessionUser)}">
-							<span class="board_recomment_option">
-								<a href="#" class="board_recomment_update" data_num="${rcView.rcno}">
-									수정
-								</a>
-								<span>|</span>
-								<a href="#" class="board_recomment_delete" data_num="${rcView.rcno}">
-									삭제
-								</a>
-							</span>
-						</c:if>						
-					</div>					
-					<div class="reply_registration_contents">
-						${rcView.recomment}
-					</div>
-				</div>
-				<div class="recommand_update_line"  data_num="${rcView.rcno}">
-					<div class="recommand_update_line_position">
-						<form action="recommand.bizpoll" method="GET" name="recommand_update"  class="recommand_update">
-							<textarea name="bdtail_recommand_update_write" class="bdtail_recommand_update_write"   data_num="${rcView.rcno}">${rcView.recomment}</textarea>					
-							<input type="hidden" name="rno" class="rno"  value="${rcView.rcno}">
-						</form>
-						<span class="bdtail_recommand_write_update">
-							<a href="#" class="recommand_update_btn_css" >등록
-								<img class="recommand_update_img" alt="bdtail_registration_img" src="image/up_boardwrite.png" data_num="${rcView.rcno}">
-							</a>
-						</span>	
-					</div>
-				</div>
-			</c:if>
-		</c:forEach>				
-		<div class="recommand_store_line"  data_num="${reply.rno}">
+		</div>						
+		<div class="recommand_store_line"  data_num="${reply.rno_step}">
 			<div class="recommand_store_line_position">
 				<form action="recommand.bizpoll" method="GET" name="recommand_store"  class="recommand_store">
-					<textarea name="bdtail_recommand_write" class="bdtail_recommand_write"   data_num="${reply.rno}" placeholder="답글을 입력해주세요."></textarea>					
-					<input type="hidden" name="rno" class="rno"  value="${reply.rno}">
+					<textarea name="bdtail_recommand_write" class="bdtail_recommand_write"   data_num="${reply.rno_step}" placeholder="답글을 입력해주세요."></textarea>					
+					<input type="hidden" name="rno_step" class="rno_step"  value="${reply.rno_step}">
 				</form>
 				<span class="bdtail_recommand_write_registration">
 					<a href="#" class="recommand_write_btn_css" >등록
-						<img class="recommand_write_img" alt="bdtail_registration_img" src="image/up_boardwrite.png" data_num="${reply.rno}">
+						<img class="recommand_write_img" alt="bdtail_registration_img" src="image/up_boardwrite.png" data_num="${reply.rno_step}">
 					</a>
 				</span>	
 			</div>

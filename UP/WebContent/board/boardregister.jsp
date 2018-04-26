@@ -26,12 +26,7 @@
 		margin: 0 10px;
 	}
 	#bdregister_title_wrap {
-		margin: 0 10px;
-		height: 32px;		
-		padding-top: 5px;
-		padding-bottom: 5px;
 		border-top: 1px solid #ccc;
-		border-bottom: 1px solid #ccc;
 		position: relative;
 	}
 	#bdregister_title {

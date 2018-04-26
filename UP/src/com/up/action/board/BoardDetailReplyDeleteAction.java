@@ -21,19 +21,12 @@ public class BoardDetailReplyDeleteAction implements Action{
 			throws ServletException, IOException {
 		JSONObject jObj = new JSONObject();
 		
-		Integer rno = Integer.parseInt(request.getParameter("rno"));
-		System.out.println("rno = " + rno);
+		Integer rno_step = Integer.parseInt(request.getParameter("rno_step"));
+		System.out.println("rno_step = " + rno_step);
 		
 		BoardReplyDAO rDao = BoardReplyDAO.getInstance();
-		int flag = rDao.boardReplyDelete(rno);
-		
-		if(flag > 0) {
-			flag = 1;
-		} else {
-			flag = 0;
-		}
-		
-		jObj.put("flag", flag);
+		rDao.boardReplyDelete(rno_step);
+		rDao.boardReplyRno_stepUpdate2(rno_step);
 		
 		response.setContentType("application/x-json; charset=UTF-8"); 
 		response.getWriter().println(jObj);

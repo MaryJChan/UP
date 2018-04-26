@@ -23,7 +23,7 @@ public class BoardAnswerViewAction implements Action{
 		BoardDAO bDao = BoardDAO.getInstance();
 		BoardDTO bDto = 	bDao.BoardAnswerView(bno);
 		
-		bDto.setContent("    ----------------------------------------------------------- 게시글의 내용 ------------------------------------------------------------\n\n\n	" + bDto.getContent() + "	\n\n\n    -----------------------------------------------------------------------------------------------------------------------------------------\n");
+		bDto.setContent("\n\n\n	" + bDto.getContent() + "	\n\n\n--------------------------------------------------------------- 게시글의 내용 ----------------------------------------------------------------\n");
 		request.setAttribute("boardAnswerView", bDto);
 		
 		ActionForward forward = new ActionForward();

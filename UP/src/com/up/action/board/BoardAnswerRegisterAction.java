@@ -79,8 +79,12 @@ public class BoardAnswerRegisterAction implements Action{
 		bDto.setCategory(bDto.getCategory());
 		bDao.boardUpdateStep(bDto);
 		
+		if(re_level > 1) {
+			re_level = 1;
+		}
+		
 		bDao = BoardDAO.getInstance();
-		bDto = new BoardDTO(bDto.getBno_step(), title, bDto.getCategory(), content, writer, filename, filesize, re_level);
+		bDto = new BoardDTO(bDto.getBno_step(), title, bDto.getCategory(), content, writer, filename, filesize, bDto.getRef(), re_level);
 		bDao.boardAnswerRegister(bDto);
 		
 		ActionForward forward = new ActionForward();

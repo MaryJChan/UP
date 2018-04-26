@@ -38,8 +38,8 @@
 	<!-- 시퀀스와 동일한 기능을하는 서브쿼리 -->
 	<!-- ref는 bno와 같은 값을 사용해야한다 -->
 	<insert id="boardRegister" parameterType="bDTO">
-		INSERT INTO tblboard(bno, bno_step, title, category, content, writer, filename, filesize, re_level) 
-		VALUES ((SELECT nvl(max(bno)+1, 1) from tblboard), (SELECT nvl(max(bno_step)+1, 1) from tblboard), #{title}, #{category}, #{content}, #{writer}, #{filename}, #{filesize}, 0)
+		INSERT INTO tblboard(bno, bno_step, title, category, content, writer, filename, filesize, ref, re_level) 
+		VALUES ((SELECT nvl(max(bno)+1, 1) from tblboard), (SELECT nvl(max(bno_step)+1, 1) from tblboard), #{title}, #{category}, #{content}, #{writer}, #{filename}, #{filesize}, (SELECT nvl(max(ref)+1, 1) from tblboard), 0)
 	</insert>
 	
 	<select id="boarddetailview" resultType="npDTO" parameterType="Integer">
@@ -58,6 +58,7 @@
 				filename,
 				filesize,
 				downcnt,
+				ref,
 				re_level,
 				regdate, 
 				LEAD(bno, 1 ) OVER (ORDER BY bno_step ASC) AS next_article_bno, 
@@ -79,7 +80,7 @@
 	
 	<update id="boardupdate" parameterType="bDTO">
 		UPDATE tblboard SET
-		title = #{title}, content = #{content}
+		title = #{title}, category = #{category}, content = #{content}, filename = #{filename}, filesize = #{filesize}
 		WHERE bno = #{bno}
 	</update>
 	
@@ -180,10 +181,7 @@
 				FROM (
 					SELECT b.*, (SELECT COUNT(*)
 									 	 FROM boardreply d
-										 WHERE b.bno = d.bno) replycnt, 
-										 (SELECT COUNT(*) 
-										 FROM boardrecomment drc 
-										 WHERE b.bno = drc.bno) recommentcnt 
+										 WHERE b.bno = d.bno) replycnt
 					FROM tblboard b
 					WHERE bno > 0
 					ORDER BY bno_step DESC
@@ -193,25 +191,20 @@
 		]]>
 	</select>
 	
-	<insert id="boardReplyStore" parameterType="rDTO">
-		INSERT INTO boardreply(rno, bno, sessionuser, replycomment)
-		VALUES (seq_boardreply_rno.nextval, #{bno}, #{sessionUser}, #{replyComment})
+	<insert id="boardReplyRegister" parameterType="rDTO">
+		INSERT INTO boardreply(rno, rno_step, bno, sessionuser, replycomment, ref, re_level)
+		VALUES ((SELECT nvl(max(rno)+1, 1) from boardreply), (SELECT nvl(max(rno_step)+1, 1) from boardreply), #{bno}, #{sessionUser}, #{replyComment}, (SELECT nvl(max(ref)+1, 1) from boardreply), 0)
 	</insert>
 	
 	<select id="boardReplyView" resultType="rDTO" parameterType="Integer">
 		SELECT * FROM boardreply
 		WHERE bno = #{bno}
-		ORDER BY rno DESC
+		ORDER BY rno_step DESC
 	</select>
 	
 	<delete id="boardReplyDelete" parameterType="Integer">
 		DELETE FROM boardreply
-		WHERE rno = #{rno}
-	</delete>
-	
-	<delete id="boardRecommentDelete2" parameterType="Integer">
-		DELETE FROM boardrecomment
-		WHERE rno = #{rno}
+		WHERE rno_step = #{rno_step}
 	</delete>
 	
 	<select id="boardOption" resultType="bDTO" parameterType="cDTO">		
@@ -319,21 +312,29 @@
 		WHERE rnum BETWEEN #{pageStart} AND #{perPageNum}		
 	</select>
 	
+	<!-- 댓글 UPDATE -->
 	<update id="boardReplyUpdate" parameterType="rDTO">
 		UPDATE boardreply SET 
 		replycomment = #{replyComment} 
-		WHERE rno = #{rno}
+		WHERE rno_step = #{rno_step}
 	</update>
 	
-	<insert id="boardRecommentStore" parameterType = "rcDTO">
-		INSERT INTO boardrecomment(rcno, bno, rno, sessionuser, recomment)
-		VALUES (seq_boardrecomment_rcno.nextval, #{bno}, #{rno}, #{sessionUser}, #{recomment})
+	<!-- 리댓글 등록 -->
+	<insert id="boardRecommentStore" parameterType="rDTO">
+		INSERT INTO boardreply(rno, rno_step, bno, sessionuser, replycomment, ref, re_level)
+		VALUES ((SELECT nvl(max(rno)+1, 1) from boardreply), #{rno_step}, #{bno}, #{sessionUser}, #{replyComment}, #{ref}, #{re_level})
 	</insert>
 	
-	<select id="boardRecommentView" resultType="rcDTO">
-		SELECT * FROM boardrecomment
-		WHERE bno = #{bno}
-		ORDER BY rcno ASC
+	<!-- 리댓글 등록시 rno_step UPDATE -->
+	<update id="boardReplyRno_stepUpdate" parameterType="Integer">
+		UPDATE boardreply SET
+		rno_step = rno_step + 1
+		WHERE rno_step >= #{rno_step}
+	</update>
+	
+	<select id="boardReplySelect" resultType="rDTO" parameterType="Integer">
+		SELECT * FROM boardreply
+		WHERE rno_step = #{rno_step}
 	</select>
 	
 	<select id="boardFavoriteCheck" resultType="fDTO">
@@ -406,8 +407,8 @@
 	
 	<!-- 답글 등록 -->
 	<insert id="boardAnswerRegister" parameterType="bDTO">
-		INSERT INTO tblboard(bno, bno_step, title, category, content, writer, filename, filesize, re_level) 
-		VALUES ((SELECT nvl(max(bno)+1, 1) from tblboard), #{bno_step}, #{title}, #{category}, #{content}, #{writer}, #{filename}, #{filesize}, #{re_level})
+		INSERT INTO tblboard(bno, bno_step, title, category, content, writer, filename, filesize, ref, re_level) 
+		VALUES ((SELECT nvl(max(bno)+1, 1) from tblboard), #{bno_step}, #{title}, #{category}, #{content}, #{writer}, #{filename}, #{filesize}, #{ref}, #{re_level})
 	</insert>
 	
 	<!-- 상세페이지 등급 출력 -->
@@ -421,5 +422,12 @@
 		UPDATE tblboard SET
 		bno_step = bno_step - 1
 		WHERE bno_step > #{bno_step}
+	</update>
+	
+	<!-- 댓글 삭제시 rno_step 수정 -->
+	<update id="boardReplyRno_stepUpdate2" parameterType="Integer">
+		UPDATE boardreply SET
+		rno_step = rno_step - 1
+		WHERE rno_step > #{rno_step}
 	</update>
 </mapper>

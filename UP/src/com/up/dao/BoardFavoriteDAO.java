@@ -96,5 +96,20 @@ public class BoardFavoriteDAO {
 		return result;
 		
 	}
+	
+	public int boardGoodcntselect(Integer bno) {
+		int goodcnt = 0;
+
+		sqlSession = sqlSessionFactory.openSession();
+		try {
+			goodcnt = sqlSession.selectOne("boardGoodcntSelect", bno);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			sqlSession.close();
+		}
+
+		return goodcnt;
+	}
 
 }

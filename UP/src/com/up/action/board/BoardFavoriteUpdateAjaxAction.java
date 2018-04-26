@@ -46,7 +46,10 @@ public class BoardFavoriteUpdateAjaxAction implements Action{
 			if(result > 0 && result2 > 0) {
 				flag = 1;
 			}
+			
 		}		
+		
+		
 				
 		JSONObject jObj = new JSONObject();
 		jObj.put("flag", flag);		

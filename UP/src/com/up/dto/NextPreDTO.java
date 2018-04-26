@@ -15,7 +15,6 @@ public class NextPreDTO {
 	private int filesize;
 	private int downcnt;
 	private int ref;
-	private int re_step;
 	private int re_level;
 	private Date regdate;
 	private int next_article_bno;
@@ -145,14 +144,6 @@ public class NextPreDTO {
 
 	public void setRef(int ref) {
 		this.ref = ref;
-	}
-
-	public int getRe_step() {
-		return re_step;
-	}
-
-	public void setRe_step(int re_step) {
-		this.re_step = re_step;
 	}
 
 	public int getRe_level() {

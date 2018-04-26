@@ -17,6 +17,7 @@ public class BoardDTO {
 	private String filename;
 	private int filesize;
 	private int downcnt;
+	private int ref;
 	private int re_level;
 	private Date regdate;
 	
@@ -34,6 +35,16 @@ public class BoardDTO {
 		this.title = title;
 		this.content = content;
 	}	
+	
+	public BoardDTO(int bno, String title, String category, String content, String filename, int filesize) {
+		super();
+		this.bno = bno;
+		this.title = title;
+		this.category = category;
+		this.content = content;
+		this.filename = filename;
+		this.filesize = filesize;
+	}
 
 	public BoardDTO(String title, String category, String content, String writer, String filename, int filesize) {
 		super();
@@ -75,7 +86,7 @@ public class BoardDTO {
 	}	
 
 	public BoardDTO(int bno_step, String title, String category, String content, String writer, String filename, int filesize,
-			int re_level) {
+			int ref, int re_level) {
 		super();
 		this.bno_step = bno_step;
 		this.title = title;
@@ -84,6 +95,7 @@ public class BoardDTO {
 		this.writer = writer;
 		this.filename = filename;
 		this.filesize = filesize;
+		this.ref = ref;
 		this.re_level = re_level;
 	}
 
@@ -197,6 +209,14 @@ public class BoardDTO {
 
 	public void setDowncnt(int downcnt) {
 		this.downcnt = downcnt;
+	}
+
+	public int getRef() {
+		return ref;
+	}
+
+	public void setRef(int ref) {
+		this.ref = ref;
 	}
 
 	public int getRe_level() {

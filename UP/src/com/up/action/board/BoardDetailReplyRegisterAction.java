@@ -13,7 +13,7 @@ import com.up.action.ActionForward;
 import com.up.dao.BoardReplyDAO;
 import com.up.dto.BoardReplyDTO;
 
-public class BoardDetailReplyAction implements Action{
+public class BoardDetailReplyRegisterAction implements Action{
 
 	@Override
 	public ActionForward excute(HttpServletRequest request, HttpServletResponse response)
@@ -28,14 +28,11 @@ public class BoardDetailReplyAction implements Action{
 		System.out.println("bno = " + bno);
 		System.out.println("sessionUser = " + sessionUser);
 		System.out.println("replyComment = " + replyComment);
-		
-		BoardReplyDTO rDto = null;
-		BoardReplyDAO rDao = null;		
 
 		if(sessionUser != null && replyComment != null) {
-			rDto = new BoardReplyDTO(bno, sessionUser, replyComment);
-			rDao = BoardReplyDAO.getInstance();
-			flag = rDao.boardReplyStore(rDto);
+			BoardReplyDTO rDto = new BoardReplyDTO(bno, sessionUser, replyComment);
+			BoardReplyDAO rDao = BoardReplyDAO.getInstance();
+			flag = rDao.boardReplyRegister(rDto);
 			System.out.println("flag = " + flag);			
 			
 			if(flag == 1) {

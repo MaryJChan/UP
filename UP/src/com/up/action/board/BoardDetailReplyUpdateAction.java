@@ -20,11 +20,11 @@ public class BoardDetailReplyUpdateAction implements Action{
 			throws ServletException, IOException {
 		JSONObject jObj = new JSONObject();
 		
-		int rno = Integer.parseInt(request.getParameter("rno"));
+		int rno_step = Integer.parseInt(request.getParameter("rno_step"));
 		String replyComment = request.getParameter("replyComment");
-		System.out.println("rno = " + rno + "   replyComment = " + replyComment);
+		System.out.println("rno_step = " + rno_step + "   replyComment = " + replyComment);
 		
-		BoardReplyDTO rDto = new BoardReplyDTO(rno, replyComment);
+		BoardReplyDTO rDto = new BoardReplyDTO(rno_step, replyComment);
 		BoardReplyDAO rDao = BoardReplyDAO.getInstance();
 		int flag = rDao.boardReplyUpdate(rDto);
 		

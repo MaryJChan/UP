@@ -10,9 +10,7 @@ import org.json.simple.JSONObject;
 
 import com.up.action.Action;
 import com.up.action.ActionForward;
-import com.up.dao.BoardRecommentDAO;
 import com.up.dao.BoardReplyDAO;
-import com.up.dto.BoardRecommentDTO;
 import com.up.dto.BoardReplyDTO;
 
 public class BoardDetailRecommentStoreAction implements Action{
@@ -23,23 +21,32 @@ public class BoardDetailRecommentStoreAction implements Action{
 		JSONObject jObj = new JSONObject();
 		
 		int flag = 0;		
-		int bno = Integer.parseInt(request.getParameter("bno"));
-		int rno = Integer.parseInt(request.getParameter("rno"));
+		Integer rno_step = Integer.parseInt(request.getParameter("rno_step"));
+		Integer bno = Integer.parseInt(request.getParameter("bno"));		
 		String sessionUser = request.getParameter("sessionUser");
-		String recomment = request.getParameter("recomment");
+		String replyComment = request.getParameter("replyComment");
 
 		System.out.println("bno = " + bno);
-		System.out.println("rno = " + rno);
+		System.out.println("rno_step = " + rno_step);
 		System.out.println("sessionUser = " + sessionUser);
-		System.out.println("recomment = " + recomment);
+		System.out.println("replyComment = " + replyComment);
 		
-		BoardRecommentDTO rcDto = null;
-		BoardRecommentDAO rcDao = null;		
-
-		if(sessionUser != null && recomment != null) {
-			rcDto = new BoardRecommentDTO(bno, rno, sessionUser, recomment);
-			rcDao = BoardRecommentDAO.getInstance();
-			flag = rcDao.boardRecommentStore(rcDto);
+		BoardReplyDAO rDao = BoardReplyDAO.getInstance();
+		BoardReplyDTO rDto = rDao.boardReplySelect(rno_step);
+		int ref = rDto.getRef();
+		int re_level = rDto.getRe_level()+1;
+		
+		if(sessionUser != null && replyComment != null) {
+			
+			rDao.boardReplyRno_stepUpdate(rno_step);
+			
+			if(re_level > 1) {
+				re_level = 1;
+			}
+			
+			rDto = new BoardReplyDTO(rno_step, bno, sessionUser, replyComment, ref, re_level);
+			
+			flag = rDao.boardRecommentStore(rDto);
 			System.out.println("flag = " + flag);			
 			
 			if(flag == 1) {

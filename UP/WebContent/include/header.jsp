@@ -12,9 +12,12 @@
 	response.setHeader("Pragma", "no-cache");
 %>
 <%
-    	// 줄바꿈을 위한 코딩
-    	pageContext.setAttribute("br", "<br/>");
-    	pageContext.setAttribute("cn", "\n");
+	// 줄바꿈을 위한 코딩
+	pageContext.setAttribute("cr", "\r");
+	pageContext.setAttribute("cn", "\n");
+	pageContext.setAttribute("crcn", "\r\n");
+	pageContext.setAttribute("sp", "&nbsp;");
+	pageContext.setAttribute("br", "<br/>");
 %> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
