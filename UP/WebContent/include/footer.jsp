@@ -260,7 +260,7 @@
 						</a>
 					</li>
 					<li>
-						<a href="#" class="f_icon03">
+						<a href="up_constract.bizpoll" class="f_icon03">
 							MEMBER JOIN
 							<br>
 							<span>회원가입</span>
@@ -329,7 +329,7 @@
 				(주)UP패션사업부 / 광주광역시 반룡로 6번길 16 UP<br>
 				고객상담실 : A/S 및 오프라인 매장관련 010-2714-7318, 온라인 스토어 010-2714-7318, 키즈 온라인 스토어 010-2714-7318 / 대표 이메일 : ddhfjswl2003@naver.com<br>
 				대표이사 : 김재찬 / 사업자등록번호 : 113-85-19030 / 통신판매업신고 : 금천구청 제 2005-01053 / 개인정보책임자 : 조동주<br>
-				Copyright 201. UP
+				UP  Copyright © IUPashion Corp. All Rights Reserved.
 			</div>
 		</div>
 		

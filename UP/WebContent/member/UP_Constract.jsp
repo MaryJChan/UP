@@ -26,8 +26,8 @@
 		box-sizing: border-box;
 	}
 	div#header {
-		height: 169px;
-		padding-top: 62px;
+		height: 120px;
+		padding-top: 50px;
 		position: relative;	
 	}
 	div#container {
@@ -469,40 +469,6 @@
 			<a href="#">단체 회원 가입</a>
 		</div>
 	</div>
-	<div id="footer">
-		<ul id="footer_list"> 
-			<li id="babo">
-				<a href="#">이용약관</a>
-			</li>
-			<li>
-				<strong>
-					<a href="#">개인정보처리방침</a>
-				</strong>	
-			</li>
-			<li>
-				<a href="#">책임의 한계와 법적고지</a>
-			</li>
-			<li>
-				<a href="#">회원정보 고객센터</a>
-			</li>
-		</ul>
-		<div>
-			<div id="footer_logo">
-				<a href="#" id="logo">UP</a>
-			</div>
-			<em class ="copy">
-				Copyright
-			</em>
-			<em class="u_cri">
-				©
-			</em>
-			<a href="#" class="u_cra">
-				IUPashion Corp.
-			</a>
-			<span>
-				All Rights Reserved.
-			</span>
-		</div>
-	</div>
 </body>
 </html>
+<%@ include file="../include/footer.jsp" %>

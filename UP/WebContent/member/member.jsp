@@ -41,6 +41,7 @@
 	.conContainer {
 		background-color: #FFF;
 		padding: 20px;
+		padding-bottom: 60px;
 		zoom: 1;
 		width: 940px;
 		margin: 10px auto;
@@ -925,3 +926,4 @@
 	</div>
 </body>
 </html>
+<%@ include file="../include/footer.jsp" %>

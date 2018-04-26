@@ -46,7 +46,7 @@
 	.conWrap {
 		width: 100%;
 		clear: both;
-		margin: 10px auto 50px auto;
+		margin: 10px auto 0 auto;
 		z-index: 0;
 		/* position: relative; 	 */		
 	}
@@ -564,7 +564,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="item_list" >
+	<%-- <div class="item_list" >
 		<h3>NEW ITEM</h3>
 		<hr>		
 		<c:forEach items="${newProductList}" var="pDto">
@@ -578,8 +578,8 @@
 						<br>
 						<span>
 							<fmt:setLocale value="ko_kr"/>
-							<%-- <fmt:setLocale value="en_us"/> --%>
-							<%-- <fmt:setLocale value="ja_jp"/> --%>
+							<fmt:setLocale value="en_us"/>
+							<fmt:setLocale value="ja_jp"/>
 							<!-- currency = 접속하는 현지와 화폐단위 -->
 							<fmt:formatNumber value="${pDto.p_price2}"  type="currency"/>
 							<fmt:formatNumber value="0.15"  type="percent"/>
@@ -612,6 +612,7 @@
 				</a>
 			</div>			
 		</c:forEach>	
-	</div>      
+	</div>       --%>
 </body>
 </html>
+<%@ include file="../include/footer.jsp" %>
