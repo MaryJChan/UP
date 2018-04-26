@@ -25,558 +25,558 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
-/* font-family: 'Nanum Gothic', serif; */
-* {
-	padding: 0;
-	margin: 0;
-}
-
-ul {
-	list-style-type: none;
-}
-
-body, input, button, textarea {
-	font-size: 12px;
-	line-height: 1.3ec;
-	font-family: 'Nanum Gothic', serif;
-	color: #333;
-}
-
-a {
-	text-decoration: none;
-}
-
-hr {
-	display: none;
-}
-
-.header {
-	position: relative;
-	width: 100%;
-	height: 91px;
-	border-bottom: 1px solid #dfdfdf;
-	z-index: 10;
-}
-
-.top_color {
-	width: 100%;
-	height: 34px;
-	background-color: #dfdfdf;
-}
-
-.top_area {
-	width: 980px;
-	height: 28px;
-	margin: 0 auto;
-	clear: both;
-}
-
-.top_menu {
-	position: relative;
-	width: 980px;
-	height: 27px;
-	display: block;
-	float: left;
-	z-index: 1;
-	margin: 0 auto;
-	padding-top: 5px;
-}
-
-.top_menu>li {
-	height: 22px;
-	float: left;
-	line-height: 22px;
-	vertical-align: middle;
-	display: block;
-	margin-right: 2px;
-}
-
-.icon_korea {
-	width: 26px;
-	height: 18px;
-	float: left;
-	margin-top: 2px;
-	display: inline-block;
-	background: url('image/KOREA.png') 0 0 no-repeat;
-	text-indent: -10000px;
-}
-
-.icon_store {
-	height: 18px;
-	font-size: 10px;
-	font-weight: bold;
-	background: url('image/icon_map.png') 0 0 no-repeat;
-	background-size: 18px 100%;
-	display: inline-block;
-	margin-top: 2px;
-	padding-left: 20px;
-	color: #333;
-}
-
-.top_menu .pipe {
-	display: inline-block;
-	margin: 0 5px 0 10px;
-	font-size: 11px;
-}
-
-.se_top_color {
-	width: 100%;
-	height: 57px;
-}
-
-.top_con {
-	width: 980px;
-	height: 43px;
-	margin: 0 auto;
-	padding: 7.5px 0 6.5px 0;
-	position: relative;
-}
-
-.logo {
-	width: 65px;
-	height: 43px;
-	float: left;
-	margin-right: 25px;
-	line-height: 43px;
-}
-
-.logo>a {
-	color: red !important;
-	text-decoration: none;
-	font-style: italic;
-	font-weight: bold;
-}
-
-.gnb_area {
-	width: auto;
-	height: 24px;
-	float: left;
-	display: block;
-	padding-top: 10px;
-}
-
-.gnb {
-	width: auto;
-	height: 39px;
-	float: left;
-}
-
-.gnb>li {
-	height: 39px;
-	width: auto;
-	max-width: 94px;
-	position: relative;
-	float: left;
-	font-size: 13px;
-	font-weight: 800;
-	line-height: 28px;
-	display: block;
-	margin-right: 25px;
-	z-index: 2;
-}
-
-.head_updrop {
-	width: 145px;
-	background-color: #FFF;
-	padding: 25px 20px;
-	position: absolute;
-	border: 1px solid #dfdfdf;
-	border-top: 1px solid #dfdfdf;
-	left: -20px;
-	top: 39px;
-	display: none;
-}
-
-.updrop_area {
-	width: 145px;
-	height: 100%;
-}
-
-#menuDepth1list1:hover .head_updrop {
-	display: block;
-}
-
-#head_NBdrop>a {
-	font-size: 11px;
-	font-weight: normal;
-	display: block;
-	color: #333;
-}
-
-#head_NBdrop>li>a {
-	width: 147px;
-	display: block;
-	border-bottom: 1px solid #e6e6e6;
-	color: #333;
-	font-size: 14px;
-	font-weight: 700;
-	margin: 7px 0 3px 0;
-}
-
-#head_NBdrop>a:hover {
-	color: #e51130;
-}
-
-.gnb>li>a {
-	color: #000;
-}
-
-.gnb>li>a:hover {
-	color: #ca0000;
-}
-
-.top_search {
-	position: absolute;
-	top: 9px;
-	right: 145px;
-	width: 180px;
-	height: 28px;
-	float: left;
-	display: block;
-	background: url('image/up_main/search_bg.png');
-	background-size: 100% 100%;
-	vertical-align: middle;
-	padding: 5px 0 8px 20px;
-	z-index: -1p
-}
-
-.top_search>input {
-	border: 0;
-	background-color: #000;
-	width: 130px;
-	height: 28px;
-	color: #fff;
-	line-height: 28px;
-}
-
-.top_search img {
-	vertical-align: middle;
-	text-align: left;
-}
-
-#txtSearch {
-	outline: none;
-}
-
-.top_myinfo_area {
-	width: 115px;
-	height: 48px;
-	float: right;
-	display: block;
-}
-
-.top_myinfo_area>li {
-	position: relative;
-	float: left;
-	display: block;
-	font-size: 10px;
-	color: #333;
-	font-weight: 400;
-	text-align: center;
-	margin-top: -5px;
-}
-
-.mr15 {
-	margin-right: 15px;
-}
-
-.top_myinfo_area>li>a {
-	display: inline-block;
-	color: #333;
-	text-align: center;
-	font-size: 10px;
-}
-
-.icon_login {
-	width: 31px;
-	height: 31px;
-	float: left;
-	background: url('image/up_main/icon_myinfo.png') 0 0 no-repeat;
-	background-size: 100% 100%;
-	margin: 4px 0 0 0;
-	text-indent: -10000px;
-}
-
-.top_myinfo_area .log_txt {
-	position: absolute;
-	bottom: -13px;
-	left: 60%;
-	width: 100px;
-	height: 12px;
-	font-size: 10px;
-	color: #333;
-	font-weight: 700;
-	display: block;
-	text-align: center;
-	margin-left: -50px;
-	z-index: 6666;
-}
-
-.top_myinfo_area li a {
-	display: inline-block;
-	color: #333;
-	text-align: center;
-}
-
-.top_myinfo_area li a:hover {
-	color: #e51130;
-}
-
-.end {
-	float: right;
-	display: block;
-}
-
-.mypage {
-	position: relative;
-	width: 31px;
-	height: 33px;
-	float: right;
-	background: url('image/up_main/icon_mypage.png') 0 0 no-repeat;
-	background-size: 100% 100%;
-	margin: 4px 0 0 0;
-	right: -45px;
-}
-
-.bag_txt {
-	position: absolute;
-	bottom: -11px;
-	left: 100%;
-	width: 55px;
-	height: 12px;
-	font-size: 10px;
-	display: block;
-	z-index: 6666;
-	font-weight: 700;
-}
-
-/* 모달 창  */
-/* The Modal (background) */
-.modal {
-	display: none; /* Hidden by default */
-	position: fixed; /* Stay in place */
-	z-index: 1; /* Sit on top */
-	padding-top: 100px; /* Location of the box */
-	left: 0;
-	top: 0;
-	width: 100%; /* Full width */
-	height: 100%; /* Full height */
-	overflow: auto; /* Enable scroll if needed */
-	background-color: rgb(0, 0, 0); /* Fallback color */
-	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
-}
-
-/* Modal Content */
-.modal-content {
-	background-color: #fefefe;
-	margin: auto;
-	padding: 20px;
-	border: 1px solid #888;
-	width: 450px;
-	height: 530px;
-}
-
-/* The Close Button */
-.close {
-	color: #aaaaaa;
-	float: right;
-	font-size: 28px;
-	font-weight: bold;
-}
-
-.close:hover, .close:focus {
-	color: #000;
-	text-decoration: none;
-	cursor: pointer;
-}
-/* 로그인 */
-a:link, a:visited {
-
-	text-decoration: none;
-}
-
-#wrap {
-	margin: 50px auto;
-	width: 433px;
-	height: 474px;
-}
-
-#login_content {
-	width: 373px;
-	height: 464px;
-	padding: 0 25px;
-	border: 5px solid #CCC;
-	text-align: left;
-	display: inline-block;
-}
-
-#login_area {
-	width: 373px;
-	height: 442px;
-	position: relative;
-}
-
-#subtitle {
-	position: relative;
-	height: 18px;
-	margin: 22px auto 12px 0;
-	width: 373px;
-	height: 43px;
-}
-
-#subtitle>h1 {
-	color: #e51130;
-	font-weight: 900;
-}
-
-#container {
-	padding-top: 20px;
-	width: 373px;
-	position: relative;
-}
-
-.p_id {
-	margin-bottom: 16px;
-	width: 373px;
-	font-size: 13px;
-}
-
-.p_id>label {
-	display: inline-block;
-	width: 100px;
-	font-weight: bold;
-}
-
-.p_pw {
-	margin-bottom: 16px;
-	width: 373px;
-	font-size: 13px;
-}
-
-.p_pw>label {
-	display: inline-block;
-	width: 100px;
-	font-weight: bold;
-}
-
-.idpw {
-	color: #333;
-	letter-spacing: -1px;
-	background-color: white;
-	width: 240px;
-	height: 22px;
-	border: 2px solid #CCC;
-	border-radius: 5px;
-	font-weight: normal;
-	font-size: 13px;
-	line-height: 22px;
-	padding: 8px 12px;
-	outline: none; /* 인풋태그 선제거 */
-}
-
-#login_form {
-	position: relative;
-}
-
-#login_form>img {
-	display: inline-block;
-	width: 24px;
-	height: 24px;
-	position: absolute;
-	right: 8px;
-	top: 8px;
-}
-
-#remember {
-	margin: -1px 0 16px;
-	position: absolute;
-	left: 103px;
-	top: 138px;
-}
-
-#remember>input {
-	color: #333;
-	margin: 3px 3px 3px 4px;
-	vertical-align: middle;
-}
-
-#remember>label {
-	font-size: 13px;
-	letter-spacing: -1px;
-}
-
-#btn_login {
-	display: inline-block;
-	background-color: #e51130;
-	width: 268px;
-	padding: 3px 0 2px 0;
-	line-height: 38px;
-	text-align: center;
-	border-radius: 5px;
-	color: #fff;
-	font-weight: bold;
-	position: absolute;
-	top: 180px;
-	left: 105px;
-}
-
-#login_help {
-	width: 371px;
-	position: absolute;
-	bottom: 20px;
-	padding-top: 10px;
-	font-size: 12px;
-	letter-spacing: -1px;
-	border-top: 1px solid #CCC;
-}
-
-#login_help a {
-	letter-spacing: -1px;
-	color: #333;
-}
-
-#login_help a:hover {
-	text-decoration: underline;
-}
-
-.right {
-	display: inline-block;
-	position: absolute;
-	right: 0;
-}
-
-.right>a {
-	color: #777 !important;
-}
-
-.right_bar {
-	display: inline-block;
-	width: 1px;
-	height: 11px;
-	background-color: #ccc;
-	font-size: 11px;
-	margin: 4px 1px 0 3px;
-}
-
-#id_error {
-	left: 110px;
-	bottom: 43px;
-}
-
-#pw_error {
-	left: 110px;
-	bottom: -16px;
-}
-
-.error {
-	position: absolute;
-	font-size: 11px;
-	color: red;
-	left: 3px;
-	display: none;
-	left: 110px;
-}
+	@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+	/* font-family: 'Nanum Gothic', serif; */
+	* {
+		padding: 0;
+		margin: 0;
+	}
+	
+	ul {
+		list-style-type: none;
+	}
+	
+	body, input, button, textarea {
+		font-size: 12px;
+		line-height: 1.3ec;
+		font-family: 'Nanum Gothic', serif;
+		color: #333;
+	}
+	
+	a {
+		text-decoration: none;
+	}
+	
+	hr {
+		display: none;
+	}
+	
+	.header {
+		position: relative;
+		width: 100%;
+		height: 91px;
+		border-bottom: 1px solid #dfdfdf;
+		z-index: 10;
+	}
+	
+	.top_color {
+		width: 100%;
+		height: 34px;
+		background-color: #dfdfdf;
+	}
+	
+	.top_area {
+		width: 980px;
+		height: 28px;
+		margin: 0 auto;
+		clear: both;
+	}
+	
+	.top_menu {
+		position: relative;
+		width: 980px;
+		height: 27px;
+		display: block;
+		float: left;
+		z-index: 1;
+		margin: 0 auto;
+		padding-top: 5px;
+	}
+	
+	.top_menu>li {
+		height: 22px;
+		float: left;
+		line-height: 22px;
+		vertical-align: middle;
+		display: block;
+		margin-right: 2px;
+	}
+	
+	.icon_korea {
+		width: 26px;
+		height: 18px;
+		float: left;
+		margin-top: 2px;
+		display: inline-block;
+		background: url('image/KOREA.png') 0 0 no-repeat;
+		text-indent: -10000px;
+	}
+	
+	.icon_store {
+		height: 18px;
+		font-size: 10px;
+		font-weight: bold;
+		background: url('image/icon_map.png') 0 0 no-repeat;
+		background-size: 18px 100%;
+		display: inline-block;
+		margin-top: 2px;
+		padding-left: 20px;
+		color: #333;
+	}
+	
+	.top_menu .pipe {
+		display: inline-block;
+		margin: 0 5px 0 10px;
+		font-size: 11px;
+	}
+	
+	.se_top_color {
+		width: 100%;
+		height: 57px;
+	}
+	
+	.top_con {
+		width: 980px;
+		height: 43px;
+		margin: 0 auto;
+		padding: 7.5px 0 6.5px 0;
+		position: relative;
+	}
+	
+	.logo {
+		width: 65px;
+		height: 43px;
+		float: left;
+		margin-right: 25px;
+		line-height: 43px;
+	}
+	
+	.logo>a {
+		color: red !important;
+		text-decoration: none;
+		font-style: italic;
+		font-weight: bold;
+	}
+	
+	.gnb_area {
+		width: auto;
+		height: 24px;
+		float: left;
+		display: block;
+		padding-top: 10px;
+	}
+	
+	.gnb {
+		width: auto;
+		height: 39px;
+		float: left;
+	}
+	
+	.gnb>li {
+		height: 39px;
+		width: auto;
+		max-width: 94px;
+		position: relative;
+		float: left;
+		font-size: 13px;
+		font-weight: 800;
+		line-height: 28px;
+		display: block;
+		margin-right: 25px;
+		z-index: 2;
+	}
+	
+	.head_updrop {
+		width: 145px;
+		background-color: #FFF;
+		padding: 25px 20px;
+		position: absolute;
+		border: 1px solid #dfdfdf;
+		border-top: 1px solid #dfdfdf;
+		left: -20px;
+		top: 39px;
+		display: none;
+	}
+	
+	.updrop_area {
+		width: 145px;
+		height: 100%;
+	}
+	
+	#menuDepth1list1:hover .head_updrop {
+		display: block;
+	}
+	
+	#head_NBdrop>a {
+		font-size: 11px;
+		font-weight: normal;
+		display: block;
+		color: #333;
+	}
+	
+	#head_NBdrop>li>a {
+		width: 147px;
+		display: block;
+		border-bottom: 1px solid #e6e6e6;
+		color: #333;
+		font-size: 14px;
+		font-weight: 700;
+		margin: 7px 0 3px 0;
+	}
+	
+	#head_NBdrop>a:hover {
+		color: #e51130;
+	}
+	
+	.gnb>li>a {
+		color: #000;
+	}
+	
+	.gnb>li>a:hover {
+		color: #ca0000;
+	}
+	
+	.top_search {
+		position: absolute;
+		top: 9px;
+		right: 145px;
+		width: 180px;
+		height: 28px;
+		float: left;
+		display: block;
+		background: url('image/up_main/search_bg.png');
+		background-size: 100% 100%;
+		vertical-align: middle;
+		padding: 5px 0 8px 20px;
+		z-index: -1p
+	}
+	
+	.top_search>input {
+		border: 0;
+		background-color: #000;
+		width: 130px;
+		height: 28px;
+		color: #fff;
+		line-height: 28px;
+	}
+	
+	.top_search img {
+		vertical-align: middle;
+		text-align: left;
+	}
+	
+	#txtSearch {
+		outline: none;
+	}
+	
+	.top_myinfo_area {
+		width: 115px;
+		height: 48px;
+		float: right;
+		display: block;
+	}
+	
+	.top_myinfo_area>li {
+		position: relative;
+		float: left;
+		display: block;
+		font-size: 10px;
+		color: #333;
+		font-weight: 400;
+		text-align: center;
+		margin-top: -5px;
+	}
+	
+	.mr15 {
+		margin-right: 15px;
+	}
+	
+	.top_myinfo_area>li>a {
+		display: inline-block;
+		color: #333;
+		text-align: center;
+		font-size: 10px;
+	}
+	
+	.icon_login {
+		width: 31px;
+		height: 31px;
+		float: left;
+		background: url('image/up_main/icon_myinfo.png') 0 0 no-repeat;
+		background-size: 100% 100%;
+		margin: 4px 0 0 0;
+		text-indent: -10000px;
+	}
+	
+	.top_myinfo_area .log_txt {
+		position: absolute;
+		bottom: -13px;
+		left: 60%;
+		width: 100px;
+		height: 12px;
+		font-size: 10px;
+		color: #333;
+		font-weight: 700;
+		display: block;
+		text-align: center;
+		margin-left: -50px;
+		z-index: 6666;
+	}
+	
+	.top_myinfo_area li a {
+		display: inline-block;
+		color: #333;
+		text-align: center;
+	}
+	
+	.top_myinfo_area li a:hover {
+		color: #e51130;
+	}
+	
+	.end {
+		float: right;
+		display: block;
+	}
+	
+	.mypage {
+		position: relative;
+		width: 31px;
+		height: 33px;
+		float: right;
+		background: url('image/up_main/icon_mypage.png') 0 0 no-repeat;
+		background-size: 100% 100%;
+		margin: 4px 0 0 0;
+		right: -45px;
+	}
+	
+	.bag_txt {
+		position: absolute;
+		bottom: -11px;
+		left: 100%;
+		width: 55px;
+		height: 12px;
+		font-size: 10px;
+		display: block;
+		z-index: 6666;
+		font-weight: 700;
+	}
+	
+	/* 모달 창  */
+	/* The Modal (background) */
+	.modal {
+		display: none; /* Hidden by default */
+		position: fixed; /* Stay in place */
+		z-index: 1; /* Sit on top */
+		padding-top: 100px; /* Location of the box */
+		left: 0;
+		top: 0;
+		width: 100%; /* Full width */
+		height: 100%; /* Full height */
+		overflow: auto; /* Enable scroll if needed */
+		background-color: rgb(0, 0, 0); /* Fallback color */
+		background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+	}
+	
+	/* Modal Content */
+	.modal-content {
+		background-color: #fefefe;
+		margin: auto;
+		padding: 20px;
+		border: 1px solid #888;
+		width: 450px;
+		height: 530px;
+	}
+	
+	/* The Close Button */
+	.close {
+		color: #aaaaaa;
+		float: right;
+		font-size: 28px;
+		font-weight: bold;
+	}
+	
+	.close:hover, .close:focus {
+		color: #000;
+		text-decoration: none;
+		cursor: pointer;
+	}
+	/* 로그인 */
+	a:link, a:visited {
+	
+		text-decoration: none;
+	}
+	
+	#wrap {
+		margin: 50px auto;
+		width: 433px;
+		height: 474px;
+	}
+	
+	#login_content {
+		width: 373px;
+		height: 464px;
+		padding: 0 25px;
+		border: 5px solid #CCC;
+		text-align: left;
+		display: inline-block;
+	}
+	
+	#login_area {
+		width: 373px;
+		height: 442px;
+		position: relative;
+	}
+	
+	#subtitle {
+		position: relative;
+		height: 18px;
+		margin: 22px auto 12px 0;
+		width: 373px;
+		height: 43px;
+	}
+	
+	#subtitle>h1 {
+		color: #e51130;
+		font-weight: 900;
+	}
+	
+	#container {
+		padding-top: 20px;
+		width: 373px;
+		position: relative;
+	}
+	
+	.p_id {
+		margin-bottom: 16px;
+		width: 373px;
+		font-size: 13px;
+	}
+	
+	.p_id>label {
+		display: inline-block;
+		width: 100px;
+		font-weight: bold;
+	}
+	
+	.p_pw {
+		margin-bottom: 16px;
+		width: 373px;
+		font-size: 13px;
+	}
+	
+	.p_pw>label {
+		display: inline-block;
+		width: 100px;
+		font-weight: bold;
+	}
+	
+	.idpw {
+		color: #333;
+		letter-spacing: -1px;
+		background-color: white;
+		width: 240px;
+		height: 22px;
+		border: 2px solid #CCC;
+		border-radius: 5px;
+		font-weight: normal;
+		font-size: 13px;
+		line-height: 22px;
+		padding: 8px 12px;
+		outline: none; /* 인풋태그 선제거 */
+	}
+	
+	#login_form {
+		position: relative;
+	}
+	
+	#login_form>img {
+		display: inline-block;
+		width: 24px;
+		height: 24px;
+		position: absolute;
+		right: 8px;
+		top: 8px;
+	}
+	
+	#remember {
+		margin: -1px 0 16px;
+		position: absolute;
+		left: 103px;
+		top: 138px;
+	}
+	
+	#remember>input {
+		color: #333;
+		margin: 3px 3px 3px 4px;
+		vertical-align: middle;
+	}
+	
+	#remember>label {
+		font-size: 13px;
+		letter-spacing: -1px;
+	}
+	
+	#btn_login {
+		display: inline-block;
+		background-color: #e51130;
+		width: 268px;
+		padding: 3px 0 2px 0;
+		line-height: 38px;
+		text-align: center;
+		border-radius: 5px;
+		color: #fff;
+		font-weight: bold;
+		position: absolute;
+		top: 180px;
+		left: 105px;
+	}
+	
+	#login_help {
+		width: 371px;
+		position: absolute;
+		bottom: 20px;
+		padding-top: 10px;
+		font-size: 12px;
+		letter-spacing: -1px;
+		border-top: 1px solid #CCC;
+	}
+	
+	#login_help a {
+		letter-spacing: -1px;
+		color: #333;
+	}
+	
+	#login_help a:hover {
+		text-decoration: underline;
+	}
+	
+	.right {
+		display: inline-block;
+		position: absolute;
+		right: 0;
+	}
+	
+	.right>a {
+		color: #777 !important;
+	}
+	
+	.right_bar {
+		display: inline-block;
+		width: 1px;
+		height: 11px;
+		background-color: #ccc;
+		font-size: 11px;
+		margin: 4px 1px 0 3px;
+	}
+	
+	#id_error {
+		left: 110px;
+		bottom: 43px;
+	}
+	
+	#pw_error {
+		left: 110px;
+		bottom: -16px;
+	}
+	
+	.error {
+		position: absolute;
+		font-size: 11px;
+		color: red;
+		left: 3px;
+		display: none;
+		left: 110px;
+	}
 </style>
 <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
 <script type="text/javascript">
