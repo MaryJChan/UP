@@ -298,14 +298,12 @@ public class BoardDAO {
 	public void boardUpdateStep(BoardDTO bDto) {
 		sqlSession = sqlSessionFactory.openSession();
 		try {
-			result = sqlSession.update("boardUpdateStep", bDto);
+			result = sqlSession.update("boardUpdateBnostep", bDto);
 			sqlSession.commit();
-			int result2 = sqlSession.update("boardUpdateBnoup", bDto);
-			sqlSession.commit();
-			if (result > 0 && result2 > 0) {
-				System.out.println("답글 및 bnoup 순서조정 성공");
+			if (result > 0) {
+				System.out.println("bnoup 순서조정 성공");
 			} else {
-				System.out.println("답글 및 bnoup 순서조정 실패");
+				System.out.println("bnoup 순서조정 실패");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -331,10 +329,10 @@ public class BoardDAO {
 		}
 	}
 
-	public void boardUpdateBnoup(Integer bnoup) {
+	public void boardUpdateBnoup(Integer bno_step) {
 		sqlSession = sqlSessionFactory.openSession();
 		try {
-			result = sqlSession.update("boardUpdatebnoup", bnoup);
+			result = sqlSession.update("boardUpdatebnoup", bno_step);
 			sqlSession.commit();
 			if (result > 0) {
 				System.out.println("boardUpdatebnoup 성공");

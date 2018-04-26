@@ -244,6 +244,8 @@
 	}
 	#select_false {
 		border: 1px solid #ccc;		
+		float: right;
+		margin-right: 30px;
 	}
 	#select_true {
 		border: 1px solid #e51130;
@@ -668,7 +670,7 @@
 			</c:if>
 		</div>
 		<div id="bdtail_contents">
-			${boardDetailList.content}
+			${fn:replace(boardDetailList.content, cn, br)}
 		</div>
 		<div id="bdtail_comment_wrap">			
 			<div id="commentList"></div>
@@ -824,7 +826,7 @@
 						  게시글을 삭제하시겠습니까?
 					</div>
 					<div id="delete_window_select">
-						<a href="boarddelete.bizpoll?bnoup=${boardDetailList.bnoup}&bno=${boardDetailList.bno}" id="select_true" class="delete_selectbox">
+						<a href="boarddelete.bizpoll?bno_step=${boardDetailList.bno_step}&bno=${boardDetailList.bno}" id="select_true" class="delete_selectbox">
 							확인	
 						</a>
 						<a href="#" id="select_false" class="delete_selectbox">

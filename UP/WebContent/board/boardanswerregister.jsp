@@ -267,7 +267,6 @@
 		<!-- 파일 다운로드하기 위해 form의 method는 POST 를 사용, enctype="multipart/form-data"속성 추가 -->
 		<form action="boardanswerstore.bizpoll" method="POST" name="bdanswer_post" id="bdanswer_post" enctype="multipart/form-data">
 			<input type="hidden" id="parent_bno" name="parent_bno" value="${boardAnswerView.bno}">
-			<input type="hidden" id="parent_bnoup" name="parent_bnoup" value="${boardAnswerView.bnoup}">
 			<div id="bdanswer_title_wrap" class="bdanswer_header_wrap">
 				<span id="bdanswer_title_fix" class="bdanswer_header_fix">
 					제 목 : 

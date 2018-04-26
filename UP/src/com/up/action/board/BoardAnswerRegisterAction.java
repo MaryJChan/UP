@@ -36,9 +36,7 @@ public class BoardAnswerRegisterAction implements Action{
 		// new MultipartRequest(request, 파일업로드 디렉토리, 업로드 용량, 인코딩, 파일이름중복정책)
 		MultipartRequest multi = new MultipartRequest(request, Constants.UPLOAD_PATH, Constants.MAX_UPLOAD, "UTF-8", new DefaultFileRenamePolicy());
 		Integer bno = Integer.parseInt(multi.getParameter("parent_bno"));
-		Integer bnoup = Integer.parseInt(multi.getParameter("parent_bnoup"));
 		String title = multi.getParameter("bdanswer_title");
-		/*String category = multi.getParameter("bdanswer_category");*/
 		String content = multi.getParameter("bdanswer_content");
 		String writer = multi.getParameter("bdanswer_writer");
 		String filename = " "; //공백
@@ -49,8 +47,6 @@ public class BoardAnswerRegisterAction implements Action{
 		BoardDAO bDao = BoardDAO.getInstance();
 		BoardDTO bDto = bDao.BoardAnswerView(bno);
 		
-		int ref = bDto.getRef();								// 기존 게시글의 ref
-		int re_step = bDto.getRe_step() + 1;			// 기존 게시글의 re_step + 1
 		int re_level = bDto.getRe_level() + 1;			// 기존 게시글의 re_level + 1
 		// 파일 업로드 예외처리
 		try {
@@ -80,13 +76,11 @@ public class BoardAnswerRegisterAction implements Action{
 		}
 		
 		// 답글 및 bnoup 순서 조정(re_step)
-		bDto.setRef(ref);
-		bDto.setRe_step(re_step);
 		bDto.setCategory(bDto.getCategory());
 		bDao.boardUpdateStep(bDto);
 		
 		bDao = BoardDAO.getInstance();
-		bDto = new BoardDTO(bnoup, title, bDto.getCategory(), content, writer, filename, filesize, ref, re_step, re_level);
+		bDto = new BoardDTO(bDto.getBno_step(), title, bDto.getCategory(), content, writer, filename, filesize, re_level);
 		bDao.boardAnswerRegister(bDto);
 		
 		ActionForward forward = new ActionForward();

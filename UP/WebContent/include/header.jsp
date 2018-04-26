@@ -11,7 +11,11 @@
 	response.setHeader("Cache-Control", "no-store");
 	response.setHeader("Pragma", "no-cache");
 %>
-
+<%
+    	// 줄바꿈을 위한 코딩
+    	pageContext.setAttribute("br", "<br/>");
+    	pageContext.setAttribute("cn", "\n");
+%> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>

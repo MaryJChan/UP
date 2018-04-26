@@ -419,13 +419,13 @@
 					<c:forEach items="${boardList}" var="list">
 						<div class="board_view_q">
 							<span class="board_view_a a_boarder_num">
-								${list.bnoup} 
+								${list.bno_step} 
 							</span>
 							<a href="boarddetail.bizpoll?bno=${list.bno}&hits=${list.hits}&sessionuser=${sessionScope.loginUser.mid}" class="board_view_a a_boarder_title" >
 								<c:forEach var = "i" begin = "1" end = "${list.re_level}">
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</c:forEach>
-								<c:if test="${list.re_step != 1}">
+								<c:if test="${list.re_level > 0}">
 									┖  RE : 
 								</c:if>
 								[${list.category}] ${list.title} 

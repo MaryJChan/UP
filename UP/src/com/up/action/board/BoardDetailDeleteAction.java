@@ -18,10 +18,10 @@ public class BoardDetailDeleteAction implements Action{
 		String url = "board.bizpoll";
 		
 		Integer bno = Integer.parseInt(request.getParameter("bno"));
-		Integer bnoup = Integer.parseInt(request.getParameter("bnoup"));
+		Integer bno_step = Integer.parseInt(request.getParameter("bno_step"));
 		
 		BoardDAO bDao = BoardDAO.getInstance();
-		bDao.boardUpdateBnoup(bnoup);
+		bDao.boardUpdateBnoup(bno_step);
 		int flag = bDao.boardDelete(bno);	
 		
 		request.setAttribute("flag", flag);

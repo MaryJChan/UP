@@ -5,7 +5,7 @@ import java.util.Date;
 public class BoardDTO {
 	
 	private int bno;
-	private int bnoup;
+	private int bno_step;
 	private String title;
 	private String category;
 	private String content;
@@ -17,8 +17,6 @@ public class BoardDTO {
 	private String filename;
 	private int filesize;
 	private int downcnt;
-	private int ref;
-	private int re_step;
 	private int re_level;
 	private Date regdate;
 	
@@ -63,9 +61,9 @@ public class BoardDTO {
 		this.writer = writer;
 	}
 
-	public BoardDTO(int bnoup, String title, String category, String content, String writer, int hits, int replycnt, int goodcnt, Date regdate) {
+	public BoardDTO(int bno_step, String title, String category, String content, String writer, int hits, int replycnt, int goodcnt, Date regdate) {
 		super();
-		this.bnoup = bnoup;
+		this.bno_step = bno_step;
 		this.title = title;
 		this.category = category;
 		this.content = content;
@@ -76,18 +74,16 @@ public class BoardDTO {
 		this.regdate = regdate;		
 	}	
 
-	public BoardDTO(int bnoup, String title, String category, String content, String writer, String filename, int filesize,
-			int ref, int re_step, int re_level) {
+	public BoardDTO(int bno_step, String title, String category, String content, String writer, String filename, int filesize,
+			int re_level) {
 		super();
-		this.bnoup = bnoup;
+		this.bno_step = bno_step;
 		this.title = title;
 		this.category = category;
 		this.content = content;
 		this.writer = writer;
 		this.filename = filename;
 		this.filesize = filesize;
-		this.ref = ref;
-		this.re_step = re_step;
 		this.re_level = re_level;
 	}
 
@@ -99,12 +95,12 @@ public class BoardDTO {
 		this.bno = bno;
 	}
 
-	public int getBnoup() {
-		return bnoup;
+	public int getBno_step() {
+		return bno_step;
 	}
 
-	public void setBnoup(int bnoup) {
-		this.bnoup = bnoup;
+	public void setBno_step(int bno_step) {
+		this.bno_step = bno_step;
 	}
 
 	public String getTitle() {
@@ -201,22 +197,6 @@ public class BoardDTO {
 
 	public void setDowncnt(int downcnt) {
 		this.downcnt = downcnt;
-	}
-
-	public int getRef() {
-		return ref;
-	}
-
-	public void setRef(int ref) {
-		this.ref = ref;
-	}
-
-	public int getRe_step() {
-		return re_step;
-	}
-
-	public void setRe_step(int re_step) {
-		this.re_step = re_step;
 	}
 
 	public int getRe_level() {
