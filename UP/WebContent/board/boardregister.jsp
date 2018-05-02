@@ -31,7 +31,7 @@
 	}
 	#bdregister_title {
 		display: inline-block;
-		width: 236px;
+		width: 576px;
 		height: 20px;
 		font-size: 13px;
 		border: 0;

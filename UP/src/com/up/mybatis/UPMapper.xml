@@ -430,4 +430,11 @@
 		rno_step = rno_step - 1
 		WHERE rno_step > #{rno_step}
 	</update>
+	
+	<!-- 마이페이지 용 SELECT -->
+	<select id="memSelect" resultType="mDTO">
+		SELECT * FROM member
+		WHERE mid = #{mid}
+	</select>
+	
 </mapper>

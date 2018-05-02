@@ -1,4 +1,4 @@
-package com.up.action.board;
+package com.up.action.mypage;
 
 import java.io.IOException;
 
@@ -8,30 +8,29 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.up.action.Action;
 import com.up.action.ActionForward;
-import com.up.dao.BoardDAO;
-import com.up.dto.BoardDTO;
-import com.up.dto.NextPreDTO;
+import com.up.dao.MemberDAO;
+import com.up.dto.MemberDTO;
 
-public class BoardUpdateViewAction implements Action{
+public class MypageAction implements Action{
 
 	@Override
 	public ActionForward excute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String url = "board/boardupdate.jsp";		
+		String url = "mypage/mypage.jsp";		
+
+		String mid = request.getParameter("mid");
 		
-		Integer bno = Integer.parseInt(request.getParameter("bno"));
-		System.out.println("게시글 번호 : " + bno);
-				 
-		BoardDAO bDao = BoardDAO.getInstance();
-		NextPreDTO npDto =bDao.boardDetail(bno);
+		MemberDAO mDao = MemberDAO.getInstance();
+		MemberDTO mDto = null;
+		mDto = mDao.memSelect(mid);
 		
-		request.setAttribute("boardUpdate", npDto);
+		request.setAttribute("memSelect", mDto);
 		
 		ActionForward forward = new ActionForward();
 		forward.setPath(url);
 		forward.setRedirect(false);		
-		
+
 		return forward;		
- 	}
+	}
 
 }

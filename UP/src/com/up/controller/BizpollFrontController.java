@@ -36,6 +36,7 @@ import com.up.action.member.MemAjaxAction;
 import com.up.action.member.MemberAction;
 import com.up.action.member.MemberInsertAction;
 import com.up.action.member.UPConstractAction;
+import com.up.action.mypage.MypageAction;
 
 /**
  * Servlet implementation class BizpollFrontController
@@ -146,6 +147,9 @@ public class BizpollFrontController extends HttpServlet {
 			forward = action.excute(request, response);
 		} else if (command.equals("/commentlist.bizpoll")) {
 			action = new BoardDetailCommentListAction();			
+			forward = action.excute(request, response);
+		} else if (command.equals("/mypage.bizpoll")) {
+			action = new MypageAction();			
 			forward = action.excute(request, response);
 		}
 		// ======= 공통분기 작업 ======= //

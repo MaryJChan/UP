@@ -296,7 +296,7 @@
 	.board_nexrPre_wrap {
 		margin: 0 10px;
 		height: 38px;
-		border-bottom: 1px dotted #ccc;
+		border-top: 1px dotted #ccc;
 	}
 	.board_nextPre_tag {
 		padding: 10px;
@@ -755,6 +755,29 @@
 			</c:choose>
 			</div>			
 		</div>
+		<div id="bdtail_option">
+			<span id="bdtail_footer">
+				<span id="bdtail_update">
+					<a href="boardupdateview.bizpoll?bno=${boardDetailList.bno}" id="bdtail_btn_update">수정</a>
+				</span>
+				<span class="bdtail_share">|</span>
+				<span id="bdtail_delete">
+					<a href="#" id="bdtail_btn_delete">삭제</a>
+				</span>
+			</span>
+			<span id="bdtail_answer_register">
+				<a href="#"  id="bdtail_answer_btn">답글 쓰기</a>
+			</span>
+			<span id="bdtail_footer2">
+				<span id="bdtail_write">
+					<a href="#" id="bdtail_write_btn">글쓰기</a>
+				</span>							
+				<span class="bdtail_share">|</span>
+				<span id="bdtail_list">
+					<a href="board.bizpoll">목록</a>
+				</span>
+			</span>
+		</div>
 		<c:if test="${fn:trim(boardDetailList.pre_title) ne '이전글 없음'}">
 			<div class="board_nexrPre_wrap">
 				<span class="board_nextPre_tag nextPre_btn">
@@ -765,6 +788,9 @@
 				<span class="board_nextPre_tag nextPre_title">
 					<a href="boarddetail.bizpoll?bno=${boardDetailList.pre_article_bno}">
 						<span class="nextPre_title_fix">제목 : </span>
+						<c:if test="${boardDetailList.re_level == 1}">
+							RE : 
+						</c:if>
 						[${boardDetailList.category}] ${boardDetailList.pre_title}
 					</a>
 				</span>
@@ -793,6 +819,9 @@
 				<span class="board_nextPre_tag nextPre_title">
 					<a href="boarddetail.bizpoll?bno=${boardDetailList.next_article_bno}">
 						<span class="nextPre_title_fix">제목 : </span>
+						<c:if test="${boardDetailList.re_level == 1}">
+							RE : 
+						</c:if>
 						[${boardDetailList.category}] ${boardDetailList.next_title}
 					</a>
 				</span>
@@ -810,30 +839,7 @@
 					</c:if>					 
 				</span>
 			</div>
-		</c:if>
-		<div id="bdtail_option">
-			<span id="bdtail_footer">
-				<span id="bdtail_update">
-					<a href="boardupdateview.bizpoll?bno=${boardDetailList.bno}" id="bdtail_btn_update">수정</a>
-				</span>
-				<span class="bdtail_share">|</span>
-				<span id="bdtail_delete">
-					<a href="#" id="bdtail_btn_delete">삭제</a>
-				</span>
-			</span>
-			<span id="bdtail_answer_register">
-				<a href="#"  id="bdtail_answer_btn">답글 쓰기</a>
-			</span>
-			<span id="bdtail_footer2">
-				<span id="bdtail_write">
-					<a href="#" id="bdtail_write_btn">글쓰기</a>
-				</span>							
-				<span class="bdtail_share">|</span>
-				<span id="bdtail_list">
-					<a href="board.bizpoll">목록</a>
-				</span>
-			</span>
-		</div>
+		</c:if>		
 	</div>	
 	<c:if test="${!empty boardReply}">
 		<div id="myboard_modal" class="board_modal">

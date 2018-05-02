@@ -154,7 +154,6 @@
 	$(document).ready(function(){				
 		var category_value = $("#category_value").val();
 		var bdupdate_category = $("#bdupdate_category");
-		
 		if (category_value == "상품 문의") {
 			bdupdate_category.val("상품 문의").prop("selected", true);
 		} else if (category_value == "배송 문의") {

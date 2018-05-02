@@ -307,8 +307,8 @@
 		position: relative;
 	}
 	.iu_pinkblue04_02 {
-		width: 1920px;
-		height: 982px;
+		width: 100%;
+		height: 981px;
 		background: url('image/up_main/IU_GOODS_IMAGE2.png') center 0 no-repeat;
 		margin: 0 auto;
 	}

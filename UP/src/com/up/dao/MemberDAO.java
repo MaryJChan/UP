@@ -144,6 +144,22 @@ public class MemberDAO {
 		return result;
 	}
 	
+	// 회원 등록
+		public MemberDTO memSelect(String mid) {
+			MemberDTO mDto = null;
+			sqlSession = sqlSessionFactory.openSession();
+			
+			try {
+				mDto = sqlSession.selectOne("memSelect", mid);			
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				sqlSession.close();			
+			}		
+			return mDto;
+		}
+	
 }
 
 

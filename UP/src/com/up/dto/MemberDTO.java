@@ -13,6 +13,7 @@ public class MemberDTO {
 	private String mpostcode;
 	private String madd;
 	private String memail;
+	private String mgrade;
 	private Date regdate;
 	
 	public MemberDTO () {
@@ -124,6 +125,14 @@ public class MemberDTO {
 
 	public void setMphone(String mphone) {
 		this.mphone = mphone;
+	}
+
+	public String getMgrade() {
+		return mgrade;
+	}
+
+	public void setMgrade(String mgrade) {
+		this.mgrade = mgrade;
 	}
 
 	public Date getRegdate() {

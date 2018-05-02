@@ -28,7 +28,6 @@
 	}
 	.footer {
 		width: 100%;
-		height: 438px;
 		display: block;
 		clear: both;
 	}
@@ -139,7 +138,7 @@
 	.marR40 {
 		margin-right: 40px;
 	}
-	.tit {
+	.f_list .tit {
 		font-size: 16px;
 		color: #fff;
 		font-weight: 800px;

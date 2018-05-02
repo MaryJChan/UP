@@ -176,48 +176,6 @@
 		z-index: 2;
 	}
 	
-	.head_updrop {
-		width: 145px;
-		background-color: #FFF;
-		padding: 25px 20px;
-		position: absolute;
-		border: 1px solid #dfdfdf;
-		border-top: 1px solid #dfdfdf;
-		left: -20px;
-		top: 39px;
-		display: none;
-	}
-	
-	.updrop_area {
-		width: 145px;
-		height: 100%;
-	}
-	
-	#menuDepth1list1:hover .head_updrop {
-		display: block;
-	}
-	
-	#head_NBdrop>a {
-		font-size: 11px;
-		font-weight: normal;
-		display: block;
-		color: #333;
-	}
-	
-	#head_NBdrop>li>a {
-		width: 147px;
-		display: block;
-		border-bottom: 1px solid #e6e6e6;
-		color: #333;
-		font-size: 14px;
-		font-weight: 700;
-		margin: 7px 0 3px 0;
-	}
-	
-	#head_NBdrop>a:hover {
-		color: #e51130;
-	}
-	
 	.gnb>li>a {
 		color: #000;
 	}
@@ -577,11 +535,126 @@
 		display: none;
 		left: 110px;
 	}
+	.header_drop_wrap {
+		width: 100%;
+		background-color: #f7f7f7;
+		position: absolute;
+		display: none;
+	}
+	.header_drop_area {
+		margin: 0 auto;
+		padding: 10px 0;
+		height: 350px;
+		width: 955px;
+	}
+	.header_drop_ul {
+		width: 170px;
+		height: 340px;
+		padding: 5px 0 5px 20px;
+		float: left;
+		display: block;
+		border-right: 1px solid #e6e6e6;
+	}
+	.header_drop_ul .tit {
+		font-size: 14px;
+		height: 18px;
+		color: #000;
+		font-weight: 700;
+		line-height: 18px;
+		display: block;
+		margin-bottom: 10px;
+		clear: both;
+	}
+	.header_drop_ul li {
+		width: 170px;
+		height: 18px;
+		font-size: 12px;
+		color: #333;
+		line-height: 18px;
+		font-weight: 400;
+		letter-spacing: -0.5px;
+		margin-bottom: 5px;
+		clear: both;
+	}
+	.header_drop_ul .tit a {
+		color: #000;
+		font-size: 14px;
+		font-weight: 700;
+		background: none;
+	}
+	.header_drop_ul .tit a:hover {
+		color: #000;
+		font-size: 14px;
+		font-weight: 700;
+		background: none;
+	}
+	.header_drop_ul .m_all {
+		color: #323232;
+		font-weight: 800;
+		margin-bottom: 5px;
+		padding-top: 10px;
+	}
+	.header_drop_ul li a {
+		font-size: 12px;
+		color: #333;
+		font-weight: 400;
+		display: inline-block;
+		padding: 0;
+		clear: both;
+	}
+	.header_drop_ul li a:hover {
+		color: #e21836;
+		font-weight: 400;
+		padding-right: 12px;
+		background: url("image/header/menu_arrow.png") right center no-repeat;
+		background-size: 5px 7px;
+	}
+	.header_drop_ul .m_all a {
+		color: #323232;
+		font-weight: 800;
+		margin-bottom: 5px;
+		text-decoration: underline;
+	}
+	.header_drop_ul .m_all a:hover {
+		color: #323232;
+		font-weight: 800;
+		margin-bottom: 5px;
+		text-decoration: underline;
+		background: none;
+	}
+	.header_drop_ul .depth03 a {
+		color: #323232;
+		font-weight: 800;
+	}
+	.header_drop_ul .depth03 a:hover {
+		color: #323232;
+		font-weight: 800;
+		background: none;
+	}
+	.mt20 {
+		margin-top: 20px;
+	}
+	.mt30 {
+		margin-top: 30px;
+	}
+	.menuDepth_list:hover .header_drop_wrap {
+		display: block;
+	}
 </style>
 <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
 <script type="text/javascript">
 	// el태그는 자바 스크립트 사용[로그인시 flag값 받기]
+	$(document).ready(function(){
+		$(".menuDepth_list").hover(function(){
+			$(".header_drop_wrap").css("display", "block");		
+		});	
+		$(".header_drop_wrap").hover(function(){
+		}, function (){
+			$(".header_drop_wrap").css("display", "none");		
+		});			
+	});
 
+	
 	$(document).on("click", "#btn_login",function() {
 		var id = $("#login_id").val();
 		var pw = $("#login_pw").val();
@@ -623,7 +696,6 @@
 				}
 			});
 		}
-
 	});
 
 	$(document).on("blur", "#login_id", function() {
@@ -635,7 +707,6 @@
 		} else {
 			$("#id_error").css("display", "none");
 		}
-
 	});
 
 	$(document).on("blur", "#login_pw", function() {
@@ -692,28 +763,11 @@
 				</h1>
 				<div class="gnb_area">
 					<ul class="gnb">
-						<li id="menuDepth1list1"><a href="#" id="select1">NEW
-								BALANCE</a>
-							<div class="head_updrop">
-								<div class="updrop_area">
-									<ul id="head_NBdrop">
-										<li><a href="#">신발</a></li>
-										<li><a href="#">의류</a></li>
-										<a href="#">HOOD</a>
-										<a href="#">MTM</a>
-										<li><a href="#">용품</a></li>
-										<a href="#">가방</a>
-										<a href="#">양말</a>
-									</ul>
-								</div>
-							</div></li>
-						<li id="menuDepth1list2"><a href="#" id="select2">NERDY</a></li>
-						<li id="menuDepth1list3"><a href="#" id="select3">CASUAL</a>
-						</li>
-						<li id="menuDepth1list4"><a href="#" id="select4">COSTUME</a>
-						</li>
-						<li id="menuDepth1list5"><a href="board.bizpoll" id="select5">게시판</a>
-						</li>
+						<li id="menuDepth1list1" class="menuDepth_list"><a href="#" id="select1">NEW BALANCE</a></li>
+						<li id="menuDepth1list2" class="menuDepth_list"><a href="#" id="select2">NERDY</a></li>
+						<li id="menuDepth1list3" class="menuDepth_list"><a href="#" id="select3">CASUAL</a></li>
+						<li id="menuDepth1list4" class="menuDepth_list"><a href="#" id="select4">COSTUME</a></li>
+						<li id="menuDepth1list5"><a href="board.bizpoll" id="select5">Q & A</a></li>
 					</ul>
 				</div>
 				<p class="top_search">
@@ -746,10 +800,66 @@
 
 						<li class="end"><a href="#" class="mypage"></a>
 							<p class="bag_txt">
-								<a href="#">마이페이지</a>
+								<a href="mypage.bizpoll?mid=${sessionScope.loginUser.mid}">마이페이지</a>
 							</p></li>
 					</ul>
 				</div>
+			</div>
+		</div>
+		<div class="header_drop_wrap">
+			<div class="header_drop_area">
+				<ul class="header_drop_ul">
+					<li class="tit"><a href="#">신상품</a></li>
+					<li class="tit"><a href="#">베스트 상품</a></li>
+					<li class="tit mt30"><a href="#">Upx collection</a></li>
+				</ul>
+				<ul class="header_drop_ul">
+					<li class="tit"><a href="#">New Balance</a></li>
+					<li class="depth03"><a href="#">상의</a></li>
+					<li><a href="#">- 티셔츠</a></li>
+					<li><a href="#">- 맨투맨 / 후디</a></li>
+					<li><a href="#">- 슬리브리스 / 브라탑</a></li>
+					<li><a href="#">- 자켓</a></li>
+					<li class="depth03"><a href="#">하의</a></li>
+					<li><a href="#">- 숏팬츠 / 스커트</a></li>
+					<li><a href="#">- 롱팬츠</a></li>
+					<li><a href="#">- 레깅스</a></li>
+					<li class="depth03"><a href="#">신발</a></li>
+					<li class="depth03"><a href="#">트레이닝복</a></li>
+					<li class="m_all"><a href="#">New Balace 전체보기 ▶</a></li>
+				</ul>
+				<ul class="header_drop_ul">
+					<li class="tit"><a href="#">NERDY</a></li>
+					<li class="depth03"><a href="#">상의</a></li>
+					<li><a href="#">- 티셔츠</a></li>
+					<li><a href="#">- 맨투맨 / 후디</a></li>
+					<li><a href="#">- 자켓</a></li>
+					<li class="depth03"><a href="#">하의</a></li>
+					<li><a href="#">- 숏팬츠 / 스커트</a></li>
+					<li><a href="#">- 롱팬츠</a></li>
+					<li><a href="#">- 레깅스</a></li>
+					<li class="depth03"><a href="#">신발</a></li>
+					<li class="depth03"><a href="#">트레이닝복</a></li>
+					<li class="m_all"><a href="#">NERDY 전체보기 ▶</a></li>
+				</ul>
+				<ul class="header_drop_ul">
+					<li class="tit"><a href="#">SHOES</a></li>
+					<li><a href="#">프리미엄 신발</a></li>
+					<li><a href="#">라이프 스타일</a></li>
+					<li><a href="#">러닝</a></li>
+					<li><a href="#">워킹</a></li>
+					<li><a href="#">샌들 / 슬라이드(슬리퍼)</a></li>
+					<li class="m_all"><a href="#">신발 전체보기 ▶</a></li>
+				</ul>
+				<ul class="header_drop_ul">
+					<li class="tit"><a href="#">용품</a></li>
+					<li><a href="#">가방</a></li>
+					<li><a href="#">- 백팩</a></li>
+					<li><a href="#">- 기타 가방</a></li>
+					<li><a href="#">모자</a></li>
+					<li><a href="#">양말</a></li>
+					<li class="m_all"><a href="#">용품 전체보기 ▶</a></li>
+				</ul>
 			</div>
 		</div>
 	</div>
@@ -767,15 +877,14 @@
 								name="frm_login" id="frm_login">
 								<!-- 데이터를 보냄 -->
 								<p class="p_id">
-									<label for="login_id">ID</label> <input class="idpw"
-										type="text" id="login_id" name="login_id" placeholder="계정">
-								<div id="id_error" class="error"></div>
+									<label for="login_id">ID</label> 
+									<input class="idpw" type="text" id="login_id" name="login_id" placeholder="계정">
+									<div id="id_error" class="error"></div>
 								</p>
 								<p class="p_pw">
-									<label for="login_pw">Password</label> <input class="idpw"
-										type="password" id="login_pw" name="login_pw"
-										placeholder="비밀번호(4~16자리)" maxlength="16">
-								<div id="pw_error" class="error">ID또는 비밀번호가 틀렸습니다.</div>
+									<label for="login_pw">Password</label> 
+									<input class="idpw" type="password" id="login_pw" name="login_pw" placeholder="비밀번호(4~16자리)" maxlength="16">
+									<div id="pw_error" class="error">ID또는 비밀번호가 틀렸습니다.</div>
 								</p>
 								<div id="remember">
 									<input type="checkbox" name="remember" id="remember2">
