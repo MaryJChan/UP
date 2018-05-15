@@ -32,20 +32,18 @@ li {
 	width: 900px;
 	padding: 20px;
 }
-
 #mypage_title {
 	font-size: 36px;
 	line-height: 1.4em;
-	font-weight: bold;
+	font-weight: 900;
 	color: #d60013;
 	letter-spacing: -1px;
 	padding-top: 10px;
+	cursor: pointer;
 }
-
 #mypage_top {
 	height: 255px;
 }
-
 #mypage_cours {
 	width: 242px;
 	height: 237px;
@@ -53,7 +51,6 @@ li {
 	border: 1px solid #ccc;
 	float: left;
 }
-
 #mypage_info {
 	width: 614px;
 	height: 253px;
@@ -61,29 +58,24 @@ li {
 	background-color: #fafafa;
 	float: right;
 }
-
 .nb_blue {
 	color: #0099cc;
 }
-
 .membership_level {
 	height: 116px;
 	padding: 10px 0;
 }
-
 .CR_util li {
 	float: left;
 	font-size: 12px;
 	line-height: 15px;
 	margin-bottom: 3px;
 }
-
 .Cr_Tit {
 	width: 150px;
 	margin-left: 5px;
 	color: #666;
 }
-
 .Cr_Txt a {
 	color: #0099cc;
 }
@@ -186,7 +178,97 @@ li {
 .CR_Txt a {
 	color: #0099cc;
 }
+
+
+#memberUpdate_check_area {
+	width: 100%;
+	margin-top: 50px;
+	display: none;
+}
+
+.memberCheck_box {
+	margin-top: 15px;
+	border: 10px solid #ccc;	
+	padding: 35px 30px;
+}
+#myinfo_modify {
+	border: 1px solid #ccc;
+	border-left: 0px;
+	border-right: 0px;
+	padding: 30px 0;
+	margin: 40px 0 30px 0;
+}
+.mb8 {
+	margin-bottom: 8px;
+}
+.myinfo_modify_detail {
+	display: inline-block;
+	width: 100px;
+	font-size: 11px;
+	font-weight: bold;
+}
+#myinfo_modify input {
+	width: 250px;
+	height: 23px;
+	line-height: 23px;
+	border: 1px solid #c5c5c5;
+	padding: 0 7px;
+	vertical-align: middle;
+}
+#memSelectID {
+	background-color: #f3f3f3;
+}
 </style>
+<script type="text/javascript">
+	$(document).on("click", "#box01_info_fix_btn", function(){
+		$("#mypage_body"	).css("display", "none");	
+		$("#memberUpdate_check_area"	).css("display", "block");	
+	});
+	
+	$(document).on("click", "#memberUpdate_btn", function(){
+		$("#mypage_body"	).css("display", "none");	
+		$("#memberUpdate_check_area"	).css("display", "block");	
+	});
+	$(document).on("click", "#mypage_title", function(){
+		location.reload();
+	});
+	
+	$(document).on("click", "#memberCheck_btn", function(){
+		var mid = $("#memSelectID");
+		var mpw = $("#memSelectPW");
+		
+		if(mpw.val() == ""){
+			alert("비밀번호를 입력하지 않았습니다.");
+			mpw.focus();
+			return false;
+		} else {
+			$.ajax({
+				// 가야할 서블릿 지정
+				url : "mypageMemCheckAjax.bizpoll",
+				// 방식 지정 [GET | POST]
+				type : "POST",
+				// 타입 지정
+				dataType : "JSON",
+				// 쿼리스트링과 같은 =에 공백X     //data를 dataTpye가방에 담아 type방식으로 url로 보냄
+				data : "mid=" + mid.val() + "&mpw=" + mpw.val(),
+				//성공했을때	
+				success : function(data) {
+					if (data.flag == "1") {
+						location.href="memberUpdateView.bizpoll?mid=" + mid.val();
+					} else if (data.flag == "0") {
+						alert("비밀번호가 일치하지 않습니다.");
+						mpw.focus();
+						return false;
+					}
+				},
+				//실패했을떄
+				error : function(data) {
+					alert("System Error!!!");
+				}
+			});	
+		}		
+	});
+</script>
 </head>
 <body>
 	<div id="mypage_wrap">
@@ -234,7 +316,7 @@ li {
 					</dl>
 					<dl class="mypage_info_dl_last">
 						<dt>회원 정보</dt>
-						<dd><a href="#">회원정보 수정</a></dd>
+						<dd><a href="#" id="memberUpdate_btn">회원정보 수정</a></dd>
 						<dd><a href="#">리노베이션 프로젝트</a></dd>
 						<dd><a href="#">배송지 주소록</a></dd>
 						<dd><a href="#">환불계좌관리</a></dd>
@@ -268,6 +350,31 @@ li {
 							</tr>
 						</tbody>
 					</table>
+				</div>
+			</div>
+			<div id="memberUpdate_check_area">
+				<h3 class="mt50">회원정보 수정</h3>
+				<div class="memberCheck_box">
+					<h3>고객님의 소중한 개인정보를 위해 비밀번호를 입력해 주세요.</h3>
+					<div id="myinfo_modify">
+						<form action="" name=""  id="" method="POST">
+							<p class="mb8">
+								<span class="myinfo_modify_detail">ID</span>
+								<input type="text" value="${memSelect.mid}" id="memSelectID" readonly>
+							</p>
+							<p>
+								<span class="myinfo_modify_detail">PASSWORD</span>
+								<input type="text"  id="memSelectPW">
+							</p>							
+						</form>						
+					</div>
+					<div>
+						<p>
+							<a href="#">
+								<img id="memberCheck_btn" src="image/mypage/id_check.png">
+							</a>
+						</p>
+					</div>
 				</div>
 			</div>
 		</div>

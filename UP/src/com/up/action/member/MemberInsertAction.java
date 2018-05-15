@@ -39,7 +39,7 @@ public class MemberInsertAction implements Action{
 		String birth = birth1 + birth2 + birth3;
 		String phone = phone1 + phone2 + phone3;
 		String postcode = request.getParameter("sample6_postcode");
-		String add = add1 + " " + add2;
+		String add = add1 + " · " + add2;
 		String email = email1 + "@" + email2;
 		
 		System.out.println("아이디 : " + id + "  패스워드 : " + pw + "  이름 : " + name + "  성별 : " + sex + "  생년월일 : " + birth + "  핸드폰 번호 : " + phone + " 우편번호 : " + postcode + " 주소 : " + add +  "이메일 주소 : " + email);

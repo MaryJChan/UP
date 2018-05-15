@@ -105,7 +105,7 @@
 		<![CDATA[
 			SELECT count(bno) FROM tblboard
 			WHERE bno > 0
-		]]>		
+		]]>
 	</select>
 	
 	<select id="searchCountPaging" resultType="int">

@@ -102,9 +102,10 @@ public class MemberDAO {
 				String mpostcode = list.get(0).getMpostcode();
 				String madd = list.get(0).getMadd();
 				String memail = list.get(0).getMemail();
+				String mgrade = list.get(0).getMgrade();
 				Date regdate = list.get(0).getRegdate();
 				
-				mDto = new MemberDTO(mid, mpw, mname, msex, mbirth, mphone, mpostcode, madd, memail, regdate);
+				mDto = new MemberDTO(mid, mpw, mname, msex, mbirth, mphone, mpostcode, madd, memail, mgrade, regdate);
 				
 			}		
 			

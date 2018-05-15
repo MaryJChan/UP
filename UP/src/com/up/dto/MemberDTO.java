@@ -39,6 +39,24 @@ public class MemberDTO {
 		this.madd = madd;
 		this.memail = memail;
 	}	
+	
+	
+
+	public MemberDTO(String mid, String mpw, String mname, String msex, String mbirth, String mphone, String mpostcode,
+			String madd, String memail, String mgrade, Date regdate) {
+		super();
+		this.mid = mid;
+		this.mpw = mpw;
+		this.mname = mname;
+		this.msex = msex;
+		this.mbirth = mbirth;
+		this.mphone = mphone;
+		this.mpostcode = mpostcode;
+		this.madd = madd;
+		this.memail = memail;
+		this.mgrade = mgrade;
+		this.regdate = regdate;
+	}
 
 	public String getMpostcode() {
 		return mpostcode;

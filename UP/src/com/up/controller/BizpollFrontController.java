@@ -33,10 +33,13 @@ import com.up.action.index.IndexAction;
 import com.up.action.login.LoginAjaxCkAction;
 import com.up.action.login.LogoutAjaxAction;
 import com.up.action.member.MemAjaxAction;
+import com.up.action.member.MemUpdatePwChkAjaxAction;
 import com.up.action.member.MemberAction;
 import com.up.action.member.MemberInsertAction;
 import com.up.action.member.UPConstractAction;
+import com.up.action.mypage.MemberUpdateViewAction;
 import com.up.action.mypage.MypageAction;
+import com.up.action.mypage.MypageMemCheckAjaxAction;
 
 /**
  * Servlet implementation class BizpollFrontController
@@ -151,6 +154,15 @@ public class BizpollFrontController extends HttpServlet {
 		} else if (command.equals("/mypage.bizpoll")) {
 			action = new MypageAction();			
 			forward = action.excute(request, response);
+		} else if (command.equals("/mypageMemCheckAjax.bizpoll")) {
+			action = new MypageMemCheckAjaxAction();			
+			forward = action.excute(request, response);			
+		} else if (command.equals("/memberUpdateView.bizpoll")) {
+			action = new MemberUpdateViewAction();			
+			forward = action.excute(request, response);	
+		} else if (command.equals("/memUpdatePwChkAjax.bizpoll")) {
+			action = new MemUpdatePwChkAjaxAction();			
+			forward = action.excute(request, response);	
 		}
 		// ======= 공통분기 작업 ======= //
 		if(forward != null) {
